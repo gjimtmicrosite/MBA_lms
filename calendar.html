@@ -1,0 +1,348 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>42-Hour Calendar — GJIMT LMS</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f6fb;color:#1a1a2e}
+  header{background:linear-gradient(135deg,#0f3460,#16213e);color:#fff;padding:18px 32px;display:flex;align-items:center;gap:16px}
+  header img{height:48px;border-radius:6px}
+  header h1{font-size:1.4rem;font-weight:700}
+  header p{font-size:.82rem;opacity:.8}
+  nav{background:#16213e;display:flex;flex-wrap:wrap;gap:4px;padding:8px 32px}
+  nav a{color:#e0e0e0;text-decoration:none;padding:6px 14px;border-radius:4px;font-size:.85rem;transition:.2s}
+  nav a:hover,nav a.active{background:#0f3460;color:#fff}
+  .container{max-width:1100px;margin:28px auto;padding:0 20px}
+  .card{background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.08);padding:24px;margin-bottom:20px}
+  .card h2{color:#0f3460;margin-bottom:12px;font-size:1.1rem}
+  .card h3{color:#16213e;margin:14px 0 8px;font-size:.97rem}
+  table{width:100%;border-collapse:collapse;font-size:.88rem}
+  th{background:#0f3460;color:#fff;padding:9px 12px;text-align:left}
+  td{padding:8px 12px;border-bottom:1px solid #eee}
+  tr:hover td{background:#f0f4ff}
+  .badge{display:inline-block;padding:2px 9px;border-radius:12px;font-size:.75rem;font-weight:600}
+  .badge-proj{background:#e3f2fd;color:#0f3460}
+  .badge-gsdc{background:#e8f5e9;color:#1b5e20}
+  .badge-mock{background:#fff3e0;color:#e65100}
+  .badge-doubt{background:#f3e5f5;color:#6a1b9a}
+  .btn{display:inline-block;padding:8px 18px;background:#0f3460;color:#fff;border-radius:6px;text-decoration:none;font-size:.85rem;margin:4px 2px;border:none;cursor:pointer}
+  .btn:hover{background:#16213e}
+  .btn-green{background:#2e7d32}
+  .btn-green:hover{background:#1b5e20}
+  .btn-orange{background:#e65100}
+  .week-row-proj{background:#e3f2fd}
+  .week-row-gsdc{background:#e8f5e9}
+  ul,ol{padding-left:20px;margin:8px 0}
+  li{margin:4px 0;font-size:.9rem}
+  .phase-box{border-left:4px solid #0f3460;padding:10px 14px;margin:8px 0;background:#f8f9ff;border-radius:0 6px 6px 0}
+  .phase-box.ai{border-color:#2e7d32}
+  .phase-box.manual{border-color:#e65100}
+  .hint{font-size:.8rem;color:#666;margin-top:6px}
+  .user-table td:last-child{font-family:monospace;color:#c62828}
+  footer{text-align:center;padding:18px;font-size:.8rem;color:#888;margin-top:30px}
+  .q-block{background:#f8f9ff;border-radius:8px;padding:14px;margin-bottom:14px;border:1px solid #dde3f0}
+  .q-block p{font-weight:600;margin-bottom:8px}
+  .q-block label{display:block;margin:4px 0;cursor:pointer;font-size:.9rem}
+  .scenario-box{background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:14px;margin-bottom:14px}
+  .scenario-box p{font-weight:600;color:#e65100;margin-bottom:8px}
+  textarea{width:100%;border:1px solid #ccc;border-radius:6px;padding:8px;font-size:.88rem;resize:vertical}
+  .result-box{display:none;padding:12px;border-radius:6px;margin-top:10px;font-weight:600}
+  .pass{background:#e8f5e9;color:#2e7d32;display:block}
+  .fail{background:#ffebee;color:#c62828;display:block}
+</style>
+
+<style>table td:first-child{width:40px}</style>
+</head><body>
+
+<!-- ═══════════════════ GJIMT LMS AUTH SYSTEM ════════════════════════ -->
+<style>
+#lms-login-overlay{display:none;position:fixed;inset:0;background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 60%,#0f172a 100%);z-index:99999;align-items:center;justify-content:center;font-family:'Segoe UI',sans-serif;}
+#lms-login-overlay.active{display:flex;}
+.lms-login-box{background:#fff;border-radius:18px;padding:40px 36px;width:360px;box-shadow:0 20px 60px rgba(0,0,0,.5);text-align:center;}
+.lms-login-box .lms-logo{font-size:2rem;margin-bottom:4px;}
+.lms-login-box h2{font-size:1.25rem;color:#0f172a;margin:0 0 4px;}
+.lms-login-box .lms-subtitle{font-size:.78rem;color:#64748b;margin-bottom:24px;}
+.lms-login-box input{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:.95rem;margin-bottom:12px;outline:none;transition:border .2s;}
+.lms-login-box input:focus{border-color:#3b82f6;}
+.lms-login-box button{width:100%;padding:12px;background:#3b82f6;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:4px;transition:background .2s;}
+.lms-login-box button:hover{background:#2563eb;}
+#lms-login-error{color:#ef4444;font-size:.82rem;margin-top:8px;min-height:18px;}
+.lms-login-box .lms-hint{font-size:.73rem;color:#94a3b8;margin-top:14px;line-height:1.5;}
+.lms-page-content{display:none;}
+.lms-page-content.unlocked{display:block;}
+.lms-logout-btn{position:fixed;top:12px;right:16px;z-index:9999;background:#ef4444;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:.8rem;cursor:pointer;font-weight:600;}
+.lms-logout-btn:hover{background:#dc2626;}
+.lms-welcome-bar{background:#0f172a;color:#94a3b8;font-size:.78rem;text-align:center;padding:5px;letter-spacing:.5px;}
+</style>
+
+<div id="lms-login-overlay" class="active">
+  <div class="lms-login-box">
+    <div class="lms-logo">🎓</div>
+    <h2>GJIMT MBA LMS</h2>
+    <div class="lms-subtitle">AI Integrated Program · 2026<br>Please sign in to continue</div>
+    <input type="text" id="lms-uid" placeholder="User ID" autocomplete="username" />
+    <input type="password" id="lms-pwd" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')lmsDoLogin()"/>
+    <button onclick="lmsDoLogin()">Sign In →</button>
+    <div id="lms-login-error"></div>
+    <div class="lms-hint">Students: <b>mba26-ai-01</b> … <b>mba26-ai-10</b><br>Faculty: <b>mba26-fac-tarun</b> &nbsp;|&nbsp; Admin: <b>mba26-admin</b><br>Contact faculty if you cannot sign in.</div>
+  </div>
+</div>
+<button class="lms-logout-btn" id="lms-logout-btn" style="display:none" onclick="lmsLogout()">⏻ Sign Out</button>
+<div id="lms-welcome-bar" class="lms-welcome-bar" style="display:none"></div>
+
+<div id="lms-page-content" class="lms-page-content">
+
+
+<header>
+  <div>
+    <h1>GJIMT AI Lab — MBA Sem 1 LMS</h1>
+    <p>MBA with AI Integration · 42-Hour Program · Aug–Nov 2026 · Batch of 10</p>
+  </div>
+</header>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="calendar.html">📅 42-Hour Calendar</a>
+  <a href="projects.html">📁 Shadow Projects</a>
+  <a href="mock.html">📝 GSDC Mock Tests</a>
+  <a href="faculty.html">👩‍🏫 Faculty Dashboard</a>
+  <a href="users.html">🔑 User Accounts</a>
+</nav>
+
+<div class="container">
+  <div class="card">
+    <h2>📅 42-Hour Weekly Roadmap — MBA Sem 1 (Aug–Nov 2026)</h2>
+    <p style="margin-bottom:14px">3 hours per week × 14 weeks = 42 hours. Each week: ~2h Shadow Project work + ~1h GSDC concept.
+    Every <strong>Friday</strong>: GSDC Doubt Session (30 min). Every <strong>Saturday</strong>: GSDC Module Mock Test (45 min).</p>
+    <div style="overflow-x:auto">
+    <table>
+      <thead><tr>
+        <th>Wk</th><th>Dates</th>
+        <th>Shadow Project Task</th>
+        <th>GSDC Topic (Self-Study)</th>
+        <th>Friday Doubt / Saturday Mock</th>
+        <th>Hrs</th>
+      </tr></thead>
+      <tbody>
+    <tr>
+      <td style="text-align:center;font-weight:700">1</td>
+      <td>03–07 Aug 2026</td>
+      <td><span class="badge badge-proj">Shadow</span> P1 Phase 1 (hrs 1–3): Company Context – Netflix/Jio profiles, revenue models</td>
+      <td><span class="badge badge-gsdc">GSDC</span> M1: Intro to Prompt Engineering – basics, prompt design</td>
+      <td><span class="badge badge-doubt">Fri</span> GSDC Doubt Session #1<br>
+          <span class="badge badge-mock">Sat</span> Mock Test — M1</td>
+      <td style="text-align:center">3h</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;font-weight:700">2</td>
+      <td>10–14 Aug 2026</td>
+      <td><span class="badge badge-proj">Shadow</span> P1 Phase 1 (hrs 4–6): Industry Ecosystem Map + PESTLE via ChatGPT</td>
+      <td><span class="badge badge-gsdc">GSDC</span> M1 cont.: Ethical considerations in prompt design</td>
+      <td><span class="badge badge-doubt">Fri</span> GSDC Doubt Session #2<br>
+          <span class="badge badge-mock">Sat</span> Mock Test — M1 cont.</td>
+      <td style="text-align:center">3h</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;font-weight:700">3</td>
+      <td>17–21 Aug 2026</td>
+      <td><span class="badge badge-proj">Shadow</span> P1 Phase 2 (hrs 7–9): Manual framework – Market Segmentation / Porter's 5</td>
+      <td><span class="badge badge-gsdc">GSDC</span> M2: Generative AI Models – GANs, VAEs overview</td>
+      <td><span class="badge badge-doubt">Fri</span> GSDC Doubt Session #3<br>
+          <span class="badge badge-mock">Sat</span> Mock Test — M2</td>
+      <td style="text-align:center">3h</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;font-weight:700">4</td>
+      <td>24–28 Aug 2026</td>
+      <td><span class="badge badge-proj">Shadow</span> P1 Phase 3 (hrs 10–12): Manual data collection + Excel structuring</td>
+      <td><span class="badge badge-gsdc">GSDC</span> M2 cont.: Training and using GenAI models</td>
+      <td><span class="badge badge-doubt">Fri</span> GSDC Doubt Session #4<br>
+          <span class="badge badge-mock">Sat</span> Mock Test — M2 cont.</td>
+      <td style="text-align:center">3h</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;font-weight:700">5</td>
+      <td>31 Aug–04 Sep 2026</td>
+      <td><span class="badge badge-proj">Shadow</span> P1 Phase 4 (hrs 13–15): AI Lab – ChatGPT prompts, Excel AI, Dashboard draft</td>
+      <td><span class="badge badge-gsdc">GSDC</span> M3: AI in Project Planning – resource allocation, scheduling</td>
+      <td><span class="badge badge-doubt">Fri</span> GSDC Doubt Session #5<br>
+          <span class="badge badge-mock">Sat</span> Mock Test — M3</td>
+      <td style="text-align:center">3h</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;font-weight:700">6</td>
+      <td>07–11 Sep 2026</td>
+      <td><span class="badge badge-proj">Shadow</span> P1 Phase 4 (hrs 16–18): Presentation (Beautiful.ai) + Before/After reflection; Viva</td>
+      <td><span class="badge badge-gsdc">GSDC</span> M3 cont.: Case studies – AI-optimised project plans</td>
+      <td><span class="badge badge-doubt">Fri</span> GSDC Doubt Session #6<br>
+          <span class="badge badge-mock">Sat</span> Mock Test — M3 cont.</td>
+      <td style="text-align:center">3h</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;font-weight:700">7</td>
+      <td>14–18 Sep 2026</td>
+      <td><span class="badge badge-proj">Shadow</span> P2 Phase 1–2 (hrs 1–6): Zomato/Swiggy journey map – manual touchpoints</td>
+      <td><span class="badge badge-gsdc">GSDC</span> M4: Risk Assessment & Mitigation with GenAI</td>
+      <td><span class="badge badge-doubt">Fri</span> GSDC Doubt Session #7<br>
+          <span class="badge badge-mock">Sat</span> Mock Test — M4</td>
+      <td style="text-align:center">3h</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;font-weight:700">8</td>
+      <td>21–25 Sep 2026</td>
+      <td><span class="badge badge-proj">Shadow</span> P2 Phase 3–4 (hrs 7–9): AI friction-point analysis + report; Viva</td>
+      <td><span class="badge badge-gsdc">GSDC</span> M4 cont.: Mitigation strategies, risk matrices</td>
+      <td><span class="badge badge-doubt">Fri</span> GSDC Doubt Session #8<br>
+          <span class="badge badge-mock">Sat</span> Mock Test — M4 cont.</td>
+      <td style="text-align:center">3h</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;font-weight:700">9</td>
+      <td>28 Sep–02 Oct 2026</td>
+      <td><span class="badge badge-proj">Shadow</span> P3 Phase 1–2 (hrs 1–6): Startup BMC – manual canvas for chosen startup</td>
+      <td><span class="badge badge-gsdc">GSDC</span> M5: Data Analysis & Insights with GenAI</td>
+      <td><span class="badge badge-doubt">Fri</span> GSDC Doubt Session #9<br>
+          <span class="badge badge-mock">Sat</span> Mock Test — M5</td>
+      <td style="text-align:center">3h</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;font-weight:700">10</td>
+      <td>05–09 Oct 2026</td>
+      <td><span class="badge badge-proj">Shadow</span> P3 Phase 3–4 (hrs 7–8): AI viability assessment + report; Viva</td>
+      <td><span class="badge badge-gsdc">GSDC</span> M5 cont.: Extracting insights, project decision-making</td>
+      <td><span class="badge badge-doubt">Fri</span> GSDC Doubt Session #10<br>
+          <span class="badge badge-mock">Sat</span> Mock Test — M5 cont.</td>
+      <td style="text-align:center">3h</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;font-weight:700">11</td>
+      <td>12–16 Oct 2026</td>
+      <td><span class="badge badge-proj">Shadow</span> P4 Phase 1–2 (hrs 1–5): KPI dashboard design – manual structure, data set</td>
+      <td><span class="badge badge-gsdc">GSDC</span> M6: Automation & Efficiency – automating routine PM tasks</td>
+      <td><span class="badge badge-doubt">Fri</span> GSDC Doubt Session #11<br>
+          <span class="badge badge-mock">Sat</span> Mock Test — M6</td>
+      <td style="text-align:center">3h</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;font-weight:700">12</td>
+      <td>19–23 Oct 2026</td>
+      <td><span class="badge badge-proj">Shadow</span> P4 Phase 3–4 (hrs 6–8): Power BI/Looker Studio dashboard build; Viva</td>
+      <td><span class="badge badge-gsdc">GSDC</span> M6 cont.: Workflow streamlining, prompt-driven automation</td>
+      <td><span class="badge badge-doubt">Fri</span> GSDC Doubt Session #12<br>
+          <span class="badge badge-mock">Sat</span> Mock Test — M6 cont.</td>
+      <td style="text-align:center">3h</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;font-weight:700">13</td>
+      <td>26–30 Oct 2026</td>
+      <td><span class="badge badge-proj">Shadow</span> Consolidated review & peer feedback on all 4 projects</td>
+      <td><span class="badge badge-gsdc">GSDC</span> M7: Innovation & Future Trends in AI+PM</td>
+      <td><span class="badge badge-doubt">Fri</span> GSDC Doubt Session #13<br>
+          <span class="badge badge-mock">Sat</span> Mock Test — M7</td>
+      <td style="text-align:center">3h</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;font-weight:700">14</td>
+      <td>02–06 Nov 2026</td>
+      <td><span class="badge badge-proj">Shadow</span> Final project portfolio submission + Comprehensive Viva</td>
+      <td><span class="badge badge-gsdc">GSDC</span> M8: Use Cases, Demos, Capstone + Full Mock Exam</td>
+      <td><span class="badge badge-doubt">Fri</span> GSDC Doubt Session #14<br>
+          <span class="badge badge-mock">Sat</span> Mock Test — M8</td>
+      <td style="text-align:center">3h</td>
+    </tr></tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Hour Allocation Summary</h2>
+    <table>
+      <tr><th>Component</th><th>Allocation</th><th>Notes</th></tr>
+      <tr><td>P1 — Market Entry Snapshot (Netflix/Jio)</td><td>9 hours</td><td>Weeks 1–6 (condensed phases)</td></tr>
+      <tr><td>P2 — Customer Journey Mapping (Zomato/Swiggy)</td><td>9 hours</td><td>Weeks 7–8</td></tr>
+      <tr><td>P3 — Startup Business Model Study</td><td>8 hours</td><td>Weeks 9–10</td></tr>
+      <tr><td>P4 — Functional Dashboard Creation</td><td>8 hours</td><td>Weeks 11–12</td></tr>
+      <tr><td>Consolidated Review & Portfolio</td><td>4 hours</td><td>Weeks 13–14</td></tr>
+      <tr><td>GSDC Concepts (embedded, self-study)</td><td>8 hours</td><td>30–45 min/week</td></tr>
+      <tr><td>Friday Doubt Sessions (14 × 30 min)</td><td>Included</td><td>Outside 42h contact time</td></tr>
+      <tr><td>Saturday Mock Tests (14 × 45 min)</td><td>Included</td><td>Outside 42h contact time</td></tr>
+      <tr style="font-weight:700"><td>TOTAL CONTACT HOURS</td><td>42 hours</td><td>Aug–Nov 2026</td></tr>
+    </table>
+  </div>
+</div>
+<footer>© 2026 GJIMT AI Lab · MBA AI Integrated Program · Powered by GitHub Pages</footer>
+</div><!-- /lms-page-content -->
+
+<script>
+// ── LMS Auth ──────────────────────────────────────────────────────────────
+(function(){
+  var USERS = {
+    'mba26-ai-01':'student@2026','mba26-ai-02':'student@2026','mba26-ai-03':'student@2026',
+    'mba26-ai-04':'student@2026','mba26-ai-05':'student@2026','mba26-ai-06':'student@2026',
+    'mba26-ai-07':'student@2026','mba26-ai-08':'student@2026','mba26-ai-09':'student@2026',
+    'mba26-ai-10':'student@2026',
+    'mba26-fac-tarun':'faculty@2026',
+    'mba26-admin':'admin@2026'
+  };
+  var ROLES = {
+    'mba26-ai-01':'student','mba26-ai-02':'student','mba26-ai-03':'student',
+    'mba26-ai-04':'student','mba26-ai-05':'student','mba26-ai-06':'student',
+    'mba26-ai-07':'student','mba26-ai-08':'student','mba26-ai-09':'student',
+    'mba26-ai-10':'student',
+    'mba26-fac-tarun':'faculty',
+    'mba26-admin':'admin'
+  };
+  var ALLOWED = ['student','faculty','admin'];  // roles allowed on this page
+
+  function getSession(){
+    try{ return JSON.parse(sessionStorage.getItem('lmsSession')||'null'); }
+    catch(e){ return null; }
+  }
+  function setSession(uid,role){
+    sessionStorage.setItem('lmsSession',JSON.stringify({uid:uid,role:role}));
+  }
+  function clearSession(){ sessionStorage.removeItem('lmsSession'); }
+
+  function unlock(session){
+    document.getElementById('lms-login-overlay').classList.remove('active');
+    document.getElementById('lms-logout-btn').style.display='block';
+    var wb=document.getElementById('lms-welcome-bar');
+    wb.style.display='block';
+    wb.textContent='Signed in as: '+session.uid+' ('+session.role+')  |  MBA AI Integrated Program 2026';
+    var content=document.getElementById('lms-page-content');
+    if(content) content.classList.add('unlocked');
+  }
+
+  window.lmsDoLogin=function(){
+    var uid=(document.getElementById('lms-uid').value||'').trim().toLowerCase();
+    var pwd=document.getElementById('lms-pwd').value||'';
+    var err=document.getElementById('lms-login-error');
+    if(!USERS[uid]){ err.textContent='❌ User ID not found.'; return; }
+    if(USERS[uid]!==pwd){ err.textContent='❌ Incorrect password.'; return; }
+    var role=ROLES[uid];
+    if(ALLOWED.indexOf(role)===-1){
+      err.textContent='⛔ Access denied. This page is for '+ALLOWED.join('/')+' only.'; return;
+    }
+    setSession(uid,role);
+    unlock({uid:uid,role:role});
+  };
+
+  window.lmsLogout=function(){
+    clearSession();
+    document.getElementById('lms-login-overlay').classList.add('active');
+    document.getElementById('lms-logout-btn').style.display='none';
+    document.getElementById('lms-welcome-bar').style.display='none';
+    var content=document.getElementById('lms-page-content');
+    if(content) content.classList.remove('unlocked');
+    document.getElementById('lms-uid').value='';
+    document.getElementById('lms-pwd').value='';
+    document.getElementById('lms-login-error').textContent='';
+  };
+
+  // Check existing session on load
+  var session=getSession();
+  if(session && USERS[session.uid] && ROLES[session.uid]===session.role && ALLOWED.indexOf(session.role)!==-1){
+    unlock(session);
+  }
+})();
+</script>
+</body></html>

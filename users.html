@@ -1,0 +1,380 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>User Accounts — GJIMT LMS</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f6fb;color:#1a1a2e}
+  header{background:linear-gradient(135deg,#0f3460,#16213e);color:#fff;padding:18px 32px;display:flex;align-items:center;gap:16px}
+  header h1{font-size:1.4rem;font-weight:700}
+  header p{font-size:.82rem;opacity:.8}
+  nav{background:#16213e;display:flex;flex-wrap:wrap;gap:4px;padding:8px 32px}
+  nav a{color:#e0e0e0;text-decoration:none;padding:6px 14px;border-radius:4px;font-size:.85rem;transition:.2s}
+  nav a:hover,nav a.active{background:#0f3460;color:#fff}
+  .container{max-width:1000px;margin:28px auto;padding:0 20px}
+  .card{background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.08);padding:24px;margin-bottom:20px}
+  .card h2{color:#0f3460;margin-bottom:12px;font-size:1.1rem}
+  .card h3{color:#16213e;margin:16px 0 8px;font-size:.97rem}
+  table{width:100%;border-collapse:collapse;font-size:.88rem}
+  th{background:#0f3460;color:#fff;padding:9px 12px;text-align:left}
+  td{padding:8px 12px;border-bottom:1px solid #eee;vertical-align:middle}
+  tr:hover td{background:#f0f4ff}
+  .badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.75rem;font-weight:600}
+  .badge-student{background:#e3f2fd;color:#0f3460}
+  .badge-faculty{background:#e8f5e9;color:#1b5e20}
+  .badge-admin{background:#fff3e0;color:#e65100}
+  .btn{display:inline-block;padding:8px 18px;background:#0f3460;color:#fff;border-radius:6px;text-decoration:none;font-size:.85rem;margin:4px 2px;border:none;cursor:pointer;transition:.2s}
+  .btn:hover{background:#16213e}
+  .btn-green{background:#2e7d32}.btn-green:hover{background:#1b5e20}
+  .btn-red{background:#c62828}.btn-red:hover{background:#b71c1c}
+  .btn-orange{background:#e65100}.btn-orange:hover{background:#bf360c}
+  .hint{font-size:.8rem;color:#777;margin-top:5px}
+  .pwd{font-family:monospace;background:#f5f5f5;padding:2px 7px;border-radius:4px;color:#c62828;font-size:.85rem;letter-spacing:.04em}
+
+  /* LOGIN CARD */
+  .login-wrap{min-height:80vh;display:flex;align-items:center;justify-content:center}
+  .login-card{background:#fff;border-radius:14px;box-shadow:0 4px 24px rgba(0,0,0,.12);padding:40px 36px;width:100%;max-width:420px;text-align:center}
+  .login-card h2{color:#0f3460;margin-bottom:6px}
+  .login-card p{font-size:.85rem;color:#666;margin-bottom:24px}
+  .login-card input{width:100%;padding:11px 14px;border:1.5px solid #ccc;border-radius:7px;font-size:.95rem;margin-bottom:14px;outline:none;transition:.2s}
+  .login-card input:focus{border-color:#0f3460}
+  .login-card button{width:100%;padding:12px;background:#0f3460;color:#fff;border:none;border-radius:7px;font-size:1rem;cursor:pointer;transition:.2s}
+  .login-card button:hover{background:#16213e}
+  .error-msg{color:#c62828;font-size:.85rem;margin-top:8px;display:none}
+  .success-msg{color:#2e7d32;font-size:.85rem;margin-top:8px;display:none}
+
+  /* DASHBOARD (shown after login) */
+  #dashboard{display:none}
+  .dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:14px}
+  .dash-tile{background:#f8f9ff;border:1px solid #dde3f0;border-radius:10px;padding:18px;text-align:center;text-decoration:none;color:inherit;transition:.2s}
+  .dash-tile:hover{background:#e3f2fd;border-color:#0f3460}
+  .dash-tile .icon{font-size:2rem;margin-bottom:8px}
+  .dash-tile h3{font-size:.9rem;color:#0f3460}
+  .dash-tile p{font-size:.78rem;color:#777;margin-top:4px}
+  .user-banner{background:linear-gradient(135deg,#0f3460,#16213e);color:#fff;border-radius:10px;padding:18px 22px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center}
+  .user-banner h3{font-size:1rem}
+  .user-banner p{font-size:.82rem;opacity:.8;margin-top:3px}
+  .progress-bar{background:#e0e0e0;border-radius:6px;height:8px;margin-top:6px}
+  .progress-fill{background:#4caf50;border-radius:6px;height:8px;transition:.6s}
+
+  /* ADMIN TABLE */
+  #adminPanel{display:none}
+  footer{text-align:center;padding:18px;font-size:.8rem;color:#888;margin-top:30px}
+</style>
+</head><body>
+
+<!-- ═══════════════════ GJIMT LMS AUTH SYSTEM ════════════════════════ -->
+<style>
+#lms-login-overlay{display:none;position:fixed;inset:0;background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 60%,#0f172a 100%);z-index:99999;align-items:center;justify-content:center;font-family:'Segoe UI',sans-serif;}
+#lms-login-overlay.active{display:flex;}
+.lms-login-box{background:#fff;border-radius:18px;padding:40px 36px;width:360px;box-shadow:0 20px 60px rgba(0,0,0,.5);text-align:center;}
+.lms-login-box .lms-logo{font-size:2rem;margin-bottom:4px;}
+.lms-login-box h2{font-size:1.25rem;color:#0f172a;margin:0 0 4px;}
+.lms-login-box .lms-subtitle{font-size:.78rem;color:#64748b;margin-bottom:24px;}
+.lms-login-box input{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:.95rem;margin-bottom:12px;outline:none;transition:border .2s;}
+.lms-login-box input:focus{border-color:#3b82f6;}
+.lms-login-box button{width:100%;padding:12px;background:#3b82f6;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:4px;transition:background .2s;}
+.lms-login-box button:hover{background:#2563eb;}
+#lms-login-error{color:#ef4444;font-size:.82rem;margin-top:8px;min-height:18px;}
+.lms-login-box .lms-hint{font-size:.73rem;color:#94a3b8;margin-top:14px;line-height:1.5;}
+.lms-page-content{display:none;}
+.lms-page-content.unlocked{display:block;}
+.lms-logout-btn{position:fixed;top:12px;right:16px;z-index:9999;background:#ef4444;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:.8rem;cursor:pointer;font-weight:600;}
+.lms-logout-btn:hover{background:#dc2626;}
+.lms-welcome-bar{background:#0f172a;color:#94a3b8;font-size:.78rem;text-align:center;padding:5px;letter-spacing:.5px;}
+</style>
+
+<div id="lms-login-overlay" class="active">
+  <div class="lms-login-box">
+    <div class="lms-logo">🎓</div>
+    <h2>GJIMT MBA LMS</h2>
+    <div class="lms-subtitle">AI Integrated Program · 2026<br>Please sign in to continue</div>
+    <input type="text" id="lms-uid" placeholder="User ID" autocomplete="username" />
+    <input type="password" id="lms-pwd" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')lmsDoLogin()"/>
+    <button onclick="lmsDoLogin()">Sign In →</button>
+    <div id="lms-login-error"></div>
+    <div class="lms-hint">Students: <b>mba26-ai-01</b> … <b>mba26-ai-10</b><br>Faculty: <b>mba26-fac-tarun</b> &nbsp;|&nbsp; Admin: <b>mba26-admin</b><br>Contact faculty if you cannot sign in.</div>
+  </div>
+</div>
+<button class="lms-logout-btn" id="lms-logout-btn" style="display:none" onclick="lmsLogout()">⏻ Sign Out</button>
+<div id="lms-welcome-bar" class="lms-welcome-bar" style="display:none"></div>
+
+<div id="lms-page-content" class="lms-page-content">
+
+
+<header>
+  <div>
+    <h1>GJIMT AI Lab — MBA Sem 1 LMS</h1>
+    <p>MBA with AI Integration · 42-Hour Program · Aug–Nov 2026 · Batch of 10</p>
+  </div>
+</header>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="calendar.html">📅 42-Hour Calendar</a>
+  <a href="projects.html">📁 Shadow Projects</a>
+  <a href="mock.html">📝 GSDC Mock Tests</a>
+  <a href="faculty.html">👩‍🏫 Faculty Dashboard</a>
+  <a href="users.html" class="active">🔑 User Accounts</a>
+</nav>
+
+
+<!-- ── LOGIN SECTION ─────────────────────────────────────────────────────── -->
+<div id="loginSection" class="login-wrap">
+  <div class="login-card">
+    <div style="font-size:2.4rem;margin-bottom:8px">🔐</div>
+    <h2>GJIMT AI Lab LMS</h2>
+    <p>MBA Sem 1 · AI Integrated Program · 2026</p>
+    <input id="uid" type="text"     placeholder="User ID  (e.g. mba26-ai-01)" autocomplete="username">
+    <input id="pwd" type="password" placeholder="Password"                     autocomplete="current-password">
+    <button onclick="doLogin()">Login →</button>
+    <div id="errMsg" class="error-msg"></div>
+    <p class="hint" style="margin-top:16px">Your User ID and Password were shared by faculty.<br>
+    Contact <strong>mba26-fac-tarun</strong> if you cannot log in.</p>
+  </div>
+</div>
+
+<!-- ── STUDENT / FACULTY DASHBOARD (shown after login) ───────────────────── -->
+<div id="dashboard" class="container">
+  <div id="dColor" class="user-banner">
+    <div>
+      <h3 id="dName">—</h3>
+      <p>Role: <strong id="dRole">—</strong> &nbsp;|&nbsp; ID: <strong id="dUID">—</strong></p>
+    </div>
+    <button class="btn btn-red" onclick="doLogout()">Logout</button>
+  </div>
+
+  <div class="card">
+    <h2>📊 My Semester Progress</h2>
+    <p class="hint" style="margin-bottom:8px">Progress is updated by faculty after each project submission and viva.</p>
+    <div class="progress-bar"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
+    <p style="margin-top:6px;font-size:.85rem">Completed: <strong id="progPct">0%</strong> of 42 hours</p>
+    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+      <span class="badge badge-student">P1: Not submitted</span>
+      <span class="badge badge-student">P2: Not submitted</span>
+      <span class="badge badge-student">P3: Not submitted</span>
+      <span class="badge badge-student">P4: Not submitted</span>
+      <span class="badge badge-faculty">GSDC Mocks: 0/8</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🚀 Quick Access</h2>
+    <div class="dash-grid" id="dashGrid"></div>
+  </div>
+
+  <div class="card">
+    <h2>📋 My Schedule at a Glance</h2>
+    <table>
+      <tr><th>Week</th><th>Shadow Project Task</th><th>GSDC Mock (Saturday)</th><th>Status</th></tr>
+      <tr><td>1–2</td><td>P1 Phase 1 — Netflix/Jio Company Context</td><td>M1: Prompt Engineering</td><td><span class="badge badge-student">Upcoming</span></td></tr>
+      <tr><td>3–4</td><td>P1 Phase 2–3 — Manual Framework & Data</td><td>M2: GenAI Models</td><td><span class="badge badge-student">Upcoming</span></td></tr>
+      <tr><td>5–6</td><td>P1 Phase 4 — AI Lab + Viva</td><td>M3: AI in Planning</td><td><span class="badge badge-student">Upcoming</span></td></tr>
+      <tr><td>7–8</td><td>P2 — Zomato/Swiggy Journey Map</td><td>M4: Risk Assessment</td><td><span class="badge badge-student">Upcoming</span></td></tr>
+      <tr><td>9–10</td><td>P3 — Startup Business Model</td><td>M5: Data Analysis</td><td><span class="badge badge-student">Upcoming</span></td></tr>
+      <tr><td>11–12</td><td>P4 — KPI Dashboard (Power BI)</td><td>M6: Automation</td><td><span class="badge badge-student">Upcoming</span></td></tr>
+      <tr><td>13</td><td>Portfolio Review & Peer Feedback</td><td>M7: Future Trends</td><td><span class="badge badge-student">Upcoming</span></td></tr>
+      <tr><td>14</td><td>Final Comprehensive Viva</td><td>M8: Full Mock Exam</td><td><span class="badge badge-student">Upcoming</span></td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ── ADMIN PANEL (only for admin role) ─────────────────────────────────── -->
+<div id="adminPanel" class="container" style="display:none">
+  <div class="card">
+    <h2>🔑 All User Accounts — Admin View</h2>
+    <p class="hint" style="margin-bottom:12px">This table is only visible to the Admin role.
+    Update student names in the HTML source file before going live with the batch.</p>
+    <table>
+      <thead><tr><th>User ID</th><th>Name</th><th>Role</th><th>Password</th><th>Progress</th></tr></thead>
+      <tbody id="adminRows"></tbody>
+    </table>
+    <p class="hint" style="margin-top:10px">⚠️ Change all passwords after first login by updating the USERS object in users.html source code.</p>
+  </div>
+</div>
+
+<script>
+const USERS = {
+  "mba26-ai-01": { name:"Student 01", password:"Gjimt@01Ai", role:"student", progress:0 },
+  "mba26-ai-02": { name:"Student 02", password:"Gjimt@02Ai", role:"student", progress:0 },
+  "mba26-ai-03": { name:"Student 03", password:"Gjimt@03Ai", role:"student", progress:0 },
+  "mba26-ai-04": { name:"Student 04", password:"Gjimt@04Ai", role:"student", progress:0 },
+  "mba26-ai-05": { name:"Student 05", password:"Gjimt@05Ai", role:"student", progress:0 },
+  "mba26-ai-06": { name:"Student 06", password:"Gjimt@06Ai", role:"student", progress:0 },
+  "mba26-ai-07": { name:"Student 07", password:"Gjimt@07Ai", role:"student", progress:0 },
+  "mba26-ai-08": { name:"Student 08", password:"Gjimt@08Ai", role:"student", progress:0 },
+  "mba26-ai-09": { name:"Student 09", password:"Gjimt@09Ai", role:"student", progress:0 },
+  "mba26-ai-10": { name:"Student 10", password:"Gjimt@10Ai", role:"student", progress:0 },
+  "mba26-fac-tarun": { name:"Tarun (Faculty In-Charge)", password:"Gjimt@FacT2026", role:"faculty", progress:100 },
+  "mba26-admin":     { name:"Admin / Coordinator",      password:"Gjimt@Admin26",  role:"admin",   progress:100 }
+};
+
+const ROLE_LINKS = {
+  student: [
+    { icon:"📅", title:"42-Hour Calendar",  sub:"Your weekly roadmap",      href:"calendar.html" },
+    { icon:"📁", title:"Shadow Projects",    sub:"P1–P4 tasks & prompts",    href:"projects.html" },
+    { icon:"📝", title:"GSDC Mock Tests",    sub:"Saturday module mocks",    href:"mock.html"     },
+    { icon:"📤", title:"Submit Work",        sub:"Google Form uploads",      href:"upload-guide.html" },
+    { icon:"📚", title:"Upload Guide",       sub:"How to name & submit files",href:"upload-guide.html" },
+  ],
+  faculty: [
+    { icon:"👩‍🏫", title:"Faculty Dashboard", sub:"Rubrics & scripts",        href:"faculty.html"  },
+    { icon:"📅", title:"42-Hour Calendar",  sub:"Weekly delivery plan",     href:"calendar.html" },
+    { icon:"📁", title:"Shadow Projects",    sub:"Student-facing content",   href:"projects.html" },
+    { icon:"📝", title:"GSDC Mock Tests",    sub:"Answer keys embedded",     href:"mock.html"     },
+    { icon:"📤", title:"Upload Guide",       sub:"Share with students",      href:"upload-guide.html" },
+  ],
+  admin: [
+    { icon:"👩‍🏫", title:"Faculty Dashboard", sub:"All rubrics & scripts",    href:"faculty.html"  },
+    { icon:"📅", title:"42-Hour Calendar",  sub:"Full semester plan",       href:"calendar.html" },
+    { icon:"📁", title:"Shadow Projects",    sub:"All 4 projects",           href:"projects.html" },
+    { icon:"📝", title:"GSDC Mock Tests",    sub:"All modules + full mock",  href:"mock.html"     },
+    { icon:"📤", title:"Upload Guide",       sub:"Student submission guide", href:"upload-guide.html" },
+    { icon:"🔑", title:"All Users",          sub:"View all accounts",        href:"#adminPanel"   },
+  ]
+};
+
+const ROLE_COLORS = { student:"#0f3460", faculty:"#2e7d32", admin:"#e65100" };
+const ROLE_BADGE  = { student:"badge-student", faculty:"badge-faculty", admin:"badge-admin" };
+
+function doLogin() {
+  const uid = document.getElementById('uid').value.trim();
+  const pwd = document.getElementById('pwd').value.trim();
+  const err = document.getElementById('errMsg');
+  if (!USERS[uid] || USERS[uid].password !== pwd) {
+    err.style.display = 'block';
+    err.textContent = '❌ Incorrect User ID or Password. Please try again.';
+    return;
+  }
+  const u = USERS[uid];
+  document.getElementById('loginSection').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  document.getElementById('dName').textContent  = u.name;
+  document.getElementById('dRole').textContent  = u.role.charAt(0).toUpperCase()+u.role.slice(1);
+  document.getElementById('dUID').textContent   = uid;
+  document.getElementById('dColor').style.background = 'linear-gradient(135deg,'+ROLE_COLORS[u.role]+',#16213e)';
+
+  // progress (stored in localStorage per user)
+  const prog = parseInt(localStorage.getItem('prog_'+uid)||'0');
+  document.getElementById('progFill').style.width = prog+'%';
+  document.getElementById('progPct').textContent  = prog+'%';
+
+  // tiles
+  const grid = document.getElementById('dashGrid');
+  grid.innerHTML = '';
+  ROLE_LINKS[u.role].forEach(l => {
+    grid.innerHTML += `<a class="dash-tile" href="${l.href}">
+      <div class="icon">${l.icon}</div>
+      <h3>${l.title}</h3><p>${l.sub}</p></a>`;
+  });
+
+  if (u.role === 'admin') {
+    buildAdminPanel();
+    document.getElementById('adminPanel').style.display = 'block';
+  }
+}
+
+function buildAdminPanel() {
+  let rows = '';
+  for (const [uid, u] of Object.entries(USERS)) {
+    rows += `<tr>
+      <td>${uid}</td>
+      <td>${u.name}</td>
+      <td><span class="badge ${ROLE_BADGE[u.role]}">${u.role}</span></td>
+      <td class="pwd">${u.password}</td>
+      <td>${localStorage.getItem('prog_'+uid)||'0'}%</td>
+    </tr>`;
+  }
+  document.getElementById('adminRows').innerHTML = rows;
+}
+
+function doLogout() {
+  document.getElementById('loginSection').style.display = 'flex';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('adminPanel').style.display = 'none';
+  document.getElementById('uid').value = '';
+  document.getElementById('pwd').value = '';
+  document.getElementById('errMsg').style.display = 'none';
+}
+
+// allow Enter key to submit
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.getElementById('loginSection').style.display !== 'none') doLogin();
+});
+</script>
+<footer>© 2026 GJIMT AI Lab · MBA AI Integrated Program · Powered by GitHub Pages</footer>
+</div><!-- /lms-page-content -->
+
+<script>
+// ── LMS Auth ──────────────────────────────────────────────────────────────
+(function(){
+  var USERS = {
+    'mba26-ai-01':'student@2026','mba26-ai-02':'student@2026','mba26-ai-03':'student@2026',
+    'mba26-ai-04':'student@2026','mba26-ai-05':'student@2026','mba26-ai-06':'student@2026',
+    'mba26-ai-07':'student@2026','mba26-ai-08':'student@2026','mba26-ai-09':'student@2026',
+    'mba26-ai-10':'student@2026',
+    'mba26-fac-tarun':'faculty@2026',
+    'mba26-admin':'admin@2026'
+  };
+  var ROLES = {
+    'mba26-ai-01':'student','mba26-ai-02':'student','mba26-ai-03':'student',
+    'mba26-ai-04':'student','mba26-ai-05':'student','mba26-ai-06':'student',
+    'mba26-ai-07':'student','mba26-ai-08':'student','mba26-ai-09':'student',
+    'mba26-ai-10':'student',
+    'mba26-fac-tarun':'faculty',
+    'mba26-admin':'admin'
+  };
+  var ALLOWED = ['student','faculty','admin'];  // roles allowed on this page
+
+  function getSession(){
+    try{ return JSON.parse(sessionStorage.getItem('lmsSession')||'null'); }
+    catch(e){ return null; }
+  }
+  function setSession(uid,role){
+    sessionStorage.setItem('lmsSession',JSON.stringify({uid:uid,role:role}));
+  }
+  function clearSession(){ sessionStorage.removeItem('lmsSession'); }
+
+  function unlock(session){
+    document.getElementById('lms-login-overlay').classList.remove('active');
+    document.getElementById('lms-logout-btn').style.display='block';
+    var wb=document.getElementById('lms-welcome-bar');
+    wb.style.display='block';
+    wb.textContent='Signed in as: '+session.uid+' ('+session.role+')  |  MBA AI Integrated Program 2026';
+    var content=document.getElementById('lms-page-content');
+    if(content) content.classList.add('unlocked');
+  }
+
+  window.lmsDoLogin=function(){
+    var uid=(document.getElementById('lms-uid').value||'').trim().toLowerCase();
+    var pwd=document.getElementById('lms-pwd').value||'';
+    var err=document.getElementById('lms-login-error');
+    if(!USERS[uid]){ err.textContent='❌ User ID not found.'; return; }
+    if(USERS[uid]!==pwd){ err.textContent='❌ Incorrect password.'; return; }
+    var role=ROLES[uid];
+    if(ALLOWED.indexOf(role)===-1){
+      err.textContent='⛔ Access denied. This page is for '+ALLOWED.join('/')+' only.'; return;
+    }
+    setSession(uid,role);
+    unlock({uid:uid,role:role});
+  };
+
+  window.lmsLogout=function(){
+    clearSession();
+    document.getElementById('lms-login-overlay').classList.add('active');
+    document.getElementById('lms-logout-btn').style.display='none';
+    document.getElementById('lms-welcome-bar').style.display='none';
+    var content=document.getElementById('lms-page-content');
+    if(content) content.classList.remove('unlocked');
+    document.getElementById('lms-uid').value='';
+    document.getElementById('lms-pwd').value='';
+    document.getElementById('lms-login-error').textContent='';
+  };
+
+  // Check existing session on load
+  var session=getSession();
+  if(session && USERS[session.uid] && ROLES[session.uid]===session.role && ALLOWED.indexOf(session.role)!==-1){
+    unlock(session);
+  }
+})();
+</script>
+</body></html>

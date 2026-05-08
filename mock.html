@@ -1,0 +1,961 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GSDC Mock Tests — GJIMT LMS</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f6fb;color:#1a1a2e}
+  header{background:linear-gradient(135deg,#0f3460,#16213e);color:#fff;padding:18px 32px;display:flex;align-items:center;gap:16px}
+  header img{height:48px;border-radius:6px}
+  header h1{font-size:1.4rem;font-weight:700}
+  header p{font-size:.82rem;opacity:.8}
+  nav{background:#16213e;display:flex;flex-wrap:wrap;gap:4px;padding:8px 32px}
+  nav a{color:#e0e0e0;text-decoration:none;padding:6px 14px;border-radius:4px;font-size:.85rem;transition:.2s}
+  nav a:hover,nav a.active{background:#0f3460;color:#fff}
+  .container{max-width:1100px;margin:28px auto;padding:0 20px}
+  .card{background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.08);padding:24px;margin-bottom:20px}
+  .card h2{color:#0f3460;margin-bottom:12px;font-size:1.1rem}
+  .card h3{color:#16213e;margin:14px 0 8px;font-size:.97rem}
+  table{width:100%;border-collapse:collapse;font-size:.88rem}
+  th{background:#0f3460;color:#fff;padding:9px 12px;text-align:left}
+  td{padding:8px 12px;border-bottom:1px solid #eee}
+  tr:hover td{background:#f0f4ff}
+  .badge{display:inline-block;padding:2px 9px;border-radius:12px;font-size:.75rem;font-weight:600}
+  .badge-proj{background:#e3f2fd;color:#0f3460}
+  .badge-gsdc{background:#e8f5e9;color:#1b5e20}
+  .badge-mock{background:#fff3e0;color:#e65100}
+  .badge-doubt{background:#f3e5f5;color:#6a1b9a}
+  .btn{display:inline-block;padding:8px 18px;background:#0f3460;color:#fff;border-radius:6px;text-decoration:none;font-size:.85rem;margin:4px 2px;border:none;cursor:pointer}
+  .btn:hover{background:#16213e}
+  .btn-green{background:#2e7d32}
+  .btn-green:hover{background:#1b5e20}
+  .btn-orange{background:#e65100}
+  .week-row-proj{background:#e3f2fd}
+  .week-row-gsdc{background:#e8f5e9}
+  ul,ol{padding-left:20px;margin:8px 0}
+  li{margin:4px 0;font-size:.9rem}
+  .phase-box{border-left:4px solid #0f3460;padding:10px 14px;margin:8px 0;background:#f8f9ff;border-radius:0 6px 6px 0}
+  .phase-box.ai{border-color:#2e7d32}
+  .phase-box.manual{border-color:#e65100}
+  .hint{font-size:.8rem;color:#666;margin-top:6px}
+  .user-table td:last-child{font-family:monospace;color:#c62828}
+  footer{text-align:center;padding:18px;font-size:.8rem;color:#888;margin-top:30px}
+  .q-block{background:#f8f9ff;border-radius:8px;padding:14px;margin-bottom:14px;border:1px solid #dde3f0}
+  .q-block p{font-weight:600;margin-bottom:8px}
+  .q-block label{display:block;margin:4px 0;cursor:pointer;font-size:.9rem}
+  .scenario-box{background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:14px;margin-bottom:14px}
+  .scenario-box p{font-weight:600;color:#e65100;margin-bottom:8px}
+  textarea{width:100%;border:1px solid #ccc;border-radius:6px;padding:8px;font-size:.88rem;resize:vertical}
+  .result-box{display:none;padding:12px;border-radius:6px;margin-top:10px;font-weight:600}
+  .pass{background:#e8f5e9;color:#2e7d32;display:block}
+  .fail{background:#ffebee;color:#c62828;display:block}
+</style>
+</head><body>
+
+<!-- ═══════════════════ GJIMT LMS AUTH SYSTEM ════════════════════════ -->
+<style>
+#lms-login-overlay{display:none;position:fixed;inset:0;background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 60%,#0f172a 100%);z-index:99999;align-items:center;justify-content:center;font-family:'Segoe UI',sans-serif;}
+#lms-login-overlay.active{display:flex;}
+.lms-login-box{background:#fff;border-radius:18px;padding:40px 36px;width:360px;box-shadow:0 20px 60px rgba(0,0,0,.5);text-align:center;}
+.lms-login-box .lms-logo{font-size:2rem;margin-bottom:4px;}
+.lms-login-box h2{font-size:1.25rem;color:#0f172a;margin:0 0 4px;}
+.lms-login-box .lms-subtitle{font-size:.78rem;color:#64748b;margin-bottom:24px;}
+.lms-login-box input{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:.95rem;margin-bottom:12px;outline:none;transition:border .2s;}
+.lms-login-box input:focus{border-color:#3b82f6;}
+.lms-login-box button{width:100%;padding:12px;background:#3b82f6;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:4px;transition:background .2s;}
+.lms-login-box button:hover{background:#2563eb;}
+#lms-login-error{color:#ef4444;font-size:.82rem;margin-top:8px;min-height:18px;}
+.lms-login-box .lms-hint{font-size:.73rem;color:#94a3b8;margin-top:14px;line-height:1.5;}
+.lms-page-content{display:none;}
+.lms-page-content.unlocked{display:block;}
+.lms-logout-btn{position:fixed;top:12px;right:16px;z-index:9999;background:#ef4444;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:.8rem;cursor:pointer;font-weight:600;}
+.lms-logout-btn:hover{background:#dc2626;}
+.lms-welcome-bar{background:#0f172a;color:#94a3b8;font-size:.78rem;text-align:center;padding:5px;letter-spacing:.5px;}
+</style>
+
+<div id="lms-login-overlay" class="active">
+  <div class="lms-login-box">
+    <div class="lms-logo">🎓</div>
+    <h2>GJIMT MBA LMS</h2>
+    <div class="lms-subtitle">AI Integrated Program · 2026<br>Please sign in to continue</div>
+    <input type="text" id="lms-uid" placeholder="User ID" autocomplete="username" />
+    <input type="password" id="lms-pwd" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')lmsDoLogin()"/>
+    <button onclick="lmsDoLogin()">Sign In →</button>
+    <div id="lms-login-error"></div>
+    <div class="lms-hint">Students: <b>mba26-ai-01</b> … <b>mba26-ai-10</b><br>Faculty: <b>mba26-fac-tarun</b> &nbsp;|&nbsp; Admin: <b>mba26-admin</b><br>Contact faculty if you cannot sign in.</div>
+  </div>
+</div>
+<button class="lms-logout-btn" id="lms-logout-btn" style="display:none" onclick="lmsLogout()">⏻ Sign Out</button>
+<div id="lms-welcome-bar" class="lms-welcome-bar" style="display:none"></div>
+
+<div id="lms-page-content" class="lms-page-content">
+
+
+<header>
+  <div>
+    <h1>GJIMT AI Lab — MBA Sem 1 LMS</h1>
+    <p>MBA with AI Integration · 42-Hour Program · Aug–Nov 2026 · Batch of 10</p>
+  </div>
+</header>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="calendar.html">📅 42-Hour Calendar</a>
+  <a href="projects.html">📁 Shadow Projects</a>
+  <a href="mock.html">📝 GSDC Mock Tests</a>
+  <a href="faculty.html">👩‍🏫 Faculty Dashboard</a>
+  <a href="users.html">🔑 User Accounts</a>
+</nav>
+
+<div style="display:flex;min-height:80vh">
+  <div style="width:220px;min-width:220px;background:#16213e;padding:16px;position:sticky;top:0;height:100vh;overflow-y:auto">
+    <p style="color:#aaa;font-size:.75rem;text-transform:uppercase;margin-bottom:8px">Module Mocks</p>
+    <a href="#m1" style="display:block;padding:8px 12px;text-decoration:none;color:#e0e0e0;font-size:.85rem;border-radius:4px;margin:2px 0" onmouseover="this.style.background='#0f3460'" onmouseout="this.style.background='transparent'">Week 1: M1</a>
+<a href="#m2" style="display:block;padding:8px 12px;text-decoration:none;color:#e0e0e0;font-size:.85rem;border-radius:4px;margin:2px 0" onmouseover="this.style.background='#0f3460'" onmouseout="this.style.background='transparent'">Week 2: M2</a>
+<a href="#m3" style="display:block;padding:8px 12px;text-decoration:none;color:#e0e0e0;font-size:.85rem;border-radius:4px;margin:2px 0" onmouseover="this.style.background='#0f3460'" onmouseout="this.style.background='transparent'">Week 3: M3</a>
+<a href="#m4" style="display:block;padding:8px 12px;text-decoration:none;color:#e0e0e0;font-size:.85rem;border-radius:4px;margin:2px 0" onmouseover="this.style.background='#0f3460'" onmouseout="this.style.background='transparent'">Week 4: M4</a>
+<a href="#m5" style="display:block;padding:8px 12px;text-decoration:none;color:#e0e0e0;font-size:.85rem;border-radius:4px;margin:2px 0" onmouseover="this.style.background='#0f3460'" onmouseout="this.style.background='transparent'">Week 5: M5</a>
+<a href="#m6" style="display:block;padding:8px 12px;text-decoration:none;color:#e0e0e0;font-size:.85rem;border-radius:4px;margin:2px 0" onmouseover="this.style.background='#0f3460'" onmouseout="this.style.background='transparent'">Week 6: M6</a>
+<a href="#m7" style="display:block;padding:8px 12px;text-decoration:none;color:#e0e0e0;font-size:.85rem;border-radius:4px;margin:2px 0" onmouseover="this.style.background='#0f3460'" onmouseout="this.style.background='transparent'">Week 7: M7</a>
+<a href="#m8" style="display:block;padding:8px 12px;text-decoration:none;color:#e0e0e0;font-size:.85rem;border-radius:4px;margin:2px 0" onmouseover="this.style.background='#0f3460'" onmouseout="this.style.background='transparent'">Week 8: M8</a>
+<a href="#fullmock" style="display:block;padding:8px 12px;text-decoration:none;color:#ffe082;font-size:.85rem;border-radius:4px;margin:8px 0;background:#e65100">🏆 Full Mock (Week 14)</a>
+
+    <p style="color:#aaa;font-size:.75rem;text-transform:uppercase;margin:16px 0 8px">GSDC Resources</p>
+    <a href="https://www.gsdcouncil.org/certified-generative-ai-in-project-management" target="_blank" style="display:block;padding:8px 12px;text-decoration:none;color:#90caf9;font-size:.82rem">🔗 GSDC Official Page</a>
+    <a href="https://gsdcdata.gsdcouncil.org/gsdc/pdf/certified-generative-ai-in-project-management-new-syllabus-updated.pdf" target="_blank" style="display:block;padding:8px 12px;text-decoration:none;color:#90caf9;font-size:.82rem">📄 Syllabus PDF</a>
+  </div>
+  <div style="flex:1;padding:20px 24px;overflow-y:auto">
+    <div class="card">
+      <h2>📝 GSDC Generative AI in Project Management — Weekly Mock Tests</h2>
+      <p>One module mock every <strong>Saturday</strong> (45 min) + Full Mock in <strong>Week 14</strong> (60 min).
+      Each mock: 10 auto-scored MCQs + 1 scenario question (faculty-evaluated). Pass mark: 70%.</p>
+    </div>
+    
+    <div class="card" id="m1">
+      <h2>📝 Week 1 Mock — M1: Prompt Engineering</h2>
+      <p style="margin-bottom:12px"><strong>Format:</strong> 10 MCQs (auto-scored) + 1 Scenario question (faculty-evaluated) | <strong>Time:</strong> 45 minutes | <strong>Day:</strong> Every Saturday</p>
+      <p class="hint" style="margin-bottom:16px">Complete all MCQs first, then click Submit to see your score. Write your scenario answer and submit via Google Form.</p>
+      
+        <div class="q-block">
+          <p>Q1. What is the primary purpose of prompt engineering in GenAI systems?</p>
+          <label><input type="radio" name="m1_q1" value="A"> A. Training new AI models</label><label><input type="radio" name="m1_q1" value="B"> B. Designing inputs to guide AI outputs effectively</label><label><input type="radio" name="m1_q1" value="C"> C. Writing Python code for AI</label><label><input type="radio" name="m1_q1" value="D"> D. Data preprocessing</label>
+          <div id="m1_q1_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q2. Which of the following best describes a 'zero-shot' prompt?</p>
+          <label><input type="radio" name="m1_q2" value="A"> A. A prompt with multiple examples</label><label><input type="radio" name="m1_q2" value="B"> B. A prompt that requires no examples to produce output</label><label><input type="radio" name="m1_q2" value="C"> C. A prompt used for image generation only</label><label><input type="radio" name="m1_q2" value="D"> D. A prompt with negative instructions</label>
+          <div id="m1_q2_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q3. Ethical considerations in prompt engineering include:</p>
+          <label><input type="radio" name="m1_q3" value="A"> A. Maximising output length</label><label><input type="radio" name="m1_q3" value="B"> B. Avoiding bias, misinformation, and harmful content generation</label><label><input type="radio" name="m1_q3" value="C"> C. Using as many parameters as possible</label><label><input type="radio" name="m1_q3" value="D"> D. Keeping prompts secret</label>
+          <div id="m1_q3_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q4. A 'role-based' prompt begins with:</p>
+          <label><input type="radio" name="m1_q4" value="A"> A. 'Give me...'</label><label><input type="radio" name="m1_q4" value="B"> B. 'Ignore all previous instructions'</label><label><input type="radio" name="m1_q4" value="C"> C. 'Act as a [specific expert]...'</label><label><input type="radio" name="m1_q4" value="D"> D. 'List five...'</label>
+          <div id="m1_q4_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q5. Which prompt technique gives the model step-by-step reasoning space?</p>
+          <label><input type="radio" name="m1_q5" value="A"> A. Zero-shot</label><label><input type="radio" name="m1_q5" value="B"> B. One-shot</label><label><input type="radio" name="m1_q5" value="C"> C. Chain-of-thought</label><label><input type="radio" name="m1_q5" value="D"> D. Negative prompting</label>
+          <div id="m1_q5_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q6. Prompt injection attacks involve:</p>
+          <label><input type="radio" name="m1_q6" value="A"> A. Overloading the model with data</label><label><input type="radio" name="m1_q6" value="B"> B. Inserting malicious instructions into user input</label><label><input type="radio" name="m1_q6" value="C"> C. Using too many tokens</label><label><input type="radio" name="m1_q6" value="D"> D. Using images in prompts</label>
+          <div id="m1_q6_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q7. In project management, prompt engineering helps PMs to:</p>
+          <label><input type="radio" name="m1_q7" value="A"> A. Replace all team members</label><label><input type="radio" name="m1_q7" value="B"> B. Auto-generate project plans, risk logs, and stakeholder summaries</label><label><input type="radio" name="m1_q7" value="C"> C. Avoid stakeholder communication</label><label><input type="radio" name="m1_q7" value="D"> D. Reduce budget automatically</label>
+          <div id="m1_q7_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q8. Which component of a prompt defines the output format expected?</p>
+          <label><input type="radio" name="m1_q8" value="A"> A. Role</label><label><input type="radio" name="m1_q8" value="B"> B. Context</label><label><input type="radio" name="m1_q8" value="C"> C. Task</label><label><input type="radio" name="m1_q8" value="D"> D. Format / Constraint</label>
+          <div id="m1_q8_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q9. Temperature in a GenAI model controls:</p>
+          <label><input type="radio" name="m1_q9" value="A"> A. Hardware heat</label><label><input type="radio" name="m1_q9" value="B"> B. The randomness/creativity of outputs</label><label><input type="radio" name="m1_q9" value="C"> C. Response speed</label><label><input type="radio" name="m1_q9" value="D"> D. Token length</label>
+          <div id="m1_q9_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q10. 'Few-shot prompting' means:</p>
+          <label><input type="radio" name="m1_q10" value="A"> A. Using very short prompts</label><label><input type="radio" name="m1_q10" value="B"> B. Providing a few examples in the prompt to guide the model</label><label><input type="radio" name="m1_q10" value="C"> C. Asking the model only a few times</label><label><input type="radio" name="m1_q10" value="D"> D. Reducing model parameters</label>
+          <div id="m1_q10_result" class="result-box"></div>
+        </div>
+        <div class="scenario-box">
+          <p>📝 Scenario Question (Faculty Evaluated)</p>
+          <p style="font-size:.9rem;margin-bottom:8px">SCENARIO: You are a project manager drafting a risk log for a new product launch. Write a structured prompt that asks ChatGPT to generate a risk log with columns: Risk ID, Description, Probability, Impact, Mitigation. Include role, context, task, and format constraints.</p>
+          <textarea rows="5" placeholder="Type your answer here... (Submit to faculty via Google Form link below)"></textarea>
+          <p class="hint">This question is evaluated by faculty using the rubric. Save your answer and paste it in the Google Form submission.</p>
+        </div>
+      <button class="btn" onclick="submitMock('m1', {"m1_q1":"B","m1_q2":"B","m1_q3":"B","m1_q4":"C","m1_q5":"C","m1_q6":"B","m1_q7":"B","m1_q8":"D","m1_q9":"B","m1_q10":"B"})">✅ Submit MCQs & See Score</button>
+      <div id="m1_score" style="display:none;margin-top:12px;padding:14px;border-radius:8px;background:#e3f2fd;font-size:1rem"></div>
+      <div style="margin-top:12px">
+        <a class="btn btn-green" href="https://forms.google.com" target="_blank">📤 Submit Scenario Answer (Google Form)</a>
+      </div>
+    </div>
+    <div class="card" id="m2">
+      <h2>📝 Week 2 Mock — M2: Generative AI Models</h2>
+      <p style="margin-bottom:12px"><strong>Format:</strong> 10 MCQs (auto-scored) + 1 Scenario question (faculty-evaluated) | <strong>Time:</strong> 45 minutes | <strong>Day:</strong> Every Saturday</p>
+      <p class="hint" style="margin-bottom:16px">Complete all MCQs first, then click Submit to see your score. Write your scenario answer and submit via Google Form.</p>
+      
+        <div class="q-block">
+          <p>Q1. What does GAN stand for?</p>
+          <label><input type="radio" name="m2_q1" value="A"> A. Generalised Analytic Network</label><label><input type="radio" name="m2_q1" value="B"> B. Generative Adversarial Network</label><label><input type="radio" name="m2_q1" value="C"> C. Graph Attention Node</label><label><input type="radio" name="m2_q1" value="D"> D. Graded Accuracy Normaliser</label>
+          <div id="m2_q1_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q2. In a GAN, the two components are:</p>
+          <label><input type="radio" name="m2_q2" value="A"> A. Encoder and Decoder</label><label><input type="radio" name="m2_q2" value="B"> B. Generator and Discriminator</label><label><input type="radio" name="m2_q2" value="C"> C. Trainer and Validator</label><label><input type="radio" name="m2_q2" value="D"> D. Input and Output layers</label>
+          <div id="m2_q2_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q3. VAE stands for:</p>
+          <label><input type="radio" name="m2_q3" value="A"> A. Variable Accuracy Estimator</label><label><input type="radio" name="m2_q3" value="B"> B. Variational Autoencoder</label><label><input type="radio" name="m2_q3" value="C"> C. Visual AI Engine</label><label><input type="radio" name="m2_q3" value="D"> D. Vector Averaged Embedding</label>
+          <div id="m2_q3_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q4. Which model type is most commonly used in text generation (e.g., ChatGPT)?</p>
+          <label><input type="radio" name="m2_q4" value="A"> A. GAN</label><label><input type="radio" name="m2_q4" value="B"> B. VAE</label><label><input type="radio" name="m2_q4" value="C"> C. Large Language Model (LLM)</label><label><input type="radio" name="m2_q4" value="D"> D. CNN</label>
+          <div id="m2_q4_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q5. Overfitting in a generative AI model means:</p>
+          <label><input type="radio" name="m2_q5" value="A"> A. The model performs well on unseen data</label><label><input type="radio" name="m2_q5" value="B"> B. The model memorises training data and generalises poorly</label><label><input type="radio" name="m2_q5" value="C"> C. The model is too small</label><label><input type="radio" name="m2_q5" value="D"> D. The model produces too many tokens</label>
+          <div id="m2_q5_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q6. Fine-tuning a pre-trained model involves:</p>
+          <label><input type="radio" name="m2_q6" value="A"> A. Training from scratch on new data</label><label><input type="radio" name="m2_q6" value="B"> B. Adjusting a pre-trained model on a smaller, task-specific dataset</label><label><input type="radio" name="m2_q6" value="C"> C. Removing all original weights</label><label><input type="radio" name="m2_q6" value="D"> D. Changing the model architecture</label>
+          <div id="m2_q6_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q7. Hallucination in LLMs refers to:</p>
+          <label><input type="radio" name="m2_q7" value="A"> A. Creative storytelling</label><label><input type="radio" name="m2_q7" value="B"> B. Generating confident but factually incorrect outputs</label><label><input type="radio" name="m2_q7" value="C"> C. Slow inference speed</label><label><input type="radio" name="m2_q7" value="D"> D. Overuse of synonyms</label>
+          <div id="m2_q7_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q8. In project management, GenAI models can assist with:</p>
+          <label><input type="radio" name="m2_q8" value="A"> A. Only scheduling</label><label><input type="radio" name="m2_q8" value="B"> B. Only budgeting</label><label><input type="radio" name="m2_q8" value="C"> C. Planning, reporting, risk analysis, and status summaries</label><label><input type="radio" name="m2_q8" value="D"> D. Replacing the project sponsor</label>
+          <div id="m2_q8_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q9. The training data quality for GenAI models affects:</p>
+          <label><input type="radio" name="m2_q9" value="A"> A. Only the model size</label><label><input type="radio" name="m2_q9" value="B"> B. The relevance, accuracy, and bias of outputs</label><label><input type="radio" name="m2_q9" value="C"> C. The hardware cost only</label><label><input type="radio" name="m2_q9" value="D"> D. Internet speed</label>
+          <div id="m2_q9_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q10. Prompt tokens refer to:</p>
+          <label><input type="radio" name="m2_q10" value="A"> A. Cryptocurrency used to pay AI APIs</label><label><input type="radio" name="m2_q10" value="B"> B. Units of text (words/sub-words) processed by the model</label><label><input type="radio" name="m2_q10" value="C"> C. Encrypted prompts</label><label><input type="radio" name="m2_q10" value="D"> D. Server processing cycles</label>
+          <div id="m2_q10_result" class="result-box"></div>
+        </div>
+        <div class="scenario-box">
+          <p>📝 Scenario Question (Faculty Evaluated)</p>
+          <p style="font-size:.9rem;margin-bottom:8px">SCENARIO: A project team wants to use a GenAI model to auto-generate weekly status reports. Identify TWO risks of relying on GenAI for this task and suggest one mitigation for each risk.</p>
+          <textarea rows="5" placeholder="Type your answer here... (Submit to faculty via Google Form link below)"></textarea>
+          <p class="hint">This question is evaluated by faculty using the rubric. Save your answer and paste it in the Google Form submission.</p>
+        </div>
+      <button class="btn" onclick="submitMock('m2', {"m2_q1":"B","m2_q2":"B","m2_q3":"B","m2_q4":"C","m2_q5":"B","m2_q6":"B","m2_q7":"B","m2_q8":"C","m2_q9":"B","m2_q10":"B"})">✅ Submit MCQs & See Score</button>
+      <div id="m2_score" style="display:none;margin-top:12px;padding:14px;border-radius:8px;background:#e3f2fd;font-size:1rem"></div>
+      <div style="margin-top:12px">
+        <a class="btn btn-green" href="https://forms.google.com" target="_blank">📤 Submit Scenario Answer (Google Form)</a>
+      </div>
+    </div>
+    <div class="card" id="m3">
+      <h2>📝 Week 3 Mock — M3: AI in Project Planning</h2>
+      <p style="margin-bottom:12px"><strong>Format:</strong> 10 MCQs (auto-scored) + 1 Scenario question (faculty-evaluated) | <strong>Time:</strong> 45 minutes | <strong>Day:</strong> Every Saturday</p>
+      <p class="hint" style="margin-bottom:16px">Complete all MCQs first, then click Submit to see your score. Write your scenario answer and submit via Google Form.</p>
+      
+        <div class="q-block">
+          <p>Q1. Which AI technique is most useful for estimating project completion dates?</p>
+          <label><input type="radio" name="m3_q1" value="A"> A. Image classification</label><label><input type="radio" name="m3_q1" value="B"> B. Predictive analytics using historical project data</label><label><input type="radio" name="m3_q1" value="C"> C. Audio synthesis</label><label><input type="radio" name="m3_q1" value="D"> D. Sentiment analysis of emails</label>
+          <div id="m3_q1_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q2. Resource allocation with AI means:</p>
+          <label><input type="radio" name="m3_q2" value="A"> A. Replacing all human resources</label><label><input type="radio" name="m3_q2" value="B"> B. Using AI to match team skills to tasks optimally</label><label><input type="radio" name="m3_q2" value="C"> C. Automating payroll</label><label><input type="radio" name="m3_q2" value="D"> D. Generating org charts</label>
+          <div id="m3_q2_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q3. A Work Breakdown Structure (WBS) can be AI-assisted by:</p>
+          <label><input type="radio" name="m3_q3" value="A"> A. Drawing pictures</label><label><input type="radio" name="m3_q3" value="B"> B. Generating hierarchical task lists from a project scope description</label><label><input type="radio" name="m3_q3" value="C"> C. Sending automated emails</label><label><input type="radio" name="m3_q3" value="D"> D. Forecasting stock prices</label>
+          <div id="m3_q3_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q4. AI-generated project schedules should be:</p>
+          <label><input type="radio" name="m3_q4" value="A"> A. Accepted without review</label><label><input type="radio" name="m3_q4" value="B"> B. Validated by the PM before use</label><label><input type="radio" name="m3_q4" value="C"> C. Shared directly with clients without checking</label><label><input type="radio" name="m3_q4" value="D"> D. Never used</label>
+          <div id="m3_q4_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q5. Which tool is commonly used for AI-assisted project dashboards?</p>
+          <label><input type="radio" name="m3_q5" value="A"> A. MS Paint</label><label><input type="radio" name="m3_q5" value="B"> B. Power BI with AI insights</label><label><input type="radio" name="m3_q5" value="C"> C. Notepad</label><label><input type="radio" name="m3_q5" value="D"> D. VLC Player</label>
+          <div id="m3_q5_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q6. Critical path identification with AI helps PMs to:</p>
+          <label><input type="radio" name="m3_q6" value="A"> A. Delete non-critical tasks</label><label><input type="radio" name="m3_q6" value="B"> B. Identify the sequence of tasks that determines project duration</label><label><input type="radio" name="m3_q6" value="C"> C. Automate team leaves</label><label><input type="radio" name="m3_q6" value="D"> D. Monitor social media</label>
+          <div id="m3_q6_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q7. AI scheduling tools can flag conflicts in:</p>
+          <label><input type="radio" name="m3_q7" value="A"> A. Only budget data</label><label><input type="radio" name="m3_q7" value="B"> B. Resource availability, dependencies, and deadlines simultaneously</label><label><input type="radio" name="m3_q7" value="C"> C. Email inboxes</label><label><input type="radio" name="m3_q7" value="D"> D. File naming conventions</label>
+          <div id="m3_q7_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q8. Generative AI can create a project charter by:</p>
+          <label><input type="radio" name="m3_q8" value="A"> A. Automatically signing contracts</label><label><input type="radio" name="m3_q8" value="B"> B. Generating a structured document from a project description prompt</label><label><input type="radio" name="m3_q8" value="C"> C. Sending it to stakeholders automatically</label><label><input type="radio" name="m3_q8" value="D"> D. Translating it into all languages</label>
+          <div id="m3_q8_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q9. Stakeholder communication plans can be generated using AI by:</p>
+          <label><input type="radio" name="m3_q9" value="A"> A. Posting on social media</label><label><input type="radio" name="m3_q9" value="B"> B. Prompting the AI with stakeholder list, project goals, and communication preferences</label><label><input type="radio" name="m3_q9" value="C"> C. Emailing all stakeholders at once</label><label><input type="radio" name="m3_q9" value="D"> D. Ignoring low-priority stakeholders</label>
+          <div id="m3_q9_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q10. Agile sprint planning can benefit from AI by:</p>
+          <label><input type="radio" name="m3_q10" value="A"> A. Replacing the Scrum Master</label><label><input type="radio" name="m3_q10" value="B"> B. Suggesting story point estimates based on past velocity data</label><label><input type="radio" name="m3_q10" value="C"> C. Auto-approving all user stories</label><label><input type="radio" name="m3_q10" value="D"> D. Generating random sprint names</label>
+          <div id="m3_q10_result" class="result-box"></div>
+        </div>
+        <div class="scenario-box">
+          <p>📝 Scenario Question (Faculty Evaluated)</p>
+          <p style="font-size:.9rem;margin-bottom:8px">SCENARIO: You are planning a 6-month software deployment project. Write the exact prompt you would use in ChatGPT to generate: (a) a WBS with 5 phases, (b) a resource allocation table with 4 roles, and (c) top 3 scheduling risks.</p>
+          <textarea rows="5" placeholder="Type your answer here... (Submit to faculty via Google Form link below)"></textarea>
+          <p class="hint">This question is evaluated by faculty using the rubric. Save your answer and paste it in the Google Form submission.</p>
+        </div>
+      <button class="btn" onclick="submitMock('m3', {"m3_q1":"B","m3_q2":"B","m3_q3":"B","m3_q4":"B","m3_q5":"B","m3_q6":"B","m3_q7":"B","m3_q8":"B","m3_q9":"B","m3_q10":"B"})">✅ Submit MCQs & See Score</button>
+      <div id="m3_score" style="display:none;margin-top:12px;padding:14px;border-radius:8px;background:#e3f2fd;font-size:1rem"></div>
+      <div style="margin-top:12px">
+        <a class="btn btn-green" href="https://forms.google.com" target="_blank">📤 Submit Scenario Answer (Google Form)</a>
+      </div>
+    </div>
+    <div class="card" id="m4">
+      <h2>📝 Week 4 Mock — M4: Risk Assessment & Mitigation</h2>
+      <p style="margin-bottom:12px"><strong>Format:</strong> 10 MCQs (auto-scored) + 1 Scenario question (faculty-evaluated) | <strong>Time:</strong> 45 minutes | <strong>Day:</strong> Every Saturday</p>
+      <p class="hint" style="margin-bottom:16px">Complete all MCQs first, then click Submit to see your score. Write your scenario answer and submit via Google Form.</p>
+      
+        <div class="q-block">
+          <p>Q1. A risk register typically includes:</p>
+          <label><input type="radio" name="m4_q1" value="A"> A. Only budget figures</label><label><input type="radio" name="m4_q1" value="B"> B. Risk ID, description, probability, impact, and mitigation</label><label><input type="radio" name="m4_q1" value="C"> C. Team attendance records</label><label><input type="radio" name="m4_q1" value="D"> D. Client invoices</label>
+          <div id="m4_q1_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q2. AI-driven risk identification works by:</p>
+          <label><input type="radio" name="m4_q2" value="A"> A. Guessing risks randomly</label><label><input type="radio" name="m4_q2" value="B"> B. Analysing historical project data to surface patterns and anomalies</label><label><input type="radio" name="m4_q2" value="C"> C. Replacing risk managers</label><label><input type="radio" name="m4_q2" value="D"> D. Sending alerts without analysis</label>
+          <div id="m4_q2_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q3. Qualitative risk analysis involves:</p>
+          <label><input type="radio" name="m4_q3" value="A"> A. Calculating exact monetary losses</label><label><input type="radio" name="m4_q3" value="B"> B. Ranking risks by probability and impact using judgment</label><label><input type="radio" name="m4_q3" value="C"> C. Using only numbers</label><label><input type="radio" name="m4_q3" value="D"> D. Ignoring low-impact risks</label>
+          <div id="m4_q3_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q4. A risk heat map visually represents:</p>
+          <label><input type="radio" name="m4_q4" value="A"> A. Server temperatures</label><label><input type="radio" name="m4_q4" value="B"> B. Probability vs impact matrix for identified risks</label><label><input type="radio" name="m4_q4" value="C"> C. Team performance</label><label><input type="radio" name="m4_q4" value="D"> D. Budget variance</label>
+          <div id="m4_q4_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q5. Monte Carlo simulation in project risk means:</p>
+          <label><input type="radio" name="m4_q5" value="A"> A. A gambling strategy</label><label><input type="radio" name="m4_q5" value="B"> B. Running thousands of scenarios to estimate project outcome probabilities</label><label><input type="radio" name="m4_q5" value="C"> C. A cost-estimation formula</label><label><input type="radio" name="m4_q5" value="D"> D. A type of GenAI model</label>
+          <div id="m4_q5_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q6. AI can assist in risk mitigation by:</p>
+          <label><input type="radio" name="m4_q6" value="A"> A. Eliminating all risks</label><label><input type="radio" name="m4_q6" value="B"> B. Suggesting mitigation strategies based on similar past project data</label><label><input type="radio" name="m4_q6" value="C"> C. Hiding risks from stakeholders</label><label><input type="radio" name="m4_q6" value="D"> D. Automating risk acceptance always</label>
+          <div id="m4_q6_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q7. Early warning indicators in project risk management are:</p>
+          <label><input type="radio" name="m4_q7" value="A"> A. Post-project reports</label><label><input type="radio" name="m4_q7" value="B"> B. Real-time signals (cost variance, schedule delays) monitored by AI</label><label><input type="radio" name="m4_q7" value="C"> C. Team lunch preferences</label><label><input type="radio" name="m4_q7" value="D"> D. Vendor catalogues</label>
+          <div id="m4_q7_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q8. Risk appetite refers to:</p>
+          <label><input type="radio" name="m4_q8" value="A"> A. Team hunger levels</label><label><input type="radio" name="m4_q8" value="B"> B. The amount of risk an organisation is willing to accept</label><label><input type="radio" name="m4_q8" value="C"> C. Number of risks identified</label><label><input type="radio" name="m4_q8" value="D"> D. Risk budget allocation</label>
+          <div id="m4_q8_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q9. A risk response strategy of 'transfer' means:</p>
+          <label><input type="radio" name="m4_q9" value="A"> A. Eliminating the risk</label><label><input type="radio" name="m4_q9" value="B"> B. Passing the risk impact to a third party (e.g., insurance, subcontractor)</label><label><input type="radio" name="m4_q9" value="C"> C. Accepting the risk</label><label><input type="radio" name="m4_q9" value="D"> D. Reducing the probability only</label>
+          <div id="m4_q9_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q10. Which GenAI prompt would best help generate a risk log?</p>
+          <label><input type="radio" name="m4_q10" value="A"> A. 'Tell me a story about project failure'</label><label><input type="radio" name="m4_q10" value="B"> B. 'Act as a risk consultant. For this project scope [paste], generate a risk register with probability, impact, and mitigation in a table format.'</label><label><input type="radio" name="m4_q10" value="C"> C. 'List some risks'</label><label><input type="radio" name="m4_q10" value="D"> D. 'What is risk?'</label>
+          <div id="m4_q10_result" class="result-box"></div>
+        </div>
+        <div class="scenario-box">
+          <p>📝 Scenario Question (Faculty Evaluated)</p>
+          <p style="font-size:.9rem;margin-bottom:8px">SCENARIO: Your project team is launching a new mobile app in 3 months. List 4 risks you would identify and use the AI risk matrix format (Risk | Probability | Impact | Response Strategy) to present them.</p>
+          <textarea rows="5" placeholder="Type your answer here... (Submit to faculty via Google Form link below)"></textarea>
+          <p class="hint">This question is evaluated by faculty using the rubric. Save your answer and paste it in the Google Form submission.</p>
+        </div>
+      <button class="btn" onclick="submitMock('m4', {"m4_q1":"B","m4_q2":"B","m4_q3":"B","m4_q4":"B","m4_q5":"B","m4_q6":"B","m4_q7":"B","m4_q8":"B","m4_q9":"B","m4_q10":"B"})">✅ Submit MCQs & See Score</button>
+      <div id="m4_score" style="display:none;margin-top:12px;padding:14px;border-radius:8px;background:#e3f2fd;font-size:1rem"></div>
+      <div style="margin-top:12px">
+        <a class="btn btn-green" href="https://forms.google.com" target="_blank">📤 Submit Scenario Answer (Google Form)</a>
+      </div>
+    </div>
+    <div class="card" id="m5">
+      <h2>📝 Week 5 Mock — M5: Data Analysis & Insights</h2>
+      <p style="margin-bottom:12px"><strong>Format:</strong> 10 MCQs (auto-scored) + 1 Scenario question (faculty-evaluated) | <strong>Time:</strong> 45 minutes | <strong>Day:</strong> Every Saturday</p>
+      <p class="hint" style="margin-bottom:16px">Complete all MCQs first, then click Submit to see your score. Write your scenario answer and submit via Google Form.</p>
+      
+        <div class="q-block">
+          <p>Q1. In project management, data analysis helps PMs to:</p>
+          <label><input type="radio" name="m5_q1" value="A"> A. Only create charts</label><label><input type="radio" name="m5_q1" value="B"> B. Make evidence-based decisions on schedule, cost, and quality</label><label><input type="radio" name="m5_q1" value="C"> C. Replace stakeholders</label><label><input type="radio" name="m5_q1" value="D"> D. Avoid reporting</label>
+          <div id="m5_q1_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q2. GenAI can assist data analysis by:</p>
+          <label><input type="radio" name="m5_q2" value="A"> A. Deleting data automatically</label><label><input type="radio" name="m5_q2" value="B"> B. Interpreting datasets, identifying trends, and generating insight summaries</label><label><input type="radio" name="m5_q2" value="C"> C. Only formatting tables</label><label><input type="radio" name="m5_q2" value="D"> D. Replacing data engineers entirely</label>
+          <div id="m5_q2_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q3. Earned Value Management (EVM) uses:</p>
+          <label><input type="radio" name="m5_q3" value="A"> A. Only invoices</label><label><input type="radio" name="m5_q3" value="B"> B. Planned Value, Earned Value, and Actual Cost to measure project performance</label><label><input type="radio" name="m5_q3" value="C"> C. Team satisfaction surveys</label><label><input type="radio" name="m5_q3" value="D"> D. Vendor ratings</label>
+          <div id="m5_q3_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q4. A Cost Performance Index (CPI) > 1.0 indicates:</p>
+          <label><input type="radio" name="m5_q4" value="A"> A. Project is over budget</label><label><input type="radio" name="m5_q4" value="B"> B. Project is under budget (spending less than planned)</label><label><input type="radio" name="m5_q4" value="C"> C. Project is on schedule</label><label><input type="radio" name="m5_q4" value="D"> D. Project is cancelled</label>
+          <div id="m5_q4_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q5. AI-powered Excel features can help project managers by:</p>
+          <label><input type="radio" name="m5_q5" value="A"> A. Writing code only</label><label><input type="radio" name="m5_q5" value="B"> B. Auto-generating pivot tables, forecasts, and data patterns</label><label><input type="radio" name="m5_q5" value="C"> C. Sending emails</label><label><input type="radio" name="m5_q5" value="D"> D. Drawing floor plans</label>
+          <div id="m5_q5_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q6. Sentiment analysis on project feedback can help PMs by:</p>
+          <label><input type="radio" name="m5_q6" value="A"> A. Monitoring social media trends unrelated to project</label><label><input type="radio" name="m5_q6" value="B"> B. Identifying team morale issues and stakeholder satisfaction patterns</label><label><input type="radio" name="m5_q6" value="C"> C. Generating invoices</label><label><input type="radio" name="m5_q6" value="D"> D. Scheduling meetings automatically</label>
+          <div id="m5_q6_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q7. A project dashboard should include:</p>
+          <label><input type="radio" name="m5_q7" value="A"> A. Only financial data</label><label><input type="radio" name="m5_q7" value="B"> B. KPIs across schedule, cost, quality, and risk in visual form</label><label><input type="radio" name="m5_q7" value="C"> C. Team personal details</label><label><input type="radio" name="m5_q7" value="D"> D. Vendor contracts</label>
+          <div id="m5_q7_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q8. Data-driven decision making in projects means:</p>
+          <label><input type="radio" name="m5_q8" value="A"> A. Relying only on intuition</label><label><input type="radio" name="m5_q8" value="B"> B. Using quantitative evidence to justify project decisions</label><label><input type="radio" name="m5_q8" value="C"> C. Ignoring qualitative data</label><label><input type="radio" name="m5_q8" value="D"> D. Delaying decisions until perfect data is available</label>
+          <div id="m5_q8_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q9. Looker Studio / Power BI integrates with GenAI to:</p>
+          <label><input type="radio" name="m5_q9" value="A"> A. Only print reports</label><label><input type="radio" name="m5_q9" value="B"> B. Generate natural language summaries of dashboard data automatically</label><label><input type="radio" name="m5_q9" value="C"> C. Replace Power BI with Excel</label><label><input type="radio" name="m5_q9" value="D"> D. Delete old dashboards</label>
+          <div id="m5_q9_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q10. A KPI for 'on-time delivery' in project management is measured as:</p>
+          <label><input type="radio" name="m5_q10" value="A"> A. Total budget spent</label><label><input type="radio" name="m5_q10" value="B"> B. % of milestones completed on or before planned date</label><label><input type="radio" name="m5_q10" value="C"> C. Number of team members</label><label><input type="radio" name="m5_q10" value="D"> D. Stakeholder count</label>
+          <div id="m5_q10_result" class="result-box"></div>
+        </div>
+        <div class="scenario-box">
+          <p>📝 Scenario Question (Faculty Evaluated)</p>
+          <p style="font-size:.9rem;margin-bottom:8px">SCENARIO: You have a dataset with 6-month project cost and schedule data. Write a prompt to ask ChatGPT to: (a) calculate SPI and CPI, (b) identify the worst-performing month, and (c) recommend 2 corrective actions.</p>
+          <textarea rows="5" placeholder="Type your answer here... (Submit to faculty via Google Form link below)"></textarea>
+          <p class="hint">This question is evaluated by faculty using the rubric. Save your answer and paste it in the Google Form submission.</p>
+        </div>
+      <button class="btn" onclick="submitMock('m5', {"m5_q1":"B","m5_q2":"B","m5_q3":"B","m5_q4":"B","m5_q5":"B","m5_q6":"B","m5_q7":"B","m5_q8":"B","m5_q9":"B","m5_q10":"B"})">✅ Submit MCQs & See Score</button>
+      <div id="m5_score" style="display:none;margin-top:12px;padding:14px;border-radius:8px;background:#e3f2fd;font-size:1rem"></div>
+      <div style="margin-top:12px">
+        <a class="btn btn-green" href="https://forms.google.com" target="_blank">📤 Submit Scenario Answer (Google Form)</a>
+      </div>
+    </div>
+    <div class="card" id="m6">
+      <h2>📝 Week 6 Mock — M6: Automation & Efficiency</h2>
+      <p style="margin-bottom:12px"><strong>Format:</strong> 10 MCQs (auto-scored) + 1 Scenario question (faculty-evaluated) | <strong>Time:</strong> 45 minutes | <strong>Day:</strong> Every Saturday</p>
+      <p class="hint" style="margin-bottom:16px">Complete all MCQs first, then click Submit to see your score. Write your scenario answer and submit via Google Form.</p>
+      
+        <div class="q-block">
+          <p>Q1. Which of the following is a routine project task AI can automate?</p>
+          <label><input type="radio" name="m6_q1" value="A"> A. Strategic vision setting</label><label><input type="radio" name="m6_q1" value="B"> B. Generating weekly status reports from structured data</label><label><input type="radio" name="m6_q1" value="C"> C. Negotiating contracts</label><label><input type="radio" name="m6_q1" value="D"> D. Leading stakeholder meetings</label>
+          <div id="m6_q1_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q2. Workflow automation in project management reduces:</p>
+          <label><input type="radio" name="m6_q2" value="A"> A. Team size permanently</label><label><input type="radio" name="m6_q2" value="B"> B. Manual repetitive effort, errors, and turnaround time</label><label><input type="radio" name="m6_q2" value="C"> C. Project scope</label><label><input type="radio" name="m6_q2" value="D"> D. Stakeholder count</label>
+          <div id="m6_q2_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q3. No-code AI automation tools useful for PMs include:</p>
+          <label><input type="radio" name="m6_q3" value="A"> A. Adobe Photoshop</label><label><input type="radio" name="m6_q3" value="B"> B. Make (Integromat) and n8n</label><label><input type="radio" name="m6_q3" value="C"> C. VLC Media Player</label><label><input type="radio" name="m6_q3" value="D"> D. MS Paint</label>
+          <div id="m6_q3_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q4. AI meeting intelligence tools (e.g., Otter.ai, Fireflies.ai) can:</p>
+          <label><input type="radio" name="m6_q4" value="A"> A. Replace all meetings</label><label><input type="radio" name="m6_q4" value="B"> B. Auto-transcribe, summarise, and extract action items from meetings</label><label><input type="radio" name="m6_q4" value="C"> C. Cancel meetings automatically</label><label><input type="radio" name="m6_q4" value="D"> D. Only record audio</label>
+          <div id="m6_q4_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q5. Automated project reporting means:</p>
+          <label><input type="radio" name="m6_q5" value="A"> A. Sending reports without PM review</label><label><input type="radio" name="m6_q5" value="B"> B. AI aggregating data from multiple sources into a formatted report draft for PM review</label><label><input type="radio" name="m6_q5" value="C"> C. Using interns only</label><label><input type="radio" name="m6_q5" value="D"> D. Replacing the reporting function entirely</label>
+          <div id="m6_q5_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q6. Which AI tool can help automate email drafts for stakeholder updates?</p>
+          <label><input type="radio" name="m6_q6" value="A"> A. Google Maps</label><label><input type="radio" name="m6_q6" value="B"> B. Copilot / ChatGPT with email prompt templates</label><label><input type="radio" name="m6_q6" value="C"> C. Canva</label><label><input type="radio" name="m6_q6" value="D"> D. Excel Solver</label>
+          <div id="m6_q6_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q7. Task prioritisation with AI means:</p>
+          <label><input type="radio" name="m6_q7" value="A"> A. AI decides which tasks to delete</label><label><input type="radio" name="m6_q7" value="B"> B. AI ranks tasks by urgency, dependencies, and risk using project data</label><label><input type="radio" name="m6_q7" value="C"> C. PM delegates all decisions to AI</label><label><input type="radio" name="m6_q7" value="D"> D. Tasks are scheduled randomly</label>
+          <div id="m6_q7_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q8. Efficiency gains from AI in project management primarily come from:</p>
+          <label><input type="radio" name="m6_q8" value="A"> A. Reducing team salaries</label><label><input type="radio" name="m6_q8" value="B"> B. Faster information synthesis, pattern recognition, and draft generation</label><label><input type="radio" name="m6_q8" value="C"> C. Eliminating testing phases</label><label><input type="radio" name="m6_q8" value="D"> D. Skipping planning stages</label>
+          <div id="m6_q8_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q9. AI chatbots in project management can help by:</p>
+          <label><input type="radio" name="m6_q9" value="A"> A. Making final project decisions</label><label><input type="radio" name="m6_q9" value="B"> B. Answering team FAQs, providing status updates, and guiding workflows</label><label><input type="radio" name="m6_q9" value="C"> C. Replacing the PM entirely</label><label><input type="radio" name="m6_q9" value="D"> D. Only handling finance queries</label>
+          <div id="m6_q9_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q10. Responsible automation in project management means:</p>
+          <label><input type="radio" name="m6_q10" value="A"> A. Automating everything without human review</label><label><input type="radio" name="m6_q10" value="B"> B. Using AI to handle repetitive tasks while humans retain control over decisions</label><label><input type="radio" name="m6_q10" value="C"> C. Removing all manual checks</label><label><input type="radio" name="m6_q10" value="D"> D. Sharing all project data publicly</label>
+          <div id="m6_q10_result" class="result-box"></div>
+        </div>
+        <div class="scenario-box">
+          <p>📝 Scenario Question (Faculty Evaluated)</p>
+          <p style="font-size:.9rem;margin-bottom:8px">SCENARIO: Your team spends 3 hours every Friday manually compiling a project status report from 4 sources (Jira, Excel, email, and a shared drive). Describe a 3-step automation workflow using AI tools to reduce this to under 30 minutes.</p>
+          <textarea rows="5" placeholder="Type your answer here... (Submit to faculty via Google Form link below)"></textarea>
+          <p class="hint">This question is evaluated by faculty using the rubric. Save your answer and paste it in the Google Form submission.</p>
+        </div>
+      <button class="btn" onclick="submitMock('m6', {"m6_q1":"B","m6_q2":"B","m6_q3":"B","m6_q4":"B","m6_q5":"B","m6_q6":"B","m6_q7":"B","m6_q8":"B","m6_q9":"B","m6_q10":"B"})">✅ Submit MCQs & See Score</button>
+      <div id="m6_score" style="display:none;margin-top:12px;padding:14px;border-radius:8px;background:#e3f2fd;font-size:1rem"></div>
+      <div style="margin-top:12px">
+        <a class="btn btn-green" href="https://forms.google.com" target="_blank">📤 Submit Scenario Answer (Google Form)</a>
+      </div>
+    </div>
+    <div class="card" id="m7">
+      <h2>📝 Week 7 Mock — M7: Innovation & Future Trends</h2>
+      <p style="margin-bottom:12px"><strong>Format:</strong> 10 MCQs (auto-scored) + 1 Scenario question (faculty-evaluated) | <strong>Time:</strong> 45 minutes | <strong>Day:</strong> Every Saturday</p>
+      <p class="hint" style="margin-bottom:16px">Complete all MCQs first, then click Submit to see your score. Write your scenario answer and submit via Google Form.</p>
+      
+        <div class="q-block">
+          <p>Q1. Agentic AI in project management refers to:</p>
+          <label><input type="radio" name="m7_q1" value="A"> A. AI that only answers questions</label><label><input type="radio" name="m7_q1" value="B"> B. AI that can plan, act, and iterate on multi-step tasks autonomously</label><label><input type="radio" name="m7_q1" value="C"> C. AI used only in agile projects</label><label><input type="radio" name="m7_q1" value="D"> D. AI for financial forecasting only</label>
+          <div id="m7_q1_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q2. Digital twin technology in projects allows:</p>
+          <label><input type="radio" name="m7_q2" value="A"> A. Duplication of files</label><label><input type="radio" name="m7_q2" value="B"> B. A virtual simulation of a project/system to test scenarios before execution</label><label><input type="radio" name="m7_q2" value="C"> C. Cloning team members</label><label><input type="radio" name="m7_q2" value="D"> D. Automated invoicing</label>
+          <div id="m7_q2_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q3. The concept of 'AI-augmented PM' means:</p>
+          <label><input type="radio" name="m7_q3" value="A"> A. AI fully replaces the PM</label><label><input type="radio" name="m7_q3" value="B"> B. AI enhances the PM's capability rather than replacing human judgment</label><label><input type="radio" name="m7_q3" value="C"> C. PM only supervises AI outputs without thinking</label><label><input type="radio" name="m7_q3" value="D"> D. AI and PM work in completely separate tracks</label>
+          <div id="m7_q3_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q4. Responsible AI in project management includes:</p>
+          <label><input type="radio" name="m7_q4" value="A"> A. Ignoring data privacy</label><label><input type="radio" name="m7_q4" value="B"> B. Transparency, fairness, accountability, and human oversight in AI usage</label><label><input type="radio" name="m7_q4" value="C"> C. Using AI to bypass governance</label><label><input type="radio" name="m7_q4" value="D"> D. Sharing model outputs without validation</label>
+          <div id="m7_q4_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q5. Generative AI's impact on the PMO (Project Management Office) will likely include:</p>
+          <label><input type="radio" name="m7_q5" value="A"> A. Eliminating the PMO</label><label><input type="radio" name="m7_q5" value="B"> B. Shifting PMO focus from reporting to strategic AI governance and quality oversight</label><label><input type="radio" name="m7_q5" value="C"> C. Replacing all PMO tools with ChatGPT</label><label><input type="radio" name="m7_q5" value="D"> D. No impact on PMO functions</label>
+          <div id="m7_q5_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q6. Multi-modal AI refers to models that can process:</p>
+          <label><input type="radio" name="m7_q6" value="A"> A. Only text</label><label><input type="radio" name="m7_q6" value="B"> B. Text, images, audio, and video inputs together</label><label><input type="radio" name="m7_q6" value="C"> C. Only images</label><label><input type="radio" name="m7_q6" value="D"> D. Only structured data</label>
+          <div id="m7_q6_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q7. AI ethics frameworks for project teams should address:</p>
+          <label><input type="radio" name="m7_q7" value="A"> A. Only cost optimisation</label><label><input type="radio" name="m7_q7" value="B"> B. Bias, data privacy, explainability, and human oversight</label><label><input type="radio" name="m7_q7" value="C"> C. Tool licensing only</label><label><input type="radio" name="m7_q7" value="D"> D. Team seating arrangements</label>
+          <div id="m7_q7_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q8. Future AI PM tools are expected to offer:</p>
+          <label><input type="radio" name="m7_q8" value="A"> A. Fully autonomous project execution without human input</label><label><input type="radio" name="m7_q8" value="B"> B. Predictive insights, real-time risk alerts, and natural language project control</label><label><input type="radio" name="m7_q8" value="C"> C. Elimination of agile frameworks</label><label><input type="radio" name="m7_q8" value="D"> D. Replacement of all certifications</label>
+          <div id="m7_q8_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q9. Explainable AI (XAI) in project management is important because:</p>
+          <label><input type="radio" name="m7_q9" value="A"> A. It makes AI faster</label><label><input type="radio" name="m7_q9" value="B"> B. Stakeholders and PMs need to understand why AI made a particular recommendation</label><label><input type="radio" name="m7_q9" value="C"> C. It reduces AI costs</label><label><input type="radio" name="m7_q9" value="D"> D. It allows AI to self-certify</label>
+          <div id="m7_q9_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q10. Continuous learning in AI project tools means:</p>
+          <label><input type="radio" name="m7_q10" value="A"> A. Students must study continuously</label><label><input type="radio" name="m7_q10" value="B"> B. The AI model improves over time based on new project data and feedback</label><label><input type="radio" name="m7_q10" value="C"> C. Projects never close</label><label><input type="radio" name="m7_q10" value="D"> D. Training data is deleted after each project</label>
+          <div id="m7_q10_result" class="result-box"></div>
+        </div>
+        <div class="scenario-box">
+          <p>📝 Scenario Question (Faculty Evaluated)</p>
+          <p style="font-size:.9rem;margin-bottom:8px">SCENARIO: You are presenting to your organisation's board on 'How AI will change our project management approach in the next 3 years.' List 3 specific AI innovations, explain their impact on the PM role, and identify 1 ethical risk for each.</p>
+          <textarea rows="5" placeholder="Type your answer here... (Submit to faculty via Google Form link below)"></textarea>
+          <p class="hint">This question is evaluated by faculty using the rubric. Save your answer and paste it in the Google Form submission.</p>
+        </div>
+      <button class="btn" onclick="submitMock('m7', {"m7_q1":"B","m7_q2":"B","m7_q3":"B","m7_q4":"B","m7_q5":"B","m7_q6":"B","m7_q7":"B","m7_q8":"B","m7_q9":"B","m7_q10":"B"})">✅ Submit MCQs & See Score</button>
+      <div id="m7_score" style="display:none;margin-top:12px;padding:14px;border-radius:8px;background:#e3f2fd;font-size:1rem"></div>
+      <div style="margin-top:12px">
+        <a class="btn btn-green" href="https://forms.google.com" target="_blank">📤 Submit Scenario Answer (Google Form)</a>
+      </div>
+    </div>
+    <div class="card" id="m8">
+      <h2>📝 Week 8 Mock — M8: Use Cases, Demos & Capstone</h2>
+      <p style="margin-bottom:12px"><strong>Format:</strong> 10 MCQs (auto-scored) + 1 Scenario question (faculty-evaluated) | <strong>Time:</strong> 45 minutes | <strong>Day:</strong> Every Saturday</p>
+      <p class="hint" style="margin-bottom:16px">Complete all MCQs first, then click Submit to see your score. Write your scenario answer and submit via Google Form.</p>
+      
+        <div class="q-block">
+          <p>Q1. AI-enhanced presentations (e.g., Beautiful.ai, Tome) help PMs by:</p>
+          <label><input type="radio" name="m8_q1" value="A"> A. Writing code automatically</label><label><input type="radio" name="m8_q1" value="B"> B. Auto-generating slide layouts, visuals, and content from prompts</label><label><input type="radio" name="m8_q1" value="C"> C. Replacing the presentation entirely</label><label><input type="radio" name="m8_q1" value="D"> D. Only formatting fonts</label>
+          <div id="m8_q1_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q2. Document summarisation with AI is most useful for PMs when:</p>
+          <label><input type="radio" name="m8_q2" value="A"> A. The document is less than 1 page</label><label><input type="radio" name="m8_q2" value="B"> B. Reviewing long contracts, reports, or research papers quickly</label><label><input type="radio" name="m8_q2" value="C"> C. Sending casual emails</label><label><input type="radio" name="m8_q2" value="D"> D. Tracking attendance</label>
+          <div id="m8_q2_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q3. AI-powered recommendation systems in project context can help with:</p>
+          <label><input type="radio" name="m8_q3" value="A"> A. Recommending movies to the team</label><label><input type="radio" name="m8_q3" value="B"> B. Suggesting relevant templates, past project learnings, or resource matches</label><label><input type="radio" name="m8_q3" value="C"> C. Auto-approving change requests</label><label><input type="radio" name="m8_q3" value="D"> D. Generating project logos</label>
+          <div id="m8_q3_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q4. Content generation via prompt engineering covers:</p>
+          <label><input type="radio" name="m8_q4" value="A"> A. Only text generation</label><label><input type="radio" name="m8_q4" value="B"> B. Text, images, audio, video, and data outputs depending on the model</label><label><input type="radio" name="m8_q4" value="C"> C. Only code</label><label><input type="radio" name="m8_q4" value="D"> D. Only translations</label>
+          <div id="m8_q4_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q5. The purpose of a GenAI capstone project is to:</p>
+          <label><input type="radio" name="m8_q5" value="A"> A. Summarise theoretical knowledge only</label><label><input type="radio" name="m8_q5" value="B"> B. Apply all certification concepts to a real or simulated project scenario</label><label><input type="radio" name="m8_q5" value="C"> C. Replace the final exam</label><label><input type="radio" name="m8_q5" value="D"> D. Build a new AI model from scratch</label>
+          <div id="m8_q5_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q6. AI chart analysis tools can help PMs by:</p>
+          <label><input type="radio" name="m8_q6" value="A"> A. Designing logos</label><label><input type="radio" name="m8_q6" value="B"> B. Interpreting visual data and generating narrative insights from charts automatically</label><label><input type="radio" name="m8_q6" value="C"> C. Sending charts by email</label><label><input type="radio" name="m8_q6" value="D"> D. Deleting outlier data</label>
+          <div id="m8_q6_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q7. A PDF/Word AI assistant helps PMs to:</p>
+          <label><input type="radio" name="m8_q7" value="A"> A. Print documents faster</label><label><input type="radio" name="m8_q7" value="B"> B. Query, summarise, and extract specific information from large documents</label><label><input type="radio" name="m8_q7" value="C"> C. Convert files to video</label><label><input type="radio" name="m8_q7" value="D"> D. Delete duplicate files</label>
+          <div id="m8_q7_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q8. When using AI for automated data insights, the PM should:</p>
+          <label><input type="radio" name="m8_q8" value="A"> A. Accept all outputs as final</label><label><input type="radio" name="m8_q8" value="B"> B. Validate AI insights against raw data before making decisions</label><label><input type="radio" name="m8_q8" value="C"> C. Share outputs directly with clients without review</label><label><input type="radio" name="m8_q8" value="D"> D. Ignore data outliers flagged by AI</label>
+          <div id="m8_q8_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q9. Which of the following represents responsible use of GenAI in a project report?</p>
+          <label><input type="radio" name="m8_q9" value="A"> A. Copying AI output directly without review</label><label><input type="radio" name="m8_q9" value="B"> B. Using AI to draft sections, then reviewing, editing, and citing AI assistance</label><label><input type="radio" name="m8_q9" value="C"> C. Hiding AI usage from stakeholders</label><label><input type="radio" name="m8_q9" value="D"> D. Using AI only for client-facing documents</label>
+          <div id="m8_q9_result" class="result-box"></div>
+        </div>
+        <div class="q-block">
+          <p>Q10. A well-structured AI capstone for project management should demonstrate:</p>
+          <label><input type="radio" name="m8_q10" value="A"> A. Only technical AI knowledge</label><label><input type="radio" name="m8_q10" value="B"> B. Integration of prompt engineering, data analysis, risk management, and automation in a real PM scenario</label><label><input type="radio" name="m8_q10" value="C"> C. Ability to train new AI models</label><label><input type="radio" name="m8_q10" value="D"> D. Social media marketing skills</label>
+          <div id="m8_q10_result" class="result-box"></div>
+        </div>
+        <div class="scenario-box">
+          <p>📝 Scenario Question (Faculty Evaluated)</p>
+          <p style="font-size:.9rem;margin-bottom:8px">SCENARIO (Capstone): You have been assigned as PM for GJIMT's new AI-Integrated MBA Programme launch. Using GenAI tools, describe how you would: (a) generate a project charter, (b) build a risk register, (c) create a KPI dashboard, and (d) automate weekly status reporting. Name the specific AI tools and prompts for each.</p>
+          <textarea rows="5" placeholder="Type your answer here... (Submit to faculty via Google Form link below)"></textarea>
+          <p class="hint">This question is evaluated by faculty using the rubric. Save your answer and paste it in the Google Form submission.</p>
+        </div>
+      <button class="btn" onclick="submitMock('m8', {"m8_q1":"B","m8_q2":"B","m8_q3":"B","m8_q4":"B","m8_q5":"B","m8_q6":"B","m8_q7":"B","m8_q8":"B","m8_q9":"B","m8_q10":"B"})">✅ Submit MCQs & See Score</button>
+      <div id="m8_score" style="display:none;margin-top:12px;padding:14px;border-radius:8px;background:#e3f2fd;font-size:1rem"></div>
+      <div style="margin-top:12px">
+        <a class="btn btn-green" href="https://forms.google.com" target="_blank">📤 Submit Scenario Answer (Google Form)</a>
+      </div>
+    </div>
+    
+<div class="card" id="fullmock">
+  <h2>🏆 Week 14 — Full Mock Exam (All 8 Modules)</h2>
+  <p style="margin-bottom:12px"><strong>Format:</strong> 16 MCQs across all modules + 2 scenario questions | <strong>Time:</strong> 60 minutes | <strong>Pattern:</strong> Mirrors GSDC December exam style</p>
+  <p class="hint" style="margin-bottom:16px">This is the final full-length practice exam. Complete under timed conditions. No AI tools allowed during this mock.</p>
+  
+        <div class="q-block">
+          <p><span class="badge badge-gsdc">M1</span> What is the primary purpose of prompt engineering in GenAI systems?</p>
+          <label><input type="radio" name="fm_m1_q0" value="A"> A. Training new AI models</label><label><input type="radio" name="fm_m1_q0" value="B"> B. Designing inputs to guide AI outputs effectively</label><label><input type="radio" name="fm_m1_q0" value="C"> C. Writing Python code for AI</label><label><input type="radio" name="fm_m1_q0" value="D"> D. Data preprocessing</label>
+        </div>
+        <div class="q-block">
+          <p><span class="badge badge-gsdc">M1</span> Which prompt technique gives the model step-by-step reasoning space?</p>
+          <label><input type="radio" name="fm_m1_q4" value="A"> A. Zero-shot</label><label><input type="radio" name="fm_m1_q4" value="B"> B. One-shot</label><label><input type="radio" name="fm_m1_q4" value="C"> C. Chain-of-thought</label><label><input type="radio" name="fm_m1_q4" value="D"> D. Negative prompting</label>
+        </div>
+        <div class="q-block">
+          <p><span class="badge badge-gsdc">M2</span> What does GAN stand for?</p>
+          <label><input type="radio" name="fm_m2_q0" value="A"> A. Generalised Analytic Network</label><label><input type="radio" name="fm_m2_q0" value="B"> B. Generative Adversarial Network</label><label><input type="radio" name="fm_m2_q0" value="C"> C. Graph Attention Node</label><label><input type="radio" name="fm_m2_q0" value="D"> D. Graded Accuracy Normaliser</label>
+        </div>
+        <div class="q-block">
+          <p><span class="badge badge-gsdc">M2</span> Overfitting in a generative AI model means:</p>
+          <label><input type="radio" name="fm_m2_q4" value="A"> A. The model performs well on unseen data</label><label><input type="radio" name="fm_m2_q4" value="B"> B. The model memorises training data and generalises poorly</label><label><input type="radio" name="fm_m2_q4" value="C"> C. The model is too small</label><label><input type="radio" name="fm_m2_q4" value="D"> D. The model produces too many tokens</label>
+        </div>
+        <div class="q-block">
+          <p><span class="badge badge-gsdc">M3</span> Which AI technique is most useful for estimating project completion dates?</p>
+          <label><input type="radio" name="fm_m3_q0" value="A"> A. Image classification</label><label><input type="radio" name="fm_m3_q0" value="B"> B. Predictive analytics using historical project data</label><label><input type="radio" name="fm_m3_q0" value="C"> C. Audio synthesis</label><label><input type="radio" name="fm_m3_q0" value="D"> D. Sentiment analysis of emails</label>
+        </div>
+        <div class="q-block">
+          <p><span class="badge badge-gsdc">M3</span> Which tool is commonly used for AI-assisted project dashboards?</p>
+          <label><input type="radio" name="fm_m3_q4" value="A"> A. MS Paint</label><label><input type="radio" name="fm_m3_q4" value="B"> B. Power BI with AI insights</label><label><input type="radio" name="fm_m3_q4" value="C"> C. Notepad</label><label><input type="radio" name="fm_m3_q4" value="D"> D. VLC Player</label>
+        </div>
+        <div class="q-block">
+          <p><span class="badge badge-gsdc">M4</span> A risk register typically includes:</p>
+          <label><input type="radio" name="fm_m4_q0" value="A"> A. Only budget figures</label><label><input type="radio" name="fm_m4_q0" value="B"> B. Risk ID, description, probability, impact, and mitigation</label><label><input type="radio" name="fm_m4_q0" value="C"> C. Team attendance records</label><label><input type="radio" name="fm_m4_q0" value="D"> D. Client invoices</label>
+        </div>
+        <div class="q-block">
+          <p><span class="badge badge-gsdc">M4</span> Monte Carlo simulation in project risk means:</p>
+          <label><input type="radio" name="fm_m4_q4" value="A"> A. A gambling strategy</label><label><input type="radio" name="fm_m4_q4" value="B"> B. Running thousands of scenarios to estimate project outcome probabilities</label><label><input type="radio" name="fm_m4_q4" value="C"> C. A cost-estimation formula</label><label><input type="radio" name="fm_m4_q4" value="D"> D. A type of GenAI model</label>
+        </div>
+        <div class="q-block">
+          <p><span class="badge badge-gsdc">M5</span> In project management, data analysis helps PMs to:</p>
+          <label><input type="radio" name="fm_m5_q0" value="A"> A. Only create charts</label><label><input type="radio" name="fm_m5_q0" value="B"> B. Make evidence-based decisions on schedule, cost, and quality</label><label><input type="radio" name="fm_m5_q0" value="C"> C. Replace stakeholders</label><label><input type="radio" name="fm_m5_q0" value="D"> D. Avoid reporting</label>
+        </div>
+        <div class="q-block">
+          <p><span class="badge badge-gsdc">M5</span> AI-powered Excel features can help project managers by:</p>
+          <label><input type="radio" name="fm_m5_q4" value="A"> A. Writing code only</label><label><input type="radio" name="fm_m5_q4" value="B"> B. Auto-generating pivot tables, forecasts, and data patterns</label><label><input type="radio" name="fm_m5_q4" value="C"> C. Sending emails</label><label><input type="radio" name="fm_m5_q4" value="D"> D. Drawing floor plans</label>
+        </div>
+        <div class="q-block">
+          <p><span class="badge badge-gsdc">M6</span> Which of the following is a routine project task AI can automate?</p>
+          <label><input type="radio" name="fm_m6_q0" value="A"> A. Strategic vision setting</label><label><input type="radio" name="fm_m6_q0" value="B"> B. Generating weekly status reports from structured data</label><label><input type="radio" name="fm_m6_q0" value="C"> C. Negotiating contracts</label><label><input type="radio" name="fm_m6_q0" value="D"> D. Leading stakeholder meetings</label>
+        </div>
+        <div class="q-block">
+          <p><span class="badge badge-gsdc">M6</span> Automated project reporting means:</p>
+          <label><input type="radio" name="fm_m6_q4" value="A"> A. Sending reports without PM review</label><label><input type="radio" name="fm_m6_q4" value="B"> B. AI aggregating data from multiple sources into a formatted report draft for PM review</label><label><input type="radio" name="fm_m6_q4" value="C"> C. Using interns only</label><label><input type="radio" name="fm_m6_q4" value="D"> D. Replacing the reporting function entirely</label>
+        </div>
+        <div class="q-block">
+          <p><span class="badge badge-gsdc">M7</span> Agentic AI in project management refers to:</p>
+          <label><input type="radio" name="fm_m7_q0" value="A"> A. AI that only answers questions</label><label><input type="radio" name="fm_m7_q0" value="B"> B. AI that can plan, act, and iterate on multi-step tasks autonomously</label><label><input type="radio" name="fm_m7_q0" value="C"> C. AI used only in agile projects</label><label><input type="radio" name="fm_m7_q0" value="D"> D. AI for financial forecasting only</label>
+        </div>
+        <div class="q-block">
+          <p><span class="badge badge-gsdc">M7</span> Generative AI's impact on the PMO (Project Management Office) will likely include:</p>
+          <label><input type="radio" name="fm_m7_q4" value="A"> A. Eliminating the PMO</label><label><input type="radio" name="fm_m7_q4" value="B"> B. Shifting PMO focus from reporting to strategic AI governance and quality oversight</label><label><input type="radio" name="fm_m7_q4" value="C"> C. Replacing all PMO tools with ChatGPT</label><label><input type="radio" name="fm_m7_q4" value="D"> D. No impact on PMO functions</label>
+        </div>
+        <div class="q-block">
+          <p><span class="badge badge-gsdc">M8</span> AI-enhanced presentations (e.g., Beautiful.ai, Tome) help PMs by:</p>
+          <label><input type="radio" name="fm_m8_q0" value="A"> A. Writing code automatically</label><label><input type="radio" name="fm_m8_q0" value="B"> B. Auto-generating slide layouts, visuals, and content from prompts</label><label><input type="radio" name="fm_m8_q0" value="C"> C. Replacing the presentation entirely</label><label><input type="radio" name="fm_m8_q0" value="D"> D. Only formatting fonts</label>
+        </div>
+        <div class="q-block">
+          <p><span class="badge badge-gsdc">M8</span> The purpose of a GenAI capstone project is to:</p>
+          <label><input type="radio" name="fm_m8_q4" value="A"> A. Summarise theoretical knowledge only</label><label><input type="radio" name="fm_m8_q4" value="B"> B. Apply all certification concepts to a real or simulated project scenario</label><label><input type="radio" name="fm_m8_q4" value="C"> C. Replace the final exam</label><label><input type="radio" name="fm_m8_q4" value="D"> D. Build a new AI model from scratch</label>
+        </div>
+  <button class="btn btn-orange" onclick="submitMock('fm', {"fm_m1_q0":"B","fm_m1_q4":"C","fm_m2_q0":"B","fm_m2_q4":"B","fm_m3_q0":"B","fm_m3_q4":"B","fm_m4_q0":"B","fm_m4_q4":"B","fm_m5_q0":"B","fm_m5_q4":"B","fm_m6_q0":"B","fm_m6_q4":"B","fm_m7_q0":"B","fm_m7_q4":"B","fm_m8_q0":"B","fm_m8_q4":"B"})">✅ Submit Full Mock & See Score</button>
+  <div id="fm_score" style="display:none;margin-top:12px;padding:14px;border-radius:8px;background:#fff3e0;font-size:1rem"></div>
+</div>
+  </div>
+</div>
+
+<script>
+function submitMock(prefix, answers) {
+  let correct = 0, total = Object.keys(answers).length;
+  for (let qid in answers) {
+    let selected = document.querySelector('input[name="'+qid+'"]:checked');
+    let resDiv = document.getElementById(qid+'_result');
+    if (selected) {
+      if (selected.value === answers[qid]) {
+        correct++;
+        if(resDiv){ resDiv.innerHTML = '✅ Correct!'; resDiv.className='result-box pass'; resDiv.style.display='block'; }
+      } else {
+        if(resDiv){ resDiv.innerHTML = '❌ Incorrect. Correct answer: ' + answers[qid]; resDiv.className='result-box fail'; resDiv.style.display='block'; }
+      }
+    } else {
+      if(resDiv){ resDiv.innerHTML = '⚠️ Not attempted'; resDiv.className='result-box'; resDiv.style.display='block'; resDiv.style.background='#f5f5f5'; }
+    }
+  }
+  let pct = Math.round(correct/total*100);
+  let scoreDiv = document.getElementById(prefix+'_score');
+  let msg = pct >= 70 ? '🎉 <strong>PASS</strong> — You scored ' + correct + '/' + total + ' (' + pct + '%). Ready for the GSDC exam!' 
+                      : '📚 <strong>Review needed</strong> — You scored ' + correct + '/' + total + ' (' + pct + '%). Revisit the module materials.';
+  scoreDiv.innerHTML = msg;
+  scoreDiv.style.display = 'block';
+  window.scrollTo(0, scoreDiv.offsetTop - 80);
+}
+</script>
+<footer>© 2026 GJIMT AI Lab · MBA AI Integrated Program · Powered by GitHub Pages</footer>
+</div><!-- /lms-page-content -->
+
+<script>
+// ── LMS Auth ──────────────────────────────────────────────────────────────
+(function(){
+  var USERS = {
+    'mba26-ai-01':'student@2026','mba26-ai-02':'student@2026','mba26-ai-03':'student@2026',
+    'mba26-ai-04':'student@2026','mba26-ai-05':'student@2026','mba26-ai-06':'student@2026',
+    'mba26-ai-07':'student@2026','mba26-ai-08':'student@2026','mba26-ai-09':'student@2026',
+    'mba26-ai-10':'student@2026',
+    'mba26-fac-tarun':'faculty@2026',
+    'mba26-admin':'admin@2026'
+  };
+  var ROLES = {
+    'mba26-ai-01':'student','mba26-ai-02':'student','mba26-ai-03':'student',
+    'mba26-ai-04':'student','mba26-ai-05':'student','mba26-ai-06':'student',
+    'mba26-ai-07':'student','mba26-ai-08':'student','mba26-ai-09':'student',
+    'mba26-ai-10':'student',
+    'mba26-fac-tarun':'faculty',
+    'mba26-admin':'admin'
+  };
+  var ALLOWED = ['student','faculty','admin'];  // roles allowed on this page
+
+  function getSession(){
+    try{ return JSON.parse(sessionStorage.getItem('lmsSession')||'null'); }
+    catch(e){ return null; }
+  }
+  function setSession(uid,role){
+    sessionStorage.setItem('lmsSession',JSON.stringify({uid:uid,role:role}));
+  }
+  function clearSession(){ sessionStorage.removeItem('lmsSession'); }
+
+  function unlock(session){
+    document.getElementById('lms-login-overlay').classList.remove('active');
+    document.getElementById('lms-logout-btn').style.display='block';
+    var wb=document.getElementById('lms-welcome-bar');
+    wb.style.display='block';
+    wb.textContent='Signed in as: '+session.uid+' ('+session.role+')  |  MBA AI Integrated Program 2026';
+    var content=document.getElementById('lms-page-content');
+    if(content) content.classList.add('unlocked');
+  }
+
+  window.lmsDoLogin=function(){
+    var uid=(document.getElementById('lms-uid').value||'').trim().toLowerCase();
+    var pwd=document.getElementById('lms-pwd').value||'';
+    var err=document.getElementById('lms-login-error');
+    if(!USERS[uid]){ err.textContent='❌ User ID not found.'; return; }
+    if(USERS[uid]!==pwd){ err.textContent='❌ Incorrect password.'; return; }
+    var role=ROLES[uid];
+    if(ALLOWED.indexOf(role)===-1){
+      err.textContent='⛔ Access denied. This page is for '+ALLOWED.join('/')+' only.'; return;
+    }
+    setSession(uid,role);
+    unlock({uid:uid,role:role});
+  };
+
+  window.lmsLogout=function(){
+    clearSession();
+    document.getElementById('lms-login-overlay').classList.add('active');
+    document.getElementById('lms-logout-btn').style.display='none';
+    document.getElementById('lms-welcome-bar').style.display='none';
+    var content=document.getElementById('lms-page-content');
+    if(content) content.classList.remove('unlocked');
+    document.getElementById('lms-uid').value='';
+    document.getElementById('lms-pwd').value='';
+    document.getElementById('lms-login-error').textContent='';
+  };
+
+  // Check existing session on load
+  var session=getSession();
+  if(session && USERS[session.uid] && ROLES[session.uid]===session.role && ALLOWED.indexOf(session.role)!==-1){
+    unlock(session);
+  }
+})();
+</script>
+
+<script>
+// ── Mock Date-Gate (student-only) ─────────────────────────────────────────
+(function(){
+  var MOCK_DATES = {"m1": "2026-08-08", "m2": "2026-08-22", "m3": "2026-09-05", "m4": "2026-09-19", "m5": "2026-10-03", "m6": "2026-10-17", "m7": "2026-10-31", "m8": "2026-11-07"};
+  var MOCK_LABELS = {"m1": "Week 1 Mock — M1: Prompt Engineering", "m2": "Week 3 Mock — M2: Generative AI Models", "m3": "Week 5 Mock — M3: AI in Project Planning", "m4": "Week 7 Mock — M4: Risk Assessment & Mitigation", "m5": "Week 9 Mock — M5: Data Analysis & Insights", "m6": "Week 11 Mock — M6: Automation & Efficiency", "m7": "Week 13 Mock — M7: Innovation & Future Trends", "m8": "Week 14 Mock — M8: Full Mock Exam"};
+
+  function getRole(){
+    try{ var s=JSON.parse(sessionStorage.getItem('lmsSession')||'null'); return s?s.role:null; }
+    catch(e){ return null; }
+  }
+
+  function applyDateGates(){
+    var role = getRole();
+    // Faculty/admin see everything — no date gate
+    if(role==='faculty'||role==='admin') return;
+
+    var today = new Date();
+    today.setHours(0,0,0,0);
+
+    Object.keys(MOCK_DATES).forEach(function(mid){
+      var section = document.getElementById(mid);
+      if(!section) return;
+      var unlockDate = new Date(MOCK_DATES[mid]);
+      unlockDate.setHours(0,0,0,0);
+
+      if(today < unlockDate){
+        // Calculate days remaining
+        var diff = Math.ceil((unlockDate - today)/(1000*60*60*24));
+        var label = MOCK_LABELS[mid]||mid;
+        var unlockStr = unlockDate.toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+        // Save original content and replace with lock overlay
+        var inner = section.innerHTML;
+        section.setAttribute('data-locked-content', encodeURIComponent(inner));
+        section.innerHTML = 
+          '<div style="padding:32px 24px;text-align:center;">' +
+          '<div style="font-size:3rem;margin-bottom:12px;">🔒</div>' +
+          '<h2 style="color:#0f3460;margin-bottom:8px;">📝 ' + label + '</h2>' +
+          '<div style="background:#fff3e0;border:1px solid #ffe082;border-radius:10px;padding:20px 28px;display:inline-block;margin-top:12px;">' +
+          '<p style="font-size:1rem;color:#e65100;font-weight:700;margin-bottom:6px;">⏳ This mock unlocks in <span style="font-size:1.4rem;">' + diff + '</span> day' + (diff!==1?'s':'') + '</p>' +
+          '<p style="font-size:.88rem;color:#555;margin-top:4px;">Available from: <strong>' + unlockStr + '</strong> (Saturday)</p>' +
+          '<p style="font-size:.8rem;color:#888;margin-top:10px;">Mock tests are released on Saturday of the scheduled week as per the 42-Hour Calendar.</p>' +
+          '</div></div>';
+      }
+    });
+  }
+
+  // Run after page content is unlocked by auth system
+  // Override the unlock function to also apply date gates
+  var origUnlock = window.lmsDoLogin;
+  // Use MutationObserver to detect when lms-page-content gets 'unlocked' class
+  var observer = new MutationObserver(function(mutations){
+    mutations.forEach(function(m){
+      if(m.type==='attributes' && m.attributeName==='class'){
+        var el = m.target;
+        if(el.classList.contains('unlocked')){
+          applyDateGates();
+        }
+      }
+    });
+  });
+  var content = document.getElementById('lms-page-content');
+  if(content){
+    observer.observe(content, {attributes:true});
+    // Also run now if already unlocked (session resume)
+    if(content.classList.contains('unlocked')) applyDateGates();
+  }
+})();
+</script>
+
+
+<script>
+// ── Sidebar lock icons ────────────────────────────────────────────────────
+(function(){
+  var MOCK_DATES = {"m1": "2026-08-08", "m2": "2026-08-22", "m3": "2026-09-05", "m4": "2026-09-19", "m5": "2026-10-03", "m6": "2026-10-17", "m7": "2026-10-31", "m8": "2026-11-07"};
+  var SIDEBAR_LABELS = {
+    'm1':'Week 1: M1','m2':'Week 3: M2','m3':'Week 5: M3','m4':'Week 7: M4',
+    'm5':'Week 9: M5','m6':'Week 11: M6','m7':'Week 13: M7','m8':'Week 14: Full Mock'
+  };
+
+  function updateSidebar(){
+    try{ var s=JSON.parse(sessionStorage.getItem('lmsSession')||'null'); var role=s?s.role:null;
+      if(role==='faculty'||role==='admin') return; }
+    catch(e){}
+    var today=new Date(); today.setHours(0,0,0,0);
+    Object.keys(MOCK_DATES).forEach(function(mid){
+      var link=document.querySelector('a[href="#'+mid+'"]');
+      if(!link) return;
+      var unlock=new Date(MOCK_DATES[mid]); unlock.setHours(0,0,0,0);
+      var lbl=SIDEBAR_LABELS[mid]||mid;
+      if(today<unlock){
+        link.textContent='🔒 '+lbl;
+        link.style.color='#666';
+        link.style.cursor='default';
+      } else {
+        link.textContent='✅ '+lbl;
+        link.style.color='#81c784';
+      }
+    });
+  }
+
+  var content=document.getElementById('lms-page-content');
+  if(content){
+    new MutationObserver(function(ms){
+      ms.forEach(function(m){
+        if(m.attributeName==='class'&&m.target.classList.contains('unlocked')) updateSidebar();
+      });
+    }).observe(content,{attributes:true});
+    if(content.classList.contains('unlocked')) updateSidebar();
+  }
+})();
+</script>
+
+</body></html>

@@ -1,0 +1,509 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Upload & Submission Guide — GJIMT LMS</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f6fb;color:#1a1a2e}
+  header{background:linear-gradient(135deg,#0f3460,#16213e);color:#fff;padding:18px 32px;display:flex;align-items:center;gap:16px}
+  header h1{font-size:1.4rem;font-weight:700}
+  header p{font-size:.82rem;opacity:.8}
+  nav{background:#16213e;display:flex;flex-wrap:wrap;gap:4px;padding:8px 32px}
+  nav a{color:#e0e0e0;text-decoration:none;padding:6px 14px;border-radius:4px;font-size:.85rem;transition:.2s}
+  nav a:hover,nav a.active{background:#0f3460;color:#fff}
+  .container{max-width:1000px;margin:28px auto;padding:0 20px}
+  .card{background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.08);padding:24px;margin-bottom:20px}
+  .card h2{color:#0f3460;margin-bottom:12px;font-size:1.1rem}
+  .card h3{color:#16213e;margin:16px 0 8px;font-size:.97rem}
+  table{width:100%;border-collapse:collapse;font-size:.88rem}
+  th{background:#0f3460;color:#fff;padding:9px 12px;text-align:left}
+  td{padding:8px 12px;border-bottom:1px solid #eee;vertical-align:middle}
+  tr:hover td{background:#f0f4ff}
+  .badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.75rem;font-weight:600}
+  .badge-student{background:#e3f2fd;color:#0f3460}
+  .badge-faculty{background:#e8f5e9;color:#1b5e20}
+  .badge-admin{background:#fff3e0;color:#e65100}
+  .btn{display:inline-block;padding:8px 18px;background:#0f3460;color:#fff;border-radius:6px;text-decoration:none;font-size:.85rem;margin:4px 2px;border:none;cursor:pointer;transition:.2s}
+  .btn:hover{background:#16213e}
+  .btn-green{background:#2e7d32}.btn-green:hover{background:#1b5e20}
+  .btn-red{background:#c62828}.btn-red:hover{background:#b71c1c}
+  .btn-orange{background:#e65100}.btn-orange:hover{background:#bf360c}
+  .hint{font-size:.8rem;color:#777;margin-top:5px}
+  .pwd{font-family:monospace;background:#f5f5f5;padding:2px 7px;border-radius:4px;color:#c62828;font-size:.85rem;letter-spacing:.04em}
+
+  /* LOGIN CARD */
+  .login-wrap{min-height:80vh;display:flex;align-items:center;justify-content:center}
+  .login-card{background:#fff;border-radius:14px;box-shadow:0 4px 24px rgba(0,0,0,.12);padding:40px 36px;width:100%;max-width:420px;text-align:center}
+  .login-card h2{color:#0f3460;margin-bottom:6px}
+  .login-card p{font-size:.85rem;color:#666;margin-bottom:24px}
+  .login-card input{width:100%;padding:11px 14px;border:1.5px solid #ccc;border-radius:7px;font-size:.95rem;margin-bottom:14px;outline:none;transition:.2s}
+  .login-card input:focus{border-color:#0f3460}
+  .login-card button{width:100%;padding:12px;background:#0f3460;color:#fff;border:none;border-radius:7px;font-size:1rem;cursor:pointer;transition:.2s}
+  .login-card button:hover{background:#16213e}
+  .error-msg{color:#c62828;font-size:.85rem;margin-top:8px;display:none}
+  .success-msg{color:#2e7d32;font-size:.85rem;margin-top:8px;display:none}
+
+  /* DASHBOARD (shown after login) */
+  #dashboard{display:none}
+  .dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:14px}
+  .dash-tile{background:#f8f9ff;border:1px solid #dde3f0;border-radius:10px;padding:18px;text-align:center;text-decoration:none;color:inherit;transition:.2s}
+  .dash-tile:hover{background:#e3f2fd;border-color:#0f3460}
+  .dash-tile .icon{font-size:2rem;margin-bottom:8px}
+  .dash-tile h3{font-size:.9rem;color:#0f3460}
+  .dash-tile p{font-size:.78rem;color:#777;margin-top:4px}
+  .user-banner{background:linear-gradient(135deg,#0f3460,#16213e);color:#fff;border-radius:10px;padding:18px 22px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center}
+  .user-banner h3{font-size:1rem}
+  .user-banner p{font-size:.82rem;opacity:.8;margin-top:3px}
+  .progress-bar{background:#e0e0e0;border-radius:6px;height:8px;margin-top:6px}
+  .progress-fill{background:#4caf50;border-radius:6px;height:8px;transition:.6s}
+
+  /* ADMIN TABLE */
+  #adminPanel{display:none}
+  footer{text-align:center;padding:18px;font-size:.8rem;color:#888;margin-top:30px}
+</style>
+
+<style>
+  .step{display:flex;gap:16px;margin-bottom:18px;align-items:flex-start}
+  .step-num{min-width:36px;height:36px;border-radius:50%;background:#0f3460;color:#fff;
+             display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem}
+  .step-body{flex:1}
+  .step-body h3{color:#0f3460;margin-bottom:4px;font-size:.95rem}
+  .file-name{font-family:monospace;background:#e8f5e9;color:#1b5e20;padding:3px 8px;
+              border-radius:4px;font-size:.85rem;display:inline-block;margin:2px 0}
+  .warn{background:#fff3e0;border-left:4px solid #e65100;padding:10px 14px;border-radius:0 6px 6px 0;
+         font-size:.88rem;margin:10px 0}
+  .tip{background:#e3f2fd;border-left:4px solid #0f3460;padding:10px 14px;border-radius:0 6px 6px 0;
+        font-size:.88rem;margin:10px 0}
+  .checklist label{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:.9rem;cursor:pointer}
+  .checklist input{width:16px;height:16px;accent-color:#0f3460}
+</style>
+</head><body>
+
+<!-- ═══════════════════ GJIMT LMS AUTH SYSTEM ════════════════════════ -->
+<style>
+#lms-login-overlay{display:none;position:fixed;inset:0;background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 60%,#0f172a 100%);z-index:99999;align-items:center;justify-content:center;font-family:'Segoe UI',sans-serif;}
+#lms-login-overlay.active{display:flex;}
+.lms-login-box{background:#fff;border-radius:18px;padding:40px 36px;width:360px;box-shadow:0 20px 60px rgba(0,0,0,.5);text-align:center;}
+.lms-login-box .lms-logo{font-size:2rem;margin-bottom:4px;}
+.lms-login-box h2{font-size:1.25rem;color:#0f172a;margin:0 0 4px;}
+.lms-login-box .lms-subtitle{font-size:.78rem;color:#64748b;margin-bottom:24px;}
+.lms-login-box input{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:.95rem;margin-bottom:12px;outline:none;transition:border .2s;}
+.lms-login-box input:focus{border-color:#3b82f6;}
+.lms-login-box button{width:100%;padding:12px;background:#3b82f6;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:4px;transition:background .2s;}
+.lms-login-box button:hover{background:#2563eb;}
+#lms-login-error{color:#ef4444;font-size:.82rem;margin-top:8px;min-height:18px;}
+.lms-login-box .lms-hint{font-size:.73rem;color:#94a3b8;margin-top:14px;line-height:1.5;}
+.lms-page-content{display:none;}
+.lms-page-content.unlocked{display:block;}
+.lms-logout-btn{position:fixed;top:12px;right:16px;z-index:9999;background:#ef4444;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:.8rem;cursor:pointer;font-weight:600;}
+.lms-logout-btn:hover{background:#dc2626;}
+.lms-welcome-bar{background:#0f172a;color:#94a3b8;font-size:.78rem;text-align:center;padding:5px;letter-spacing:.5px;}
+</style>
+
+<div id="lms-login-overlay" class="active">
+  <div class="lms-login-box">
+    <div class="lms-logo">🎓</div>
+    <h2>GJIMT MBA LMS</h2>
+    <div class="lms-subtitle">AI Integrated Program · 2026<br>Please sign in to continue</div>
+    <input type="text" id="lms-uid" placeholder="User ID" autocomplete="username" />
+    <input type="password" id="lms-pwd" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')lmsDoLogin()"/>
+    <button onclick="lmsDoLogin()">Sign In →</button>
+    <div id="lms-login-error"></div>
+    <div class="lms-hint">Students: <b>mba26-ai-01</b> … <b>mba26-ai-10</b><br>Faculty: <b>mba26-fac-tarun</b> &nbsp;|&nbsp; Admin: <b>mba26-admin</b><br>Contact faculty if you cannot sign in.</div>
+  </div>
+</div>
+<button class="lms-logout-btn" id="lms-logout-btn" style="display:none" onclick="lmsLogout()">⏻ Sign Out</button>
+<div id="lms-welcome-bar" class="lms-welcome-bar" style="display:none"></div>
+
+<div id="lms-page-content" class="lms-page-content">
+
+
+<header>
+  <div>
+    <h1>GJIMT AI Lab — MBA Sem 1 LMS</h1>
+    <p>MBA with AI Integration · 42-Hour Program · Aug–Nov 2026 · Batch of 10</p>
+  </div>
+</header>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="calendar.html">📅 42-Hour Calendar</a>
+  <a href="projects.html">📁 Shadow Projects</a>
+  <a href="mock.html">📝 GSDC Mock Tests</a>
+  <a href="faculty.html">👩‍🏫 Faculty Dashboard</a>
+  <a href="users.html" class="active">🔑 User Accounts</a>
+</nav>
+
+<div class="container">
+
+  <!-- ── INTRO ── -->
+  <div class="card">
+    <h2>📤 Student Upload & Submission Guide — MBA Sem 1</h2>
+    <p>This guide tells you exactly what to submit for each shadow project, how to name your files,
+    where to upload them, and what the Google Form looks like. Follow every step carefully —
+    incomplete or wrongly-named files will not be evaluated.</p>
+    <div style="margin-top:12px">
+      <a class="btn" href="#naming">📂 File Naming</a>
+      <a class="btn" href="#p1">P1 Checklist</a>
+      <a class="btn" href="#p2">P2 Checklist</a>
+      <a class="btn" href="#p3">P3 Checklist</a>
+      <a class="btn" href="#p4">P4 Checklist</a>
+      <a class="btn" href="#gsdc">GSDC Scenarios</a>
+      <a class="btn" href="#gdrive">Google Drive</a>
+    </div>
+  </div>
+
+  <!-- ── FILE NAMING ── -->
+  <div class="card" id="naming">
+    <h2>📂 File Naming Convention</h2>
+    <p style="margin-bottom:14px">Every file you submit must follow this exact format so faculty can identify it instantly:</p>
+    <div style="background:#f8f9ff;padding:16px;border-radius:8px;font-size:1.1rem;text-align:center;font-family:monospace;border:1px solid #dde3f0">
+      <strong>[UserID]_[ProjectCode]_[DocumentType].[extension]</strong>
+    </div>
+    <div class="tip" style="margin-top:12px">
+      <strong>Examples:</strong><br>
+      <span class="file-name">mba26-ai-03_P1_CompanyProfile.pdf</span><br>
+      <span class="file-name">mba26-ai-07_P1_ExcelWorkbook.xlsx</span><br>
+      <span class="file-name">mba26-ai-01_P2_JourneyMap.pdf</span><br>
+      <span class="file-name">mba26-ai-05_P4_PowerBIDashboard.pbix</span><br>
+      <span class="file-name">mba26-ai-09_P3_AIReflectionNote.pdf</span>
+    </div>
+    <div class="warn">
+      ❌ Do NOT use spaces in file names. Use underscore (_) between parts.<br>
+      ❌ Do NOT rename files after uploading. Faculty uses file names for tracking.<br>
+      ✅ Always export Word documents as PDF before uploading.
+    </div>
+    <h3 style="margin-top:16px">Project Codes</h3>
+    <table>
+      <tr><th>Code</th><th>Project</th><th>Deadline</th></tr>
+      <tr><td><strong>P1</strong></td><td>Market Entry Snapshot — Netflix / Jio</td><td>End of Week 6 — 11 Sep 2026</td></tr>
+      <tr><td><strong>P2</strong></td><td>Customer Journey Mapping — Zomato / Swiggy</td><td>End of Week 8 — 25 Sep 2026</td></tr>
+      <tr><td><strong>P3</strong></td><td>Startup Business Model Study</td><td>End of Week 10 — 09 Oct 2026</td></tr>
+      <tr><td><strong>P4</strong></td><td>Functional Dashboard Creation — Power BI / Looker</td><td>End of Week 12 — 23 Oct 2026</td></tr>
+    </table>
+  </div>
+
+  <!-- ── P1 ── -->
+  <div class="card" id="p1">
+    <h2>📁 P1 — Market Entry Snapshot (Netflix / Jio)</h2>
+    <p style="margin-bottom:14px"><strong>Deadline: 11 Sep 2026 (end of Week 6)</strong></p>
+
+    <h3>What to Submit (7 items)</h3>
+    <div class="checklist">
+      <label><input type="checkbox"> <span><strong>1. Company Profile Note</strong><br>
+        <span class="file-name">[UserID]_P1_CompanyProfile.pdf</span><br>
+        <span class="hint">1-page note on Netflix OR Jio — business model, pricing, expansion strategy. Word → export as PDF.</span>
+      </span></label>
+      <label><input type="checkbox"> <span><strong>2. Manual Framework Worksheet</strong><br>
+        <span class="file-name">[UserID]_P1_ManualWorksheet.pdf</span><br>
+        <span class="hint">Scanned or photographed hand-drawn framework (Market Segmentation Canvas OR Porter's 5 Forces). Merge into 1 PDF.</span>
+      </span></label>
+      <label><input type="checkbox"> <span><strong>3. Excel Data Workbook</strong><br>
+        <span class="file-name">[UserID]_P1_ExcelWorkbook.xlsx</span><br>
+        <span class="hint">3 sheets: City Demographics | Market Analysis | Google Trends Data. All manual calculations must be visible (no hidden sheets).</span>
+      </span></label>
+      <label><input type="checkbox"> <span><strong>4. Before-AI Insight Note</strong><br>
+        <span class="file-name">[UserID]_P1_BeforeAINote.pdf</span><br>
+        <span class="hint">300–400 words. What does your manual analysis tell you? What do you want AI to validate?</span>
+      </span></label>
+      <label><input type="checkbox"> <span><strong>5. Power BI Dashboard / Looker Studio Link</strong><br>
+        <span class="file-name">[UserID]_P1_Dashboard.pbix</span> &nbsp;OR&nbsp; paste Looker Studio shareable link in the Google Form<br>
+        <span class="hint">Must include: TAM KPI card, Market Share bar chart, Google Trends line chart, Revenue Projection card.</span>
+      </span></label>
+      <label><input type="checkbox"> <span><strong>6. Executive Presentation</strong><br>
+        <span class="file-name">[UserID]_P1_Presentation.pdf</span><br>
+        <span class="hint">6–8 slides from Beautiful.ai or Tome. Export as PDF. Slides must show: Market Overview, Segments, Competitive Landscape, Strategy, Financials, Risks, Recommendation.</span>
+      </span></label>
+      <label><input type="checkbox"> <span><strong>7. AI Reflection Note</strong><br>
+        <span class="file-name">[UserID]_P1_AIReflection.pdf</span><br>
+        <span class="hint">1 page. Answer: (a) What did AI find that you missed? (b) Where did human judgment matter more? (c) One ethical concern you noticed.</span>
+      </span></label>
+    </div>
+
+    <h3 style="margin-top:16px">How to Upload</h3>
+    <div class="step"><div class="step-num">1</div><div class="step-body">
+      <h3>Upload all 6 files to your Google Drive folder</h3>
+      <p>Create a folder named <span class="file-name">[UserID]_P1_Submission</span> in your Google Drive.
+      Upload all files there. Right-click the folder → Share → "Anyone with the link can view" → Copy link.</p>
+    </div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body">
+      <h3>Fill the P1 Google Form</h3>
+      <p>Open the P1 submission form (link shared by faculty on WhatsApp/LMS). You will enter:</p>
+      <ul style="margin-top:6px;padding-left:18px;font-size:.88rem">
+        <li>Your User ID</li>
+        <li>Your full name</li>
+        <li>City you analysed</li>
+        <li>Company chosen (Netflix / Jio)</li>
+        <li>Google Drive folder link (paste here)</li>
+        <li>Your 3 hypotheses (text box)</li>
+        <li>AI Reflection summary (text box — 100 words)</li>
+        <li>Scenario answer for that week's GSDC mock (text box)</li>
+      </ul>
+    </div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body">
+      <h3>Prepare for Viva (Week 6)</h3>
+      <p>You will present for <strong>5 minutes</strong> (slides) + <strong>3 minutes Q&A</strong> from faculty.
+      Bring your laptop with dashboard open. Know your prompts — faculty may ask you to run a live prompt.</p>
+    </div></div>
+    <a class="btn btn-green" href="https://forms.google.com" target="_blank">📤 Open P1 Google Form</a>
+  </div>
+
+  <!-- ── P2 ── -->
+  <div class="card" id="p2">
+    <h2>📁 P2 — Customer Journey Mapping (Zomato / Swiggy)</h2>
+    <p style="margin-bottom:14px"><strong>Deadline: 25 Sep 2026 (end of Week 8)</strong></p>
+    <h3>What to Submit (5 items)</h3>
+    <div class="checklist">
+      <label><input type="checkbox"> <span><strong>1. Ecosystem Overview</strong><br>
+        <span class="file-name">[UserID]_P2_EcosystemOverview.pdf</span><br>
+        <span class="hint">1-page: business model, app flow sketch, delivery ecosystem. Include hand-drawn app flow photo.</span>
+      </span></label>
+      <label><input type="checkbox"> <span><strong>2. Manual Journey Map Table</strong><br>
+        <span class="file-name">[UserID]_P2_ManualJourneyMap.pdf</span><br>
+        <span class="hint">Excel or hand-drawn table: 7–9 touchpoints × Customer Action | Emotion | Pain Point. Export as PDF.</span>
+      </span></label>
+      <label><input type="checkbox"> <span><strong>3. Friction Analysis Excel</strong><br>
+        <span class="file-name">[UserID]_P2_FrictionAnalysis.xlsx</span><br>
+        <span class="hint">Issue-frequency table: Friction Point | No. of Reviews | Severity (1–5) | Category (Tech/Ops/Comms).</span>
+      </span></label>
+      <label><input type="checkbox"> <span><strong>4. Visual Journey Map</strong><br>
+        <span class="file-name">[UserID]_P2_VisualMap.pdf</span><br>
+        <span class="hint">Canva AI or Miro swim-lane journey map. Export as PDF or screenshot if free plan.</span>
+      </span></label>
+      <label><input type="checkbox"> <span><strong>5. AI Reflection Note</strong><br>
+        <span class="file-name">[UserID]_P2_AIReflection.pdf</span>
+      </span></label>
+    </div>
+    <a class="btn btn-green" href="https://forms.google.com" target="_blank" style="margin-top:12px;display:inline-block">📤 Open P2 Google Form</a>
+  </div>
+
+  <!-- ── P3 ── -->
+  <div class="card" id="p3">
+    <h2>📁 P3 — Startup Business Model Study</h2>
+    <p style="margin-bottom:14px"><strong>Deadline: 09 Oct 2026 (end of Week 10)</strong></p>
+    <h3>What to Submit (6 items)</h3>
+    <div class="checklist">
+      <label><input type="checkbox"> <span><strong>1. Startup Profile</strong><br>
+        <span class="file-name">[UserID]_P3_StartupProfile.pdf</span><br>
+        <span class="hint">1 page: startup name, founder, year, product, funding stage, sources cited.</span>
+      </span></label>
+      <label><input type="checkbox"> <span><strong>2. Manual Business Model Canvas</strong><br>
+        <span class="file-name">[UserID]_P3_ManualBMC.pdf</span><br>
+        <span class="hint">Scanned printed BMC template or photographed whiteboard. All 9 blocks must be filled.</span>
+      </span></label>
+      <label><input type="checkbox"> <span><strong>3. Before-AI Viability Note</strong><br>
+        <span class="file-name">[UserID]_P3_BeforeAINote.pdf</span><br>
+        <span class="hint">200 words: Is this startup viable based on your manual assessment? Justify with data.</span>
+      </span></label>
+      <label><input type="checkbox"> <span><strong>4. AI-Enhanced BMC (Notion AI / ChatGPT)</strong><br>
+        <span class="file-name">[UserID]_P3_AIBMC.pdf</span><br>
+        <span class="hint">AI-generated or AI-improved BMC with all 9 blocks. Include the exact prompts used (as an appendix page).</span>
+      </span></label>
+      <label><input type="checkbox"> <span><strong>5. Financial Model (Excel)</strong><br>
+        <span class="file-name">[UserID]_P3_FinancialModel.xlsx</span><br>
+        <span class="hint">3 revenue/cost scenarios: Conservative | Base | Optimistic. Simple table is fine.</span>
+      </span></label>
+      <label><input type="checkbox"> <span><strong>6. AI Reflection Note</strong><br>
+        <span class="file-name">[UserID]_P3_AIReflection.pdf</span>
+      </span></label>
+    </div>
+    <a class="btn btn-green" href="https://forms.google.com" target="_blank" style="margin-top:12px;display:inline-block">📤 Open P3 Google Form</a>
+  </div>
+
+  <!-- ── P4 ── -->
+  <div class="card" id="p4">
+    <h2>📁 P4 — Functional Dashboard Creation (Power BI / Looker Studio)</h2>
+    <p style="margin-bottom:14px"><strong>Deadline: 23 Oct 2026 (end of Week 12)</strong></p>
+    <h3>What to Submit (5 items)</h3>
+    <div class="checklist">
+      <label><input type="checkbox"> <span><strong>1. KPI Specification Sheet</strong><br>
+        <span class="file-name">[UserID]_P4_KPISpec.pdf</span><br>
+        <span class="hint">Table: KPI Name | Definition | Formula | Target | Source. Must list 4 SMART KPIs.</span>
+      </span></label>
+      <label><input type="checkbox"> <span><strong>2. Cleaned Data Workbook</strong><br>
+        <span class="file-name">[UserID]_P4_CleanData.xlsx</span><br>
+        <span class="hint">Faculty-provided dataset cleaned and structured. Manual pivot tables on a separate sheet.</span>
+      </span></label>
+      <label><input type="checkbox"> <span><strong>3. Dashboard File or Link</strong><br>
+        <span class="file-name">[UserID]_P4_Dashboard.pbix</span> &nbsp;OR&nbsp; Looker Studio shareable link in the form<br>
+        <span class="hint">Must contain: 2 charts (bar + line) + 4 KPI cards + AI insight summary text box. Interactive filters preferred.</span>
+      </span></label>
+      <label><input type="checkbox"> <span><strong>4. Insight Report</strong><br>
+        <span class="file-name">[UserID]_P4_InsightReport.pdf</span><br>
+        <span class="hint">1–2 pages: One paragraph of narrative per KPI (AI-generated draft reviewed and edited by you). What story does the data tell?</span>
+      </span></label>
+      <label><input type="checkbox"> <span><strong>5. AI Reflection Note</strong><br>
+        <span class="file-name">[UserID]_P4_AIReflection.pdf</span>
+      </span></label>
+    </div>
+    <a class="btn btn-green" href="https://forms.google.com" target="_blank" style="margin-top:12px;display:inline-block">📤 Open P4 Google Form</a>
+  </div>
+
+  <!-- ── GSDC SCENARIO SUBMISSIONS ── -->
+  <div class="card" id="gsdc">
+    <h2>📝 GSDC Scenario Answer Submissions</h2>
+    <p style="margin-bottom:14px">Every Saturday mock test has 1 scenario question that requires a written answer.
+    MCQs are auto-scored on the LMS. Your scenario answer must be submitted separately via Google Form.</p>
+    <div class="step"><div class="step-num">1</div><div class="step-body">
+      <h3>Attempt the scenario question on mock.html</h3>
+      <p>Read the scenario carefully. Type your answer in the text box provided on the mock page.
+      Take a screenshot or copy your answer before submitting.</p>
+    </div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body">
+      <h3>Submit via the weekly GSDC Scenario Form</h3>
+      <p>A Google Form link is shared every Friday by faculty (via WhatsApp / LMS). It will ask for:</p>
+      <ul style="margin-top:6px;padding-left:18px;font-size:.88rem">
+        <li>Your User ID</li>
+        <li>Module number (M1–M8)</li>
+        <li>Your MCQ score (from the auto-score result)</li>
+        <li>Your scenario answer (paste in text box)</li>
+      </ul>
+    </div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body">
+      <h3>Feedback returned before next Saturday</h3>
+      <p>Faculty reviews scenario answers and shares feedback during the <strong>Friday doubt session</strong>.
+      Your scenario score (out of 30) is added to your mock MCQ score (out of 100).</p>
+    </div></div>
+    <div class="warn">📌 Scenario submissions submitted after Sunday midnight will not be evaluated for that week's mock.
+    They can still be submitted late but will be marked as "Practice Only."</div>
+    <a class="btn btn-orange" href="https://forms.google.com" target="_blank" style="margin-top:8px;display:inline-block">📤 Open Weekly GSDC Scenario Form</a>
+  </div>
+
+  <!-- ── GOOGLE DRIVE GUIDE ── -->
+  <div class="card" id="gdrive">
+    <h2>☁️ Google Drive Setup Guide</h2>
+    <p style="margin-bottom:14px">All file uploads are done by sharing a Google Drive folder link in the Google Form. Follow these steps once:</p>
+    <div class="step"><div class="step-num">1</div><div class="step-body">
+      <h3>Create your semester folder</h3>
+      <p>In Google Drive, create a top-level folder named:
+      <span class="file-name">[Your UserID]_MBA26_AI_Submissions</span><br>
+      Example: <span class="file-name">mba26-ai-04_MBA26_AI_Submissions</span></p>
+    </div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body">
+      <h3>Create one sub-folder per project</h3>
+      <p>Inside, create 4 sub-folders:</p>
+      <span class="file-name">P1_MarketEntry</span> &nbsp;
+      <span class="file-name">P2_JourneyMap</span> &nbsp;
+      <span class="file-name">P3_StartupBMC</span> &nbsp;
+      <span class="file-name">P4_Dashboard</span>
+    </div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body">
+      <h3>Set sharing permissions on the main folder</h3>
+      <p>Right-click the main folder → Share → General access → <strong>"Anyone with the link" → "Viewer"</strong>.
+      Copy the link — paste this ONE link into every Google Form submission.</p>
+    </div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body">
+      <h3>Upload files to the correct sub-folder</h3>
+      <p>Before each deadline, upload all project files to the relevant sub-folder using the naming convention above.
+      Faculty will access via the single shared link.</p>
+    </div></div>
+    <div class="tip">💡 <strong>Tip:</strong> Use Google Docs/Sheets directly inside Drive to avoid the "convert to PDF" step.
+    For Power BI (.pbix) files, upload to Drive and paste the download link in the form.</div>
+
+    <h3 style="margin-top:16px">Accepted File Formats</h3>
+    <table>
+      <tr><th>Document Type</th><th>Accepted Format(s)</th></tr>
+      <tr><td>Notes, reports, reflections</td><td>PDF (preferred) or Google Docs link</td></tr>
+      <tr><td>Excel workbooks, data files</td><td>.xlsx (must open in Excel/Google Sheets)</td></tr>
+      <tr><td>Presentations</td><td>PDF (export from Beautiful.ai / Tome / PowerPoint)</td></tr>
+      <tr><td>Dashboards</td><td>.pbix (Power BI) OR Looker Studio shareable link</td></tr>
+      <tr><td>Journey maps, BMC photos</td><td>PDF or JPG (minimum 2MB for clarity)</td></tr>
+      <tr><td>Financial models</td><td>.xlsx</td></tr>
+    </table>
+  </div>
+
+  <!-- ── QUICK CHECKLIST ── -->
+  <div class="card">
+    <h2>✅ Before You Submit — Final Checklist</h2>
+    <div class="checklist">
+      <label><input type="checkbox"> File names follow the exact naming convention</label>
+      <label><input type="checkbox"> All files are inside the correct Google Drive sub-folder</label>
+      <label><input type="checkbox"> Google Drive folder is set to "Anyone with link can view"</label>
+      <label><input type="checkbox"> Google Form is fully filled (no blank required fields)</label>
+      <label><input type="checkbox"> Hypotheses / Scenario answers are pasted in the form text boxes</label>
+      <label><input type="checkbox"> Before-AI note is included (shows you did manual work first)</label>
+      <label><input type="checkbox"> AI Reflection Note is included (not just AI output — your analysis)</label>
+      <label><input type="checkbox"> Prompts used are listed in an appendix (inside AI documents)</label>
+      <label><input type="checkbox"> You have submitted before the deadline shown above</label>
+    </div>
+    <div class="warn" style="margin-top:14px">⚠️ Submissions missing the Before-AI Note OR the AI Reflection Note will be returned
+    without evaluation. These two documents are mandatory for every project.</div>
+  </div>
+
+</div>
+<footer>© 2026 GJIMT AI Lab · MBA AI Integrated Program · Powered by GitHub Pages</footer>
+</div><!-- /lms-page-content -->
+
+<script>
+// ── LMS Auth ──────────────────────────────────────────────────────────────
+(function(){
+  var USERS = {
+    'mba26-ai-01':'student@2026','mba26-ai-02':'student@2026','mba26-ai-03':'student@2026',
+    'mba26-ai-04':'student@2026','mba26-ai-05':'student@2026','mba26-ai-06':'student@2026',
+    'mba26-ai-07':'student@2026','mba26-ai-08':'student@2026','mba26-ai-09':'student@2026',
+    'mba26-ai-10':'student@2026',
+    'mba26-fac-tarun':'faculty@2026',
+    'mba26-admin':'admin@2026'
+  };
+  var ROLES = {
+    'mba26-ai-01':'student','mba26-ai-02':'student','mba26-ai-03':'student',
+    'mba26-ai-04':'student','mba26-ai-05':'student','mba26-ai-06':'student',
+    'mba26-ai-07':'student','mba26-ai-08':'student','mba26-ai-09':'student',
+    'mba26-ai-10':'student',
+    'mba26-fac-tarun':'faculty',
+    'mba26-admin':'admin'
+  };
+  var ALLOWED = ['student','faculty','admin'];  // roles allowed on this page
+
+  function getSession(){
+    try{ return JSON.parse(sessionStorage.getItem('lmsSession')||'null'); }
+    catch(e){ return null; }
+  }
+  function setSession(uid,role){
+    sessionStorage.setItem('lmsSession',JSON.stringify({uid:uid,role:role}));
+  }
+  function clearSession(){ sessionStorage.removeItem('lmsSession'); }
+
+  function unlock(session){
+    document.getElementById('lms-login-overlay').classList.remove('active');
+    document.getElementById('lms-logout-btn').style.display='block';
+    var wb=document.getElementById('lms-welcome-bar');
+    wb.style.display='block';
+    wb.textContent='Signed in as: '+session.uid+' ('+session.role+')  |  MBA AI Integrated Program 2026';
+    var content=document.getElementById('lms-page-content');
+    if(content) content.classList.add('unlocked');
+  }
+
+  window.lmsDoLogin=function(){
+    var uid=(document.getElementById('lms-uid').value||'').trim().toLowerCase();
+    var pwd=document.getElementById('lms-pwd').value||'';
+    var err=document.getElementById('lms-login-error');
+    if(!USERS[uid]){ err.textContent='❌ User ID not found.'; return; }
+    if(USERS[uid]!==pwd){ err.textContent='❌ Incorrect password.'; return; }
+    var role=ROLES[uid];
+    if(ALLOWED.indexOf(role)===-1){
+      err.textContent='⛔ Access denied. This page is for '+ALLOWED.join('/')+' only.'; return;
+    }
+    setSession(uid,role);
+    unlock({uid:uid,role:role});
+  };
+
+  window.lmsLogout=function(){
+    clearSession();
+    document.getElementById('lms-login-overlay').classList.add('active');
+    document.getElementById('lms-logout-btn').style.display='none';
+    document.getElementById('lms-welcome-bar').style.display='none';
+    var content=document.getElementById('lms-page-content');
+    if(content) content.classList.remove('unlocked');
+    document.getElementById('lms-uid').value='';
+    document.getElementById('lms-pwd').value='';
+    document.getElementById('lms-login-error').textContent='';
+  };
+
+  // Check existing session on load
+  var session=getSession();
+  if(session && USERS[session.uid] && ROLES[session.uid]===session.role && ALLOWED.indexOf(session.role)!==-1){
+    unlock(session);
+  }
+})();
+</script>
+</body></html>

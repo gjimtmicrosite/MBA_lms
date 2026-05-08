@@ -1,0 +1,259 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shadow Projects — GJIMT LMS</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f6fb;color:#1a1a2e}
+  header{background:linear-gradient(135deg,#0f3460,#16213e);color:#fff;padding:18px 32px;display:flex;align-items:center;gap:16px}
+  header img{height:48px;border-radius:6px}
+  header h1{font-size:1.4rem;font-weight:700}
+  header p{font-size:.82rem;opacity:.8}
+  nav{background:#16213e;display:flex;flex-wrap:wrap;gap:4px;padding:8px 32px}
+  nav a{color:#e0e0e0;text-decoration:none;padding:6px 14px;border-radius:4px;font-size:.85rem;transition:.2s}
+  nav a:hover,nav a.active{background:#0f3460;color:#fff}
+  .container{max-width:1100px;margin:28px auto;padding:0 20px}
+  .card{background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.08);padding:24px;margin-bottom:20px}
+  .card h2{color:#0f3460;margin-bottom:12px;font-size:1.1rem}
+  .card h3{color:#16213e;margin:14px 0 8px;font-size:.97rem}
+  table{width:100%;border-collapse:collapse;font-size:.88rem}
+  th{background:#0f3460;color:#fff;padding:9px 12px;text-align:left}
+  td{padding:8px 12px;border-bottom:1px solid #eee}
+  tr:hover td{background:#f0f4ff}
+  .badge{display:inline-block;padding:2px 9px;border-radius:12px;font-size:.75rem;font-weight:600}
+  .badge-proj{background:#e3f2fd;color:#0f3460}
+  .badge-gsdc{background:#e8f5e9;color:#1b5e20}
+  .badge-mock{background:#fff3e0;color:#e65100}
+  .badge-doubt{background:#f3e5f5;color:#6a1b9a}
+  .btn{display:inline-block;padding:8px 18px;background:#0f3460;color:#fff;border-radius:6px;text-decoration:none;font-size:.85rem;margin:4px 2px;border:none;cursor:pointer}
+  .btn:hover{background:#16213e}
+  .btn-green{background:#2e7d32}
+  .btn-green:hover{background:#1b5e20}
+  .btn-orange{background:#e65100}
+  .week-row-proj{background:#e3f2fd}
+  .week-row-gsdc{background:#e8f5e9}
+  ul,ol{padding-left:20px;margin:8px 0}
+  li{margin:4px 0;font-size:.9rem}
+  .phase-box{border-left:4px solid #0f3460;padding:10px 14px;margin:8px 0;background:#f8f9ff;border-radius:0 6px 6px 0}
+  .phase-box.ai{border-color:#2e7d32}
+  .phase-box.manual{border-color:#e65100}
+  .hint{font-size:.8rem;color:#666;margin-top:6px}
+  .user-table td:last-child{font-family:monospace;color:#c62828}
+  footer{text-align:center;padding:18px;font-size:.8rem;color:#888;margin-top:30px}
+  .q-block{background:#f8f9ff;border-radius:8px;padding:14px;margin-bottom:14px;border:1px solid #dde3f0}
+  .q-block p{font-weight:600;margin-bottom:8px}
+  .q-block label{display:block;margin:4px 0;cursor:pointer;font-size:.9rem}
+  .scenario-box{background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:14px;margin-bottom:14px}
+  .scenario-box p{font-weight:600;color:#e65100;margin-bottom:8px}
+  textarea{width:100%;border:1px solid #ccc;border-radius:6px;padding:8px;font-size:.88rem;resize:vertical}
+  .result-box{display:none;padding:12px;border-radius:6px;margin-top:10px;font-weight:600}
+  .pass{background:#e8f5e9;color:#2e7d32;display:block}
+  .fail{background:#ffebee;color:#c62828;display:block}
+</style>
+</head><body>
+
+<!-- ═══════════════════ GJIMT LMS AUTH SYSTEM ════════════════════════ -->
+<style>
+#lms-login-overlay{display:none;position:fixed;inset:0;background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 60%,#0f172a 100%);z-index:99999;align-items:center;justify-content:center;font-family:'Segoe UI',sans-serif;}
+#lms-login-overlay.active{display:flex;}
+.lms-login-box{background:#fff;border-radius:18px;padding:40px 36px;width:360px;box-shadow:0 20px 60px rgba(0,0,0,.5);text-align:center;}
+.lms-login-box .lms-logo{font-size:2rem;margin-bottom:4px;}
+.lms-login-box h2{font-size:1.25rem;color:#0f172a;margin:0 0 4px;}
+.lms-login-box .lms-subtitle{font-size:.78rem;color:#64748b;margin-bottom:24px;}
+.lms-login-box input{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:.95rem;margin-bottom:12px;outline:none;transition:border .2s;}
+.lms-login-box input:focus{border-color:#3b82f6;}
+.lms-login-box button{width:100%;padding:12px;background:#3b82f6;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:4px;transition:background .2s;}
+.lms-login-box button:hover{background:#2563eb;}
+#lms-login-error{color:#ef4444;font-size:.82rem;margin-top:8px;min-height:18px;}
+.lms-login-box .lms-hint{font-size:.73rem;color:#94a3b8;margin-top:14px;line-height:1.5;}
+.lms-page-content{display:none;}
+.lms-page-content.unlocked{display:block;}
+.lms-logout-btn{position:fixed;top:12px;right:16px;z-index:9999;background:#ef4444;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:.8rem;cursor:pointer;font-weight:600;}
+.lms-logout-btn:hover{background:#dc2626;}
+.lms-welcome-bar{background:#0f172a;color:#94a3b8;font-size:.78rem;text-align:center;padding:5px;letter-spacing:.5px;}
+</style>
+
+<div id="lms-login-overlay" class="active">
+  <div class="lms-login-box">
+    <div class="lms-logo">🎓</div>
+    <h2>GJIMT MBA LMS</h2>
+    <div class="lms-subtitle">AI Integrated Program · 2026<br>Please sign in to continue</div>
+    <input type="text" id="lms-uid" placeholder="User ID" autocomplete="username" />
+    <input type="password" id="lms-pwd" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')lmsDoLogin()"/>
+    <button onclick="lmsDoLogin()">Sign In →</button>
+    <div id="lms-login-error"></div>
+    <div class="lms-hint">Students: <b>mba26-ai-01</b> … <b>mba26-ai-10</b><br>Faculty: <b>mba26-fac-tarun</b> &nbsp;|&nbsp; Admin: <b>mba26-admin</b><br>Contact faculty if you cannot sign in.</div>
+  </div>
+</div>
+<button class="lms-logout-btn" id="lms-logout-btn" style="display:none" onclick="lmsLogout()">⏻ Sign Out</button>
+<div id="lms-welcome-bar" class="lms-welcome-bar" style="display:none"></div>
+
+<div id="lms-page-content" class="lms-page-content">
+
+
+<header>
+  <div>
+    <h1>GJIMT AI Lab — MBA Sem 1 LMS</h1>
+    <p>MBA with AI Integration · 42-Hour Program · Aug–Nov 2026 · Batch of 10</p>
+  </div>
+</header>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="calendar.html">📅 42-Hour Calendar</a>
+  <a href="projects.html">📁 Shadow Projects</a>
+  <a href="mock.html">📝 GSDC Mock Tests</a>
+  <a href="faculty.html">👩‍🏫 Faculty Dashboard</a>
+  <a href="users.html">🔑 User Accounts</a>
+</nav>
+
+<div class="container">
+  <div class="card">
+    <h2>📁 4 Benchmarked Shadow Projects — MBA Sem 1</h2>
+    <p>Each project uses a 4-phase framework: <strong>Company Context → Manual Framework → Data & Analysis → AI Lab.</strong>
+    Students must complete and submit the manual phases before the AI phase unlocks each week.</p>
+    <div style="margin-top:10px">
+      <a class="btn" href="#P1">P1: Netflix/Jio</a>
+      <a class="btn" href="#P2">P2: Zomato/Swiggy</a>
+      <a class="btn" href="#P3">P3: Startup BMC</a>
+      <a class="btn" href="#P4">P4: KPI Dashboard</a>
+    </div>
+  </div>
+  
+    <div class="card" id="P1">
+      <h2>🎬 P1: Market Entry Snapshot <span class="badge badge-proj">Netflix / Jio</span> <span class="badge badge-mock">Weeks 1–6 (9 hours)</span></h2>
+      <p><strong>Objective:</strong> Analyse one city/region for product or service expansion using pricing, competitors, and customer segments.</p>
+      <p style="margin-top:6px"><strong>AI Tools:</strong> Google Trends · ChatGPT · Excel AI · Power BI/Looker Studio · Beautiful.ai/Tome</p>
+      <h3>📋 4-Phase Framework</h3>
+      <p class="hint" style="margin-bottom:8px">🟠 Orange = Manual (no AI) · 🤖 Green = AI Augmentation · Complete manual phases before proceeding to AI phase.</p>
+      <div class="phase-box manual"><strong>🔵 Phase 1 — Company Context (Hours 1–3)</strong><ul style="margin-top:8px"><li>Select Netflix or Jio as your benchmarked company</li><li>Study company profile: revenue model, pricing tiers, expansion strategy</li><li>Select ONE city (5–20 lakh population) for your market entry analysis</li><li>Create a 1-page company snapshot (Word/Docs) — NO AI yet</li><li>Deliverable: Company profile note + city selection rationale (200 words)</li></ul></div><div class="phase-box manual"><strong>🟠 Phase 2 — Manual Framework (Hours 4–6)</strong><ul style="margin-top:8px"><li>Apply Market Segmentation Canvas OR Porter's Five Forces for your city — pen/paper or whiteboard</li><li>Manually calculate estimated TAM (Total Addressable Market) for your segment</li><li>Write 2–3 hypotheses in format: 'I believe [segment] in [city] will adopt [company] if [condition] because [reason]'</li><li>Collect data from: census.gov.in, TRAI reports, company website, Google Trends</li><li>Deliverable: Completed manual worksheet + data checklist (Excel template provided below)</li></ul></div><div class="phase-box manual"><strong>🟢 Phase 3 — Data Structuring (Hours 7–8)</strong><ul style="margin-top:8px"><li>Build Excel workbook with 3 sheets: City Demographics, Market Analysis, Google Trends Data</li><li>Calculate manually: TAM, market penetration %, competitor market share</li><li>Write a 300-word 'Before AI Insight Note' summarising your manual findings and what you want AI to validate</li><li>Deliverable: Excel workbook + Before AI note submitted to LMS</li></ul></div><div class="phase-box ai"><strong>🤖 Phase 4 — AI Lab (Hours 8–9)</strong><ul style="margin-top:8px"><li>Tool 1 — Google Trends: Compare search interest for Netflix/Jio in your city vs competitors (12-month trend)</li><li>Tool 2 — ChatGPT: PESTLE analysis prompt → 'Act as a strategic analyst. Conduct PESTLE for OTT/Telecom in [city] India 2026. Focus on Tier-2 city factors. Present as structured table.'</li><li>Tool 3 — Excel AI: Generate competitive comparison table and subscriber growth forecast</li><li>Tool 4 — Power BI / Looker Studio: Build 4-KPI dashboard (TAM, Market Share, Google Trend Index, Revenue Projection)</li><li>Tool 5 — Beautiful.ai / Tome: Create 6-8 slide executive presentation</li><li>Write 1-page AI Reflection Note: What did AI find that you missed? Where did human judgment matter?</li><li>Deliverable: Dashboard + Presentation + AI Reflection Note + Viva (5 min presentation + 3 min Q&A)</li></ul></div>
+      <h3>📊 Evaluation Rubric</h3>
+      <table><tr><th>Criteria</th><th>Weight</th><th>Focus</th></tr><tr><td>Company Understanding</td><td><strong>30%</strong></td><td>Business model, pricing, competitive landscape clarity</td></tr><tr><td>Concept Application</td><td><strong>30%</strong></td><td>Framework quality, hypothesis testing, manual analysis accuracy</td></tr><tr><td>AI Tool Proficiency</td><td><strong>40%</strong></td><td>Prompt engineering, dashboard quality, AI vs human insight balance</td></tr></table>
+      <h3 style="margin-top:14px">📚 Learning Resources</h3>
+      <a class="btn" href="https://support.google.com/trends" target="_blank">Google Trends Tutorial</a><a class="btn" href="https://platform.openai.com/docs/guides/prompt-engineering" target="_blank">ChatGPT Prompt Engineering Guide</a><a class="btn" href="https://youtube.com/results?search_query=power+bi+beginners+2024" target="_blank">Power BI for Beginners (YouTube)</a><a class="btn" href="https://support.beautiful.ai" target="_blank">Beautiful.ai Tutorial</a>
+      <div style="margin-top:12px">
+        <a class="btn btn-green" href="https://docs.google.com/forms/create" target="_blank">📤 Submit P1 on Google Form</a>
+      </div>
+    </div>
+    <div class="card" id="P2">
+      <h2>🍔 P2: Customer Journey Mapping <span class="badge badge-proj">Zomato / Swiggy</span> <span class="badge badge-mock">Weeks 7–8 (9 hours)</span></h2>
+      <p><strong>Objective:</strong> Map the end-to-end customer journey (order to delivery) and identify 3 friction points with solutions.</p>
+      <p style="margin-top:6px"><strong>AI Tools:</strong> ChatGPT · Excel AI · Canva / Miro · Power BI</p>
+      <h3>📋 4-Phase Framework</h3>
+      <p class="hint" style="margin-bottom:8px">🟠 Orange = Manual (no AI) · 🤖 Green = AI Augmentation · Complete manual phases before proceeding to AI phase.</p>
+      <div class="phase-box manual"><strong>🔵 Phase 1 — Ecosystem Understanding (Hours 1–3)</strong><ul style="margin-top:8px"><li>Study Zomato or Swiggy: business model, app flow, delivery ecosystem, revenue streams</li><li>Download and use the app actively — note every screen, wait time, and interaction</li><li>Read 20+ app store reviews and identify recurring complaints</li><li>Deliverable: 1-page ecosystem overview + app flow sketch (hand-drawn)</li></ul></div><div class="phase-box manual"><strong>🟠 Phase 2 — Manual Journey Map (Hours 4–6)</strong><ul style="margin-top:8px"><li>Map 7–9 touchpoints from: App open → Search → Select → Order → Payment → Tracking → Delivery → Post-delivery</li><li>For each touchpoint: note Customer Action | Emotion (😊😐😟) | Pain Point</li><li>Identify 3 friction points by frequency (from app reviews) and severity</li><li>Deliverable: Completed journey map table (Excel or hand-drawn) + friction point summary</li></ul></div><div class="phase-box manual"><strong>🟢 Phase 3 — Data Analysis (Hours 7–8)</strong><ul style="margin-top:8px"><li>Categorise all friction points: Technology | Operations | Communication</li><li>Build an issue-frequency Excel table: Friction Point | No. of Reviews Mentioning | Severity (1–5)</li><li>Write Before AI note (200 words): What are your top 3 insights from manual analysis?</li></ul></div><div class="phase-box ai"><strong>🤖 Phase 4 — AI Lab (Hours 8–9)</strong><ul style="margin-top:8px"><li>ChatGPT Prompt: 'Act as a service design expert. For Zomato/Swiggy in [city], map the complete customer journey from app open to post-delivery. For each touchpoint, identify emotion, pain point, and solution. Present as a detailed table.'</li><li>Excel AI: Build issue-frequency mapping chart — friction point vs. frequency vs. severity</li><li>ChatGPT: 'Based on this complaint data [paste], identify top 3 friction points by frequency and severity. For each, recommend a specific operational or tech solution.'</li><li>Canva AI / Miro: Build visual journey map (swim-lane style)</li><li>Deliverable: Visual journey map + friction point analysis report + AI Reflection Note + Viva</li></ul></div>
+      <h3>📊 Evaluation Rubric</h3>
+      <table><tr><th>Criteria</th><th>Weight</th><th>Focus</th></tr><tr><td>Journey Completeness</td><td><strong>30%</strong></td><td>All 7–9 touchpoints covered with emotion mapping</td></tr><tr><td>Friction Analysis</td><td><strong>30%</strong></td><td>Quality of 3 friction points — evidence-based, categorised</td></tr><tr><td>AI Augmentation</td><td><strong>40%</strong></td><td>Prompt quality, visual output, Before vs After AI comparison</td></tr></table>
+      <h3 style="margin-top:14px">📚 Learning Resources</h3>
+      <a class="btn" href="https://www.nngroup.com/articles/journey-mapping-101/" target="_blank">Journey Mapping Guide (Nielsen Norman)</a><a class="btn" href="https://miro.com/templates/customer-journey-map/" target="_blank">Miro Journey Map Template</a><a class="btn" href="https://openai.com" target="_blank">ChatGPT for Business Analysis</a>
+      <div style="margin-top:12px">
+        <a class="btn btn-green" href="https://docs.google.com/forms/create" target="_blank">📤 Submit P2 on Google Form</a>
+      </div>
+    </div>
+    <div class="card" id="P3">
+      <h2>🚀 P3: Startup Business Model Study <span class="badge badge-proj">Google for Startups / Microsoft Accelerator</span> <span class="badge badge-mock">Weeks 9–10 (8 hours)</span></h2>
+      <p><strong>Objective:</strong> Analyse revenue model, cost structure, and value proposition of a live or recently funded startup.</p>
+      <p style="margin-top:6px"><strong>AI Tools:</strong> Notion AI · ChatGPT · Crunchbase · Excel AI</p>
+      <h3>📋 4-Phase Framework</h3>
+      <p class="hint" style="margin-bottom:8px">🟠 Orange = Manual (no AI) · 🤖 Green = AI Augmentation · Complete manual phases before proceeding to AI phase.</p>
+      <div class="phase-box manual"><strong>🔵 Phase 1 — Startup Selection & Context (Hours 1–3)</strong><ul style="margin-top:8px"><li>Choose ONE startup from Google for Startups India portfolio OR Microsoft for Startups portfolio</li><li>Research: funding stage, founding year, product/service, target market, geography</li><li>Sources: Crunchbase, Inc42, YourStory, startup's own website</li><li>Deliverable: 1-page startup profile (no AI)</li></ul></div><div class="phase-box manual"><strong>🟠 Phase 2 — Manual Business Model Canvas (Hours 4–5)</strong><ul style="margin-top:8px"><li>Fill all 9 BMC blocks manually: Key Partners | Key Activities | Key Resources | Value Propositions | Customer Relationships | Channels | Customer Segments | Cost Structure | Revenue Streams</li><li>Calculate approximate: Revenue estimate (from news/public data), Top 2 cost heads, Break-even hypothesis</li><li>Deliverable: Completed BMC (printed template or whiteboard photo)</li></ul></div><div class="phase-box manual"><strong>🟢 Phase 3 — Viability Assessment (Hours 6–7)</strong><ul style="margin-top:8px"><li>Score the startup on: Market Size (1–5) | Business Model Clarity (1–5) | Competitive Moat (1–5) | Scalability (1–5) | Funding Stage Alignment (1–5)</li><li>Write Before AI viability note (200 words): Is this startup viable? Why / Why not?</li></ul></div><div class="phase-box ai"><strong>🤖 Phase 4 — AI Lab (Hours 7–8)</strong><ul style="margin-top:8px"><li>Notion AI: Build structured Business Model Canvas with AI suggestions for each block</li><li>ChatGPT: 'Act as a venture capital analyst. Analyse this startup [paste summary]. Evaluate: revenue model viability, cost structure risks, competitive moat, scalability. Provide a viability score 1–10 with reasoning.'</li><li>ChatGPT: 'Create a comprehensive BMC for [startup name]. Fill all 9 blocks. Present in structured format.'</li><li>Excel AI: Build financial model — Revenue vs Cost scenarios (3 scenarios: conservative, base, optimistic)</li><li>Deliverable: AI-enhanced BMC + viability report + financial model + Viva</li></ul></div>
+      <h3>📊 Evaluation Rubric</h3>
+      <table><tr><th>Criteria</th><th>Weight</th><th>Focus</th></tr><tr><td>Startup Understanding</td><td><strong>30%</strong></td><td>Accuracy of business model, funding, market context</td></tr><tr><td>BMC Quality</td><td><strong>30%</strong></td><td>Completeness and accuracy of all 9 blocks</td></tr><tr><td>AI Viability Analysis</td><td><strong>40%</strong></td><td>Prompt quality, financial modelling, critical assessment vs AI output</td></tr></table>
+      <h3 style="margin-top:14px">📚 Learning Resources</h3>
+      <a class="btn" href="https://www.strategyzer.com/business-model-canvas" target="_blank">Business Model Canvas Template (Strategyzer)</a><a class="btn" href="https://www.crunchbase.com/hub/india-startups" target="_blank">Crunchbase India Startups</a><a class="btn" href="https://inc42.com" target="_blank">Inc42 Startup News</a><a class="btn" href="https://startup.google.com/intl/en_in/" target="_blank">Google for Startups India</a>
+      <div style="margin-top:12px">
+        <a class="btn btn-green" href="https://docs.google.com/forms/create" target="_blank">📤 Submit P3 on Google Form</a>
+      </div>
+    </div>
+    <div class="card" id="P4">
+      <h2>📊 P4: Functional Dashboard Creation <span class="badge badge-proj">Microsoft / Google</span> <span class="badge badge-mock">Weeks 11–12 (8 hours)</span></h2>
+      <p><strong>Objective:</strong> Build a 3–4 KPI dashboard (sales, customers, costs) using structured data with AI insights.</p>
+      <p style="margin-top:6px"><strong>AI Tools:</strong> Power BI / Looker Studio · Excel AI · ChatGPT · Copilot</p>
+      <h3>📋 4-Phase Framework</h3>
+      <p class="hint" style="margin-bottom:8px">🟠 Orange = Manual (no AI) · 🤖 Green = AI Augmentation · Complete manual phases before proceeding to AI phase.</p>
+      <div class="phase-box manual"><strong>🔵 Phase 1 — KPI Design (Hours 1–3)</strong><ul style="margin-top:8px"><li>Choose one business function: Sales OR Marketing OR Operations OR HR</li><li>Study 2 public Microsoft or Google dashboards (annual reports, investor decks)</li><li>Identify 3–4 SMART KPIs for your function (e.g., Revenue Growth %, Customer Acquisition Cost, On-Time Delivery %)</li><li>Sketch the dashboard layout on paper — which charts for which KPIs</li><li>Deliverable: KPI specification sheet (template provided below)</li></ul></div><div class="phase-box manual"><strong>🟠 Phase 2 — Manual Data Work (Hours 4–5)</strong><ul style="margin-top:8px"><li>Faculty provides a structured dataset (Excel) — clean and organise it</li><li>Build manual pivot tables for each KPI</li><li>Calculate variance: Actual vs Plan for each KPI</li><li>Write Before AI note: What story does your manual data tell?</li></ul></div><div class="phase-box manual"><strong>🟢 Phase 3 — Dashboard Structure (Hours 6–7)</strong><ul style="margin-top:8px"><li>Build the dashboard skeleton in Excel (no AI features yet) — bar charts, line charts, KPI cards</li><li>Validate all calculations manually before moving to AI tools</li></ul></div><div class="phase-box ai"><strong>🤖 Phase 4 — AI Lab (Hours 7–8)</strong><ul style="margin-top:8px"><li>Excel AI / Copilot: 'Analyse this sales data [paste]. Recommend 4 KPIs, identify the biggest variance driver, and suggest 2 actions.'</li><li>Power BI / Looker Studio: Import cleaned data, apply AI insights panel, enable natural language Q&A</li><li>ChatGPT: 'Act as a BI analyst. For this data [paste summary], generate a narrative insight paragraph for each of the 4 KPIs as it would appear on an executive dashboard.'</li><li>Final dashboard must include: 2 charts + 4 KPI cards + 1 AI-generated insight summary</li><li>Deliverable: Power BI / Looker Studio file (.pbix or shareable link) + insight report + Viva</li></ul></div>
+      <h3>📊 Evaluation Rubric</h3>
+      <table><tr><th>Criteria</th><th>Weight</th><th>Focus</th></tr><tr><td>KPI Relevance & Design</td><td><strong>30%</strong></td><td>SMART KPIs, alignment to chosen function</td></tr><tr><td>Data Accuracy</td><td><strong>30%</strong></td><td>Clean data, correct calculations, manual validation</td></tr><tr><td>Dashboard Quality</td><td><strong>40%</strong></td><td>Visual clarity, AI insights, narrative quality, interactivity</td></tr></table>
+      <h3 style="margin-top:14px">📚 Learning Resources</h3>
+      <a class="btn" href="https://powerbi.microsoft.com/en-us/downloads/" target="_blank">Power BI Desktop Download</a><a class="btn" href="https://lookerstudio.google.com" target="_blank">Looker Studio Tutorial</a><a class="btn" href="https://support.microsoft.com/en-us/office/analyze-data-in-excel-3223aab8-f543-4fda-85ed-76bb0295ffc4" target="_blank">Excel AI Features Guide</a><a class="btn" href="https://www.klipfolio.com/resources/articles/what-is-a-key-performance-indicator" target="_blank">KPI Design Best Practices</a>
+      <div style="margin-top:12px">
+        <a class="btn btn-green" href="https://docs.google.com/forms/create" target="_blank">📤 Submit P4 on Google Form</a>
+      </div>
+    </div>
+</div>
+<footer>© 2026 GJIMT AI Lab · MBA AI Integrated Program · Powered by GitHub Pages</footer>
+</div><!-- /lms-page-content -->
+
+<script>
+// ── LMS Auth ──────────────────────────────────────────────────────────────
+(function(){
+  var USERS = {
+    'mba26-ai-01':'student@2026','mba26-ai-02':'student@2026','mba26-ai-03':'student@2026',
+    'mba26-ai-04':'student@2026','mba26-ai-05':'student@2026','mba26-ai-06':'student@2026',
+    'mba26-ai-07':'student@2026','mba26-ai-08':'student@2026','mba26-ai-09':'student@2026',
+    'mba26-ai-10':'student@2026',
+    'mba26-fac-tarun':'faculty@2026',
+    'mba26-admin':'admin@2026'
+  };
+  var ROLES = {
+    'mba26-ai-01':'student','mba26-ai-02':'student','mba26-ai-03':'student',
+    'mba26-ai-04':'student','mba26-ai-05':'student','mba26-ai-06':'student',
+    'mba26-ai-07':'student','mba26-ai-08':'student','mba26-ai-09':'student',
+    'mba26-ai-10':'student',
+    'mba26-fac-tarun':'faculty',
+    'mba26-admin':'admin'
+  };
+  var ALLOWED = ['student','faculty','admin'];  // roles allowed on this page
+
+  function getSession(){
+    try{ return JSON.parse(sessionStorage.getItem('lmsSession')||'null'); }
+    catch(e){ return null; }
+  }
+  function setSession(uid,role){
+    sessionStorage.setItem('lmsSession',JSON.stringify({uid:uid,role:role}));
+  }
+  function clearSession(){ sessionStorage.removeItem('lmsSession'); }
+
+  function unlock(session){
+    document.getElementById('lms-login-overlay').classList.remove('active');
+    document.getElementById('lms-logout-btn').style.display='block';
+    var wb=document.getElementById('lms-welcome-bar');
+    wb.style.display='block';
+    wb.textContent='Signed in as: '+session.uid+' ('+session.role+')  |  MBA AI Integrated Program 2026';
+    var content=document.getElementById('lms-page-content');
+    if(content) content.classList.add('unlocked');
+  }
+
+  window.lmsDoLogin=function(){
+    var uid=(document.getElementById('lms-uid').value||'').trim().toLowerCase();
+    var pwd=document.getElementById('lms-pwd').value||'';
+    var err=document.getElementById('lms-login-error');
+    if(!USERS[uid]){ err.textContent='❌ User ID not found.'; return; }
+    if(USERS[uid]!==pwd){ err.textContent='❌ Incorrect password.'; return; }
+    var role=ROLES[uid];
+    if(ALLOWED.indexOf(role)===-1){
+      err.textContent='⛔ Access denied. This page is for '+ALLOWED.join('/')+' only.'; return;
+    }
+    setSession(uid,role);
+    unlock({uid:uid,role:role});
+  };
+
+  window.lmsLogout=function(){
+    clearSession();
+    document.getElementById('lms-login-overlay').classList.add('active');
+    document.getElementById('lms-logout-btn').style.display='none';
+    document.getElementById('lms-welcome-bar').style.display='none';
+    var content=document.getElementById('lms-page-content');
+    if(content) content.classList.remove('unlocked');
+    document.getElementById('lms-uid').value='';
+    document.getElementById('lms-pwd').value='';
+    document.getElementById('lms-login-error').textContent='';
+  };
+
+  // Check existing session on load
+  var session=getSession();
+  if(session && USERS[session.uid] && ROLES[session.uid]===session.role && ALLOWED.indexOf(session.role)!==-1){
+    unlock(session);
+  }
+})();
+</script>
+</body></html>

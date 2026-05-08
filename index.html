@@ -1,0 +1,238 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GJIMT AI Lab LMS — MBA Sem 1</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f6fb;color:#1a1a2e}
+  header{background:linear-gradient(135deg,#0f3460,#16213e);color:#fff;padding:18px 32px;display:flex;align-items:center;gap:16px}
+  header img{height:48px;border-radius:6px}
+  header h1{font-size:1.4rem;font-weight:700}
+  header p{font-size:.82rem;opacity:.8}
+  nav{background:#16213e;display:flex;flex-wrap:wrap;gap:4px;padding:8px 32px}
+  nav a{color:#e0e0e0;text-decoration:none;padding:6px 14px;border-radius:4px;font-size:.85rem;transition:.2s}
+  nav a:hover,nav a.active{background:#0f3460;color:#fff}
+  .container{max-width:1100px;margin:28px auto;padding:0 20px}
+  .card{background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.08);padding:24px;margin-bottom:20px}
+  .card h2{color:#0f3460;margin-bottom:12px;font-size:1.1rem}
+  .card h3{color:#16213e;margin:14px 0 8px;font-size:.97rem}
+  table{width:100%;border-collapse:collapse;font-size:.88rem}
+  th{background:#0f3460;color:#fff;padding:9px 12px;text-align:left}
+  td{padding:8px 12px;border-bottom:1px solid #eee}
+  tr:hover td{background:#f0f4ff}
+  .badge{display:inline-block;padding:2px 9px;border-radius:12px;font-size:.75rem;font-weight:600}
+  .badge-proj{background:#e3f2fd;color:#0f3460}
+  .badge-gsdc{background:#e8f5e9;color:#1b5e20}
+  .badge-mock{background:#fff3e0;color:#e65100}
+  .badge-doubt{background:#f3e5f5;color:#6a1b9a}
+  .btn{display:inline-block;padding:8px 18px;background:#0f3460;color:#fff;border-radius:6px;text-decoration:none;font-size:.85rem;margin:4px 2px;border:none;cursor:pointer}
+  .btn:hover{background:#16213e}
+  .btn-green{background:#2e7d32}
+  .btn-green:hover{background:#1b5e20}
+  .btn-orange{background:#e65100}
+  .week-row-proj{background:#e3f2fd}
+  .week-row-gsdc{background:#e8f5e9}
+  ul,ol{padding-left:20px;margin:8px 0}
+  li{margin:4px 0;font-size:.9rem}
+  .phase-box{border-left:4px solid #0f3460;padding:10px 14px;margin:8px 0;background:#f8f9ff;border-radius:0 6px 6px 0}
+  .phase-box.ai{border-color:#2e7d32}
+  .phase-box.manual{border-color:#e65100}
+  .hint{font-size:.8rem;color:#666;margin-top:6px}
+  .user-table td:last-child{font-family:monospace;color:#c62828}
+  footer{text-align:center;padding:18px;font-size:.8rem;color:#888;margin-top:30px}
+  .q-block{background:#f8f9ff;border-radius:8px;padding:14px;margin-bottom:14px;border:1px solid #dde3f0}
+  .q-block p{font-weight:600;margin-bottom:8px}
+  .q-block label{display:block;margin:4px 0;cursor:pointer;font-size:.9rem}
+  .scenario-box{background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:14px;margin-bottom:14px}
+  .scenario-box p{font-weight:600;color:#e65100;margin-bottom:8px}
+  textarea{width:100%;border:1px solid #ccc;border-radius:6px;padding:8px;font-size:.88rem;resize:vertical}
+  .result-box{display:none;padding:12px;border-radius:6px;margin-top:10px;font-weight:600}
+  .pass{background:#e8f5e9;color:#2e7d32;display:block}
+  .fail{background:#ffebee;color:#c62828;display:block}
+</style>
+</head><body>
+
+<!-- ═══════════════════ GJIMT LMS AUTH SYSTEM ════════════════════════ -->
+<style>
+#lms-login-overlay{display:none;position:fixed;inset:0;background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 60%,#0f172a 100%);z-index:99999;align-items:center;justify-content:center;font-family:'Segoe UI',sans-serif;}
+#lms-login-overlay.active{display:flex;}
+.lms-login-box{background:#fff;border-radius:18px;padding:40px 36px;width:360px;box-shadow:0 20px 60px rgba(0,0,0,.5);text-align:center;}
+.lms-login-box .lms-logo{font-size:2rem;margin-bottom:4px;}
+.lms-login-box h2{font-size:1.25rem;color:#0f172a;margin:0 0 4px;}
+.lms-login-box .lms-subtitle{font-size:.78rem;color:#64748b;margin-bottom:24px;}
+.lms-login-box input{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:.95rem;margin-bottom:12px;outline:none;transition:border .2s;}
+.lms-login-box input:focus{border-color:#3b82f6;}
+.lms-login-box button{width:100%;padding:12px;background:#3b82f6;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:4px;transition:background .2s;}
+.lms-login-box button:hover{background:#2563eb;}
+#lms-login-error{color:#ef4444;font-size:.82rem;margin-top:8px;min-height:18px;}
+.lms-login-box .lms-hint{font-size:.73rem;color:#94a3b8;margin-top:14px;line-height:1.5;}
+.lms-page-content{display:none;}
+.lms-page-content.unlocked{display:block;}
+.lms-logout-btn{position:fixed;top:12px;right:16px;z-index:9999;background:#ef4444;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:.8rem;cursor:pointer;font-weight:600;}
+.lms-logout-btn:hover{background:#dc2626;}
+.lms-welcome-bar{background:#0f172a;color:#94a3b8;font-size:.78rem;text-align:center;padding:5px;letter-spacing:.5px;}
+</style>
+
+<div id="lms-login-overlay" class="active">
+  <div class="lms-login-box">
+    <div class="lms-logo">🎓</div>
+    <h2>GJIMT MBA LMS</h2>
+    <div class="lms-subtitle">AI Integrated Program · 2026<br>Please sign in to continue</div>
+    <input type="text" id="lms-uid" placeholder="User ID" autocomplete="username" />
+    <input type="password" id="lms-pwd" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')lmsDoLogin()"/>
+    <button onclick="lmsDoLogin()">Sign In →</button>
+    <div id="lms-login-error"></div>
+    <div class="lms-hint">Students: <b>mba26-ai-01</b> … <b>mba26-ai-10</b><br>Faculty: <b>mba26-fac-tarun</b> &nbsp;|&nbsp; Admin: <b>mba26-admin</b><br>Contact faculty if you cannot sign in.</div>
+  </div>
+</div>
+<button class="lms-logout-btn" id="lms-logout-btn" style="display:none" onclick="lmsLogout()">⏻ Sign Out</button>
+<div id="lms-welcome-bar" class="lms-welcome-bar" style="display:none"></div>
+
+<div id="lms-page-content" class="lms-page-content">
+
+
+<header>
+  <div>
+    <h1>GJIMT AI Lab — MBA Sem 1 LMS</h1>
+    <p>MBA with AI Integration · 42-Hour Program · Aug–Nov 2026 · Batch of 10</p>
+  </div>
+</header>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="calendar.html">📅 42-Hour Calendar</a>
+  <a href="projects.html">📁 Shadow Projects</a>
+  <a href="mock.html">📝 GSDC Mock Tests</a>
+  <a href="faculty.html">👩‍🏫 Faculty Dashboard</a>
+  <a href="users.html">🔑 User Accounts</a>
+</nav>
+
+<div class="container">
+  <div class="card">
+    <h2>Welcome to MBA Sem 1 — AI Integrated Program LMS</h2>
+    <p style="margin-bottom:12px">This LMS covers <strong>4 Benchmarked Shadow Projects</strong> and the
+    <strong>GSDC Generative AI in Project Management Certification</strong> delivered in <strong>42 contact hours</strong>
+    from August to November 2026.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:16px">
+      <a class="card" href="calendar.html" style="text-align:center;text-decoration:none;color:inherit">
+        <div style="font-size:2rem">📅</div><h3>42-Hour Calendar</h3>
+        <p class="hint">Weekly roadmap Aug–Nov 2026</p>
+      </a>
+      <a class="card" href="projects.html" style="text-align:center;text-decoration:none;color:inherit">
+        <div style="font-size:2rem">📁</div><h3>Shadow Projects</h3>
+        <p class="hint">4 hands-on projects (P1–P4)</p>
+      </a>
+      <a class="card" href="mock.html" style="text-align:center;text-decoration:none;color:inherit">
+        <div style="font-size:2rem">📝</div><h3>GSDC Mock Tests</h3>
+        <p class="hint">8 module mocks + full mock</p>
+      </a>
+      <a class="card" href="faculty.html" style="text-align:center;text-decoration:none;color:inherit">
+        <div style="font-size:2rem">👩‍🏫</div><h3>Faculty Dashboard</h3>
+        <p class="hint">Rubrics, scripts, answer keys</p>
+      </a>
+      <a class="card" href="users.html" style="text-align:center;text-decoration:none;color:inherit">
+        <div style="font-size:2rem">🔑</div><h3>User Accounts</h3>
+        <p class="hint">10 students + faculty logins</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Program Overview</h2>
+    <table>
+      <tr><th>Item</th><th>Detail</th></tr>
+      <tr><td>Program</td><td>MBA with AI Integration — Semester 1</td></tr>
+      <tr><td>Duration</td><td>August – November 2026 (14 weeks, 3 hrs/week = 42 hrs)</td></tr>
+      <tr><td>Cohort</td><td>10 Students (Individual project submissions)</td></tr>
+      <tr><td>Faculty In-Charge</td><td>Tarun</td></tr>
+      <tr><td>Shadow Projects</td><td>P1: Netflix/Jio · P2: Zomato/Swiggy · P3: Startup BMC · P4: KPI Dashboard</td></tr>
+      <tr><td>GSDC Certification</td><td>Generative AI in Project Management (Exam: December 2026)</td></tr>
+      <tr><td>Mock Tests</td><td>Every Saturday — Module-wise MCQs + 1 Scenario question</td></tr>
+      <tr><td>Doubt Sessions</td><td>Every Friday — GSDC syllabus Q&A with Faculty</td></tr>
+      <tr><td>Philosophy</td><td>Manual analysis first → AI augmentation → Reflection</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Quick Links — GSDC Resources</h2>
+    <a class="btn" href="https://www.gsdcouncil.org/certified-generative-ai-in-project-management" target="_blank">GSDC Certification Page</a>
+    <a class="btn" href="https://gsdcdata.gsdcouncil.org/gsdc/pdf/certified-generative-ai-in-project-management-new-syllabus-updated.pdf" target="_blank">GSDC Syllabus PDF</a>
+    <a class="btn btn-green" href="mock.html">Start Mock Test</a>
+  </div>
+</div>
+<footer>© 2026 GJIMT AI Lab · MBA AI Integrated Program · Powered by GitHub Pages</footer>
+</div><!-- /lms-page-content -->
+
+<script>
+// ── LMS Auth ──────────────────────────────────────────────────────────────
+(function(){
+  var USERS = {
+    'mba26-ai-01':'student@2026','mba26-ai-02':'student@2026','mba26-ai-03':'student@2026',
+    'mba26-ai-04':'student@2026','mba26-ai-05':'student@2026','mba26-ai-06':'student@2026',
+    'mba26-ai-07':'student@2026','mba26-ai-08':'student@2026','mba26-ai-09':'student@2026',
+    'mba26-ai-10':'student@2026',
+    'mba26-fac-tarun':'faculty@2026',
+    'mba26-admin':'admin@2026'
+  };
+  var ROLES = {
+    'mba26-ai-01':'student','mba26-ai-02':'student','mba26-ai-03':'student',
+    'mba26-ai-04':'student','mba26-ai-05':'student','mba26-ai-06':'student',
+    'mba26-ai-07':'student','mba26-ai-08':'student','mba26-ai-09':'student',
+    'mba26-ai-10':'student',
+    'mba26-fac-tarun':'faculty',
+    'mba26-admin':'admin'
+  };
+  var ALLOWED = ['student','faculty','admin'];  // roles allowed on this page
+
+  function getSession(){
+    try{ return JSON.parse(sessionStorage.getItem('lmsSession')||'null'); }
+    catch(e){ return null; }
+  }
+  function setSession(uid,role){
+    sessionStorage.setItem('lmsSession',JSON.stringify({uid:uid,role:role}));
+  }
+  function clearSession(){ sessionStorage.removeItem('lmsSession'); }
+
+  function unlock(session){
+    document.getElementById('lms-login-overlay').classList.remove('active');
+    document.getElementById('lms-logout-btn').style.display='block';
+    var wb=document.getElementById('lms-welcome-bar');
+    wb.style.display='block';
+    wb.textContent='Signed in as: '+session.uid+' ('+session.role+')  |  MBA AI Integrated Program 2026';
+    var content=document.getElementById('lms-page-content');
+    if(content) content.classList.add('unlocked');
+  }
+
+  window.lmsDoLogin=function(){
+    var uid=(document.getElementById('lms-uid').value||'').trim().toLowerCase();
+    var pwd=document.getElementById('lms-pwd').value||'';
+    var err=document.getElementById('lms-login-error');
+    if(!USERS[uid]){ err.textContent='❌ User ID not found.'; return; }
+    if(USERS[uid]!==pwd){ err.textContent='❌ Incorrect password.'; return; }
+    var role=ROLES[uid];
+    if(ALLOWED.indexOf(role)===-1){
+      err.textContent='⛔ Access denied. This page is for '+ALLOWED.join('/')+' only.'; return;
+    }
+    setSession(uid,role);
+    unlock({uid:uid,role:role});
+  };
+
+  window.lmsLogout=function(){
+    clearSession();
+    document.getElementById('lms-login-overlay').classList.add('active');
+    document.getElementById('lms-logout-btn').style.display='none';
+    document.getElementById('lms-welcome-bar').style.display='none';
+    var content=document.getElementById('lms-page-content');
+    if(content) content.classList.remove('unlocked');
+    document.getElementById('lms-uid').value='';
+    document.getElementById('lms-pwd').value='';
+    document.getElementById('lms-login-error').textContent='';
+  };
+
+  // Check existing session on load
+  var session=getSession();
+  if(session && USERS[session.uid] && ROLES[session.uid]===session.role && ALLOWED.indexOf(session.role)!==-1){
+    unlock(session);
+  }
+})();
+</script>
+</body></html>
