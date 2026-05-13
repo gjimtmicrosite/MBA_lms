@@ -81,7 +81,7 @@
     <input type="password" id="lms-pwd" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')lmsDoLogin()"/>
     <button onclick="lmsDoLogin()">Sign In →</button>
     <div id="lms-login-error"></div>
-    <div class="lms-hint">Students: <b>mba26-ai-01</b> … <b>mba26-ai-10</b><br>Faculty: <b>mba26-fac-tarun</b> &nbsp;|&nbsp; Admin: <b>mba26-admin</b><br>Contact faculty if you cannot sign in.</div>
+    <div class="lms-hint">Students: <b>mba26-ai-01</b> … <b>mba26-ai-10</b><br>Faculty: <b>mba26-fac-gurdeepak</b> &nbsp;|&nbsp; Admin: <b>mba26-admin</b><br>Contact faculty if you cannot sign in.</div>
   </div>
 </div>
 <button class="lms-logout-btn" id="lms-logout-btn" style="display:none" onclick="lmsLogout()">⏻ Sign Out</button>
@@ -102,6 +102,7 @@
   <a href="calendar.html">📅 42-Hour Calendar</a>
   <a href="projects.html">📁 Shadow Projects</a>
   <a href="mock.html">📝 GSDC Mock Tests</a>
+  <a href="session-guide.html">🗂️ Session Guide</a>
   <a href="faculty.html">👩‍🏫 Faculty Dashboard</a>
   <a href="users.html">🔑 User Accounts</a>
 </nav>
@@ -143,7 +144,7 @@
       <tr><td>Program</td><td>MBA with AI Integration — Semester 1</td></tr>
       <tr><td>Duration</td><td>August – November 2026 (14 weeks, 3 hrs/week = 42 hrs)</td></tr>
       <tr><td>Cohort</td><td>10 Students (Individual project submissions)</td></tr>
-      <tr><td>Faculty In-Charge</td><td>Tarun</td></tr>
+      <tr><td>Faculty In-Charge</td><td>Gurdeepak</td></tr>
       <tr><td>Shadow Projects</td><td>P1: Netflix/Jio · P2: Zomato/Swiggy · P3: Startup BMC · P4: KPI Dashboard</td></tr>
       <tr><td>GSDC Certification</td><td>Generative AI in Project Management (Exam: December 2026)</td></tr>
       <tr><td>Mock Tests</td><td>Every Saturday — Module-wise MCQs + 1 Scenario question</td></tr>
@@ -170,7 +171,7 @@
     'mba26-ai-04':'student@2026','mba26-ai-05':'student@2026','mba26-ai-06':'student@2026',
     'mba26-ai-07':'student@2026','mba26-ai-08':'student@2026','mba26-ai-09':'student@2026',
     'mba26-ai-10':'student@2026',
-    'mba26-fac-tarun':'faculty@2026',
+    'mba26-fac-gurdeepak':'faculty@2026',
     'mba26-admin':'admin@2026'
   };
   var ROLES = {
@@ -178,19 +179,19 @@
     'mba26-ai-04':'student','mba26-ai-05':'student','mba26-ai-06':'student',
     'mba26-ai-07':'student','mba26-ai-08':'student','mba26-ai-09':'student',
     'mba26-ai-10':'student',
-    'mba26-fac-tarun':'faculty',
+    'mba26-fac-gurdeepak':'faculty',
     'mba26-admin':'admin'
   };
   var ALLOWED = ['student','faculty','admin'];  // roles allowed on this page
 
   function getSession(){
-    try{ return JSON.parse(sessionStorage.getItem('lmsSession')||'null'); }
+    try{ return JSON.parse(localStorage.getItem('lmsSession')||'null'); }
     catch(e){ return null; }
   }
   function setSession(uid,role){
-    sessionStorage.setItem('lmsSession',JSON.stringify({uid:uid,role:role}));
+    localStorage.setItem('lmsSession',JSON.stringify({uid:uid,role:role}));
   }
-  function clearSession(){ sessionStorage.removeItem('lmsSession'); }
+  function clearSession(){ localStorage.removeItem('lmsSession'); }
 
   function unlock(session){
     document.getElementById('lms-login-overlay').classList.remove('active');
@@ -200,6 +201,15 @@
     wb.textContent='Signed in as: '+session.uid+' ('+session.role+')  |  MBA AI Integrated Program 2026';
     var content=document.getElementById('lms-page-content');
     if(content) content.classList.add('unlocked');
+
+    // Scroll to hash anchor after unlock
+    if(window.location.hash){
+      setTimeout(function(){
+        var el = document.getElementById(window.location.hash.substring(1));
+        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      }, 150);
+    }
+
   }
 
   window.lmsDoLogin=function(){
