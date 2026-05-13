@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Session Guide — GJIMT LMS</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f6fb;color:#1a1a2e}
+header{background:linear-gradient(135deg,#0f3460,#16213e);color:#fff;padding:18px 32px;display:flex;align-items:center;gap:16px}
+header h1{font-size:1.4rem;font-weight:700}
+header p{font-size:.82rem;opacity:.8}
+nav{background:#16213e;display:flex;flex-wrap:wrap;gap:4px;padding:8px 32px}
+nav a{color:#e0e0e0;text-decoration:none;padding:6px 14px;border-radius:4px;font-size:.85rem;transition:.2s}
+nav a:hover,nav a.active{background:#0f3460;color:#fff}
+.container{max-width:1200px;margin:28px auto;padding:0 20px}
+.card{background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.08);padding:24px;margin-bottom:20px}
+.card h2{color:#0f3460;margin-bottom:14px;font-size:1.15rem;display:flex;align-items:center;gap:8px}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th{background:#0f3460;color:#fff;padding:10px 14px;text-align:left}
+td{padding:9px 14px;border-bottom:1px solid #eee;vertical-align:top}
+tr:hover td{background:#f0f4ff}
+.badge{display:inline-block;padding:2px 9px;border-radius:12px;font-size:.75rem;font-weight:600}
+.badge-demo{background:#e3f2fd;color:#0f3460}
+.badge-student{background:#e8f5e9;color:#1b5e20}
+.badge-both{background:#fff3e0;color:#e65100}
+.badge-gsdc{background:#f3e5f5;color:#6a1b9a}
+.hour-label{display:inline-block;background:#0f3460;color:#fff;padding:3px 10px;border-radius:20px;font-size:.78rem;font-weight:700;white-space:nowrap}
+.step-list{list-style:none;padding:0;margin:0}
+.step-list li{padding:5px 0 5px 18px;position:relative;font-size:.88rem;color:#333;line-height:1.5}
+.step-list li::before{content:'›';position:absolute;left:0;color:#0f3460;font-weight:700}
+.week-header{background:linear-gradient(135deg,#0f3460,#16213e);color:#fff;padding:14px 20px;border-radius:8px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.week-header h3{font-size:1rem;font-weight:700}
+.week-header .wk-meta{font-size:.8rem;opacity:.8}
+.sidebar{width:220px;min-width:220px;background:#16213e;padding:16px;position:sticky;top:0;height:100vh;overflow-y:auto;flex-shrink:0}
+.sidebar p.label{color:#aaa;font-size:.73rem;text-transform:uppercase;margin-bottom:8px;letter-spacing:.5px}
+.sidebar a{display:block;padding:8px 12px;text-decoration:none;color:#e0e0e0;font-size:.82rem;border-radius:4px;margin:2px 0;transition:.15s}
+.sidebar a:hover{background:#0f3460;color:#fff}
+.main-content{flex:1;padding:20px;overflow-y:auto}
+.layout{display:flex;min-height:80vh}
+.role-tag{font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:4px;display:inline-block;margin-left:6px}
+.tag-fac{background:#e3f2fd;color:#0f3460}
+.tag-stu{background:#e8f5e9;color:#1b5e20}
+.activity-block{border-left:3px solid #0f3460;padding:8px 12px;margin:6px 0;background:#f8f9ff;border-radius:0 6px 6px 0;font-size:.87rem}
+.activity-block.student-block{border-color:#2e7d32;background:#f1f8f1}
+.activity-block.shared-block{border-color:#e65100;background:#fff8f0}
+.activity-title{font-weight:600;color:#0f3460;font-size:.82rem;margin-bottom:4px}
+.student-block .activity-title{color:#2e7d32}
+.shared-block .activity-title{color:#e65100}
+footer{text-align:center;padding:18px;font-size:.8rem;color:#888;margin-top:30px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:18px;font-size:.8rem;align-items:center}
+.legend-item{display:flex;align-items:center;gap:5px}
+.legend-dot{width:12px;height:12px;border-radius:2px}
+@media(max-width:768px){.layout{flex-direction:column}.sidebar{width:100%;height:auto;position:relative}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ GJIMT LMS AUTH SYSTEM ════════════════════════ -->
+<style>
+#lms-login-overlay{display:none;position:fixed;inset:0;background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 60%,#0f172a 100%);z-index:99999;align-items:center;justify-content:center;font-family:'Segoe UI',sans-serif;}
+#lms-login-overlay.active{display:flex;}
+.lms-login-box{background:#fff;border-radius:18px;padding:40px 36px;width:360px;box-shadow:0 20px 60px rgba(0,0,0,.5);text-align:center;}
+.lms-login-box .lms-logo{font-size:2rem;margin-bottom:4px;}
+.lms-login-box h2{font-size:1.25rem;color:#0f172a;margin:0 0 4px;}
+.lms-login-box .lms-subtitle{font-size:.78rem;color:#64748b;margin-bottom:24px;}
+.lms-login-box input{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:.95rem;margin-bottom:12px;outline:none;transition:border .2s;}
+.lms-login-box input:focus{border-color:#3b82f6;}
+.lms-login-box button{width:100%;padding:12px;background:#3b82f6;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:4px;transition:background .2s;}
+.lms-login-box button:hover{background:#2563eb;}
+#lms-login-error{color:#ef4444;font-size:.82rem;margin-top:8px;min-height:18px;}
+.lms-login-box .lms-hint{font-size:.73rem;color:#94a3b8;margin-top:14px;line-height:1.5;}
+.lms-page-content{display:none;}
+.lms-page-content.unlocked{display:block;}
+.lms-logout-btn{position:fixed;top:12px;right:16px;z-index:9999;background:#ef4444;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:.8rem;cursor:pointer;font-weight:600;}
+.lms-logout-btn:hover{background:#dc2626;}
+.lms-welcome-bar{background:#0f172a;color:#94a3b8;font-size:.78rem;text-align:center;padding:5px;letter-spacing:.5px;}
+</style>
+
+<div id="lms-login-overlay" class="active">
+  <div class="lms-login-box">
+    <div class="lms-logo">🎓</div>
+    <h2>GJIMT MBA LMS</h2>
+    <div class="lms-subtitle">AI Integrated Program · 2026<br>Please sign in to continue</div>
+    <input type="text" id="lms-uid" placeholder="User ID" autocomplete="username" />
+    <input type="password" id="lms-pwd" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')lmsDoLogin()"/>
+    <button onclick="lmsDoLogin()">Sign In →</button>
+    <div id="lms-login-error"></div>
+    <div class="lms-hint">Students: <b>mba26-ai-01</b> … <b>mba26-ai-10</b><br>Faculty: <b>mba26-fac-gurdeepak</b> &nbsp;|&nbsp; Admin: <b>mba26-admin</b><br>Contact faculty if you cannot sign in.</div>
+  </div>
+</div>
+<button class="lms-logout-btn" id="lms-logout-btn" style="display:none" onclick="lmsLogout()">⏻ Sign Out</button>
+<div id="lms-welcome-bar" class="lms-welcome-bar" style="display:none"></div>
+
+<div id="lms-page-content" class="lms-page-content">
+
+<header>
+  <div>
+    <h1>GJIMT AI Lab — MBA Sem 1 LMS</h1>
+    <p>MBA with AI Integration · 42-Hour Program · Aug–Nov 2026 · Batch of 10</p>
+  </div>
+</header>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="calendar.html">📅 42-Hour Calendar</a>
+  <a href="projects.html#P1">📁 Shadow Projects</a>
+  <a href="session-guide.html" class="active">🗂️ Session Guide</a>
+  <a href="mock.html">📝 GSDC Mock Tests</a>
+  <a href="faculty.html">👩‍🏫 Faculty Dashboard</a>
+  <a href="users.html">🔑 User Accounts</a>
+</nav>
+
+<div class="layout">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <p class="label">Shadow Projects</p>
+    <a href="#wk1">Wk 1 — P1 Phase 1</a>
+    <a href="#wk2">Wk 2 — P1 Phase 1 cont.</a>
+    <a href="#wk3">Wk 3 — P1 Phase 2</a>
+    <a href="#wk4">Wk 4 — P1 Phase 3</a>
+    <a href="#wk5">Wk 5 — P1 Phase 4</a>
+    <a href="#wk6">Wk 6 — P1 Viva</a>
+    <a href="#wk7">Wk 7 — P2 Phase 1–2</a>
+    <a href="#wk8">Wk 8 — P2 Phase 3–4 + Viva</a>
+    <a href="#wk9">Wk 9 — P3 Phase 1–2</a>
+    <a href="#wk10">Wk 10 — P3 Phase 3–4 + Viva</a>
+    <a href="#wk11">Wk 11 — P4 Phase 1–2</a>
+    <a href="#wk12">Wk 12 — P4 Phase 3–4 + Viva</a>
+    <a href="#wk13">Wk 13 — Portfolio Review</a>
+    <a href="#wk14">Wk 14 — Final Viva</a>
+    <br>
+    <p class="label" style="margin-top:8px">Links</p>
+    <a href="calendar.html">📅 Full Calendar</a>
+    <a href="projects.html#P1">📁 Projects Detail</a>
+    <a href="upload-guide.html#p1">📤 Upload Guide</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="card">
+      <h2>🗂️ Weekly Session Guide — Hour-by-Hour Plan</h2>
+      <p style="font-size:.88rem;color:#555;margin-bottom:14px">Each week is a <strong>3-hour contact session</strong>. Every session is split into timed blocks showing exactly what faculty demonstrates and what students must do — hour by hour.</p>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#0f3460"></div> <span>Faculty Action / Demo</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:#2e7d32"></div> <span>Student Activity</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:#e65100"></div> <span>Shared / Discussion</span></div>
+      </div>
+    </div>
+
+    <!-- ═══ WEEK 1 ═══ -->
+    <div id="wk1" class="card"><div class="week-header"><h3>📅 Week 1 — Shadow P1 Phase 1: Company Context</h3><span class="wk-meta">03–07 Aug 2026 · 3 hours · Sat Mock: M1 Prompt Engineering</span></div><table><tr><th style="width:110px">Time Block</th><th>Faculty Action</th><th>Student Activity</th></tr><tr><td><span class="hour-label">Hr 1 · 0:00–1:00</span></td><td><div class="activity-block"><div class="activity-title">🎙️ Lecture + Demo (30 min)</div><ul class="step-list"><li>Introduce Netflix and Jio as case companies — show business model overview slides</li><li>Explain revenue model: subscription tiers (Netflix) vs. bundle pricing (Jio)</li><li>Live demo: Open Google Trends — search "Netflix India" vs "Jio Cinema" — show 12-month trend chart</li><li>Show how to read competitor landscape from public reports (JustDial, Statista)</li></ul><div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://www.netflix.com/in/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Netflix Plans India</a><a href="https://www.jio.com/en-in/jio-plans/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Jio OTT Plans</a><a href="https://trends.google.com/trends/explore?q=Netflix%20India,Jio%20Cinema&geo=IN" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Google Trends</a><a href="https://www.statista.com/outlook/dmo/digital-media/video-on-demand/svod/india" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Statista OTT India</a><a href="https://www.justdial.com" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 JustDial</a></div></div><div class="activity-block" style="margin-top:6px"><div class="activity-title">📋 Setup (30 min)</div><ul class="step-list"><li>Distribute city assignment list — each student gets one city (10 cities, 1 per student)</li><li>Show students where to find LMS: projects.html → P1 Phase 1 checklist</li><li>Walk through the P1 deliverables list on the LMS</li></ul><div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="projects.html#P1" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 P1 Project Page (LMS)</a><a href="upload-guide.html#p1" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Upload Guide (LMS)</a></div></div></td><td><div class="activity-block student-block"><div class="activity-title">✏️ Listen + Note (30 min)</div><ul class="step-list"><li>Note assigned city in personal notebook</li><li>Open LMS on laptop — navigate to Projects → P1</li><li>Write down: company name, 2 revenue streams, 1 competitor for their city</li></ul></div><div class="activity-block student-block" style="margin-top:6px"><div class="activity-title">🔍 Begin Company Profile (30 min)</div><ul class="step-list"><li>Open Google — search "[Company] business model 2024"</li><li>Start filling Company Context template (provided by faculty on WhatsApp)</li><li>Write 3 bullet points: What does company do? Who are users? How do they earn?</li></ul></div></td></tr><tr><td><span class="hour-label">Hr 2 · 1:00–2:00</span></td><td><div class="activity-block"><div class="activity-title">🧑‍🏫 Guided Work (30 min)</div><ul class="step-list"><li>Circulate and check each student's city selection and initial company notes</li><li>Correct any misconceptions about business model vs. revenue model</li><li>Show 1 sample completed Company Context note on projector</li></ul></div></td><td><div class="activity-block student-block"><div class="activity-title">📝 Company Profile Continued (60 min)</div><ul class="step-list"><li>Complete Company Context note (minimum 1 page): company overview, pricing, target segment</li><li>Find 2–3 competitors active in their assigned city</li><li>Note competitor names, pricing, and 1 differentiator each</li><li>Save draft to Google Drive folder (create folder: [UserID]_P1_Submission)</li></ul></div></td></tr><tr><td><span class="hour-label">Hr 3 · 2:00–3:00</span></td><td><div class="activity-block"><div class="activity-title">🔍 GSDC Intro — M1 Prompt Engineering (30 min)</div><ul class="step-list"><li>Introduce GSDC certification program and December exam format</li><li>Teach M1: What is a prompt? Role / Context / Task / Format structure</li><li>Live demo: Run 3 ChatGPT iterations with same task — show quality difference</li><li>Share M1 self-study resource link on WhatsApp/LMS</li></ul><div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://www.gsdcouncil.org/generative-ai-in-project-management" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 GSDC Official Page</a><a href="https://chat.openai.com" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 ChatGPT</a><a href="mock.html" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 GSDC Mock Tests</a></div></div></td><td><div class="activity-block student-block"><div class="activity-title">📖 GSDC Self-Study Start (30 min)</div><ul class="step-list"><li>Note: M1 mock test on Saturday (08 Aug) — 10 MCQs + 1 scenario</li><li>Read M1 resource shared by faculty</li><li>Write 1 practice prompt using Role-Context-Task-Format structure</li></ul></div></td></tr></table></div><div id="wk2" class="card">
+      <div class="week-header">
+        <h3>📅 Week 2 — Shadow P1 Phase 1 cont.: Ecosystem Map + PESTLE</h3>
+        <span class="wk-meta">10–14 Aug 2026 · 3 hours · Sat Mock: M1 cont.</span>
+      </div>
+      <table>
+        <tr><th style="width:110px">Time Block</th><th>Faculty Action</th><th>Student Activity</th></tr>
+        <tr>
+          <td><span class="hour-label">Hr 1 · 0:00–1:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">🔍 City Selection Review (20 min)</div>
+              <ul class="step-list">
+                <li>Call each student — verify city selection, check Company Context notes quality</li>
+                <li>Give quick feedback: is context specific enough? Are competitors real?</li>
+              </ul>
+            </div>
+            <div class="activity-block" style="margin-top:6px">
+              <div class="activity-title">🤖 Live PESTLE via ChatGPT Demo (40 min)</div>
+              <ul class="step-list">
+                <li>Open ChatGPT on projector — demonstrate PESTLE analysis prompt for Netflix in Mumbai</li>
+                <li>Run prompt: "You are a business analyst. Analyse Netflix's expansion into Mumbai using PESTLE framework. Be specific to India's 2024 context."</li>
+                <li>Annotate the output with students — what's good, what needs human verification?</li>
+                <li>Show how to rerun with improved prompt for better output</li>
+              </ul>
+<div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://chat.openai.com" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 ChatGPT</a><a href="https://promptperfect.jina.ai/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 PromptPerfect</a><a href="https://pestleanalysis.com/what-is-pestle-analysis/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 PESTLE Analysis Guide</a></div>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">👂 Observe + Copy Prompt Structure (20 min)</div>
+              <ul class="step-list">
+                <li>Watch faculty PESTLE demo — note the prompt structure used</li>
+              </ul>
+            </div>
+            <div class="activity-block student-block" style="margin-top:6px">
+              <div class="activity-title">✏️ Run Own PESTLE (40 min)</div>
+              <ul class="step-list">
+                <li>Open ChatGPT — adapt the faculty prompt for own company + city</li>
+                <li>Run PESTLE prompt — copy output to a Google Doc</li>
+                <li>Annotate output: highlight 2 points that need real-world verification</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="hour-label">Hr 2 · 1:00–2:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">🗺️ Industry Ecosystem Map Instruction (20 min)</div>
+              <ul class="step-list">
+                <li>Explain Industry Ecosystem concept: suppliers, customers, competitors, substitutes, regulators</li>
+                <li>Show a sample completed ecosystem map diagram (draw on whiteboard)</li>
+                <li>Explain how to create it in PowerPoint / Canva</li>
+              </ul>
+<div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://www.canva.com/graphs/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Canva Diagram Templates</a><a href="https://miro.com/templates/ecosystem-map/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Miro Ecosystem Map</a></div>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">🗺️ Build Ecosystem Map (60 min)</div>
+              <ul class="step-list">
+                <li>Open Canva or PowerPoint — use provided template or blank slide</li>
+                <li>Draw ecosystem for own company: 5 categories, at least 2 entities each</li>
+                <li>Export as PDF — save to Google Drive P1 folder</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="hour-label">Hr 3 · 2:00–3:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">📌 GSDC M1 — Prompt Ethics (30 min)</div>
+              <ul class="step-list">
+                <li>Teach: What is bias in AI output? How to detect it?</li>
+                <li>Deliberately run a biased prompt — show output to class, discuss</li>
+                <li>Remind: M1 mock on Saturday — check mock.html on LMS</li>
+              </ul>
+<div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://chat.openai.com" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 ChatGPT – Bias Demo</a><a href="https://aiethics.mit.edu/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 AI Ethics Resource – MIT</a><a href="mock.html" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 GSDC Mock Tests (LMS)</a></div>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">📖 GSDC Revision + Practice (30 min)</div>
+              <ul class="step-list">
+                <li>Review M1 resource — focus on ethical considerations section</li>
+                <li>Write 1 example of a biased prompt and how to fix it</li>
+                <li>Open mock.html on LMS — check M1 mock format (available Saturday)</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ═══ WEEK 3 ═══ -->
+    <div id="wk3" class="card">
+      <div class="week-header">
+        <h3>📅 Week 3 — Shadow P1 Phase 2: Manual Frameworks</h3>
+        <span class="wk-meta">17–21 Aug 2026 · 3 hours · Sat Mock: M2 GenAI Models</span>
+      </div>
+      <table>
+        <tr><th style="width:110px">Time Block</th><th>Faculty Action</th><th>Student Activity</th></tr>
+        <tr>
+          <td><span class="hour-label">Hr 1 · 0:00–1:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">📊 Lecture: Market Segmentation (40 min)</div>
+              <ul class="step-list">
+                <li>Teach Market Segmentation: Geographic, Demographic, Psychographic, Behavioural</li>
+                <li>Use whiteboard — draw segmentation table for Netflix India example</li>
+                <li>Explain: segments must be measurable, accessible, and substantial</li>
+                <li>Show sample completed segmentation worksheet</li>
+              </ul>
+<div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://hbr.org/2014/07/know-your-customers-jobs-to-be-done" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Segmentation Framework – HBR</a><a href="https://www.smartinsights.com/target-market-analysis/segmentation/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Market Segmentation Guide</a><a href="https://www.canva.com/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Canva – Worksheet Template</a></div>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">✏️ Manual Segmentation (on paper) (60 min)</div>
+              <ul class="step-list">
+                <li>Take printed segmentation template (provided by faculty)</li>
+                <li>Fill in 3 segments for own company + city — NO AI tools in this phase</li>
+                <li>For each segment: estimate size (small/medium/large), describe profile in 2 sentences</li>
+                <li>Photograph completed worksheet — upload to Google Drive P1 folder</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="hour-label">Hr 2 · 1:00–2:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">📊 Lecture: Porter's 5 Forces (40 min)</div>
+              <ul class="step-list">
+                <li>Teach Porter's 5 Forces framework on whiteboard with full diagram</li>
+                <li>Apply to Netflix/Jio industry: rate each force High / Medium / Low with rationale</li>
+                <li>Distribute printed Porter's 5 Forces template</li>
+              </ul>
+<div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://www.mindtools.com/pages/article/newTMC_08.htm" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Porter's 5 Forces – MindTools</a><a href="https://www.canva.com/graphs/porter-five-forces/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Porter 5 Forces Template – Canva</a><a href="https://www.investopedia.com/terms/p/porter.asp" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Industry Analysis – Investopedia</a></div>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">📋 Porter's 5 Forces — Manual (60 min)</div>
+              <ul class="step-list">
+                <li>Complete Porter's 5 Forces template manually (no AI)</li>
+                <li>Rate each force (H/M/L) — write 2 evidence points per force</li>
+                <li>Photograph and save to Drive P1 folder</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="hour-label">Hr 3 · 2:00–3:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">📌 GSDC M2 — GANs &amp; VAEs (30 min)</div>
+              <ul class="step-list">
+                <li>Introduce M2: Generative AI model types — GAN, VAE, Transformer</li>
+                <li>Focus on output quality implications for PMs (not the math)</li>
+                <li>Share M2 self-study resource link</li>
+              </ul>
+<div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://developers.google.com/machine-learning/gan" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 GAN Explained – Google</a><a href="https://huggingface.co/learn/nlp-course/chapter1/4" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Transformer Intro – Hugging Face</a><a href="https://www.gsdcouncil.org/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 GSDC Page</a></div>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">📖 GSDC M2 Self-Study (30 min)</div>
+              <ul class="step-list">
+                <li>Read M2 resource — focus on GAN vs VAE vs LLM differences</li>
+                <li>Note: M2 mock is Saturday of Week 3</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ═══ WEEK 4 ═══ -->
+    <div id="wk4" class="card">
+      <div class="week-header">
+        <h3>📅 Week 4 — Shadow P1 Phase 3: Data Collection + Excel</h3>
+        <span class="wk-meta">24–28 Aug 2026 · 3 hours · Sat Mock: M2 cont.</span>
+      </div>
+      <table>
+        <tr><th style="width:110px">Time Block</th><th>Faculty Action</th><th>Student Activity</th></tr>
+        <tr>
+          <td><span class="hour-label">Hr 1 · 0:00–1:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">💻 Live Demo: Data Sources (20 min)</div>
+              <ul class="step-list">
+                <li>Show live: TRAI report (trai.gov.in) — how to find telecom subscriber data by state</li>
+                <li>Show: Census India 2011 city-wise population tables</li>
+                <li>Show: Statista free tier for streaming data estimates</li>
+                <li>Explain what data to collect: internet users, smartphone penetration, income levels</li>
+              </ul>
+<div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://www.trai.gov.in/release-publication/reports/telecom-subscription-data" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 TRAI Reports</a><a href="https://censusindia.gov.in/census.website/data/census-tables" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Census India Data</a><a href="https://www.statista.com/markets/409/india/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Statista India</a><a href="https://www.mca.gov.in/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 MCA India (Company Data)</a></div>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">🔍 Data Collection (60 min)</div>
+              <ul class="step-list">
+                <li>Open TRAI/Census/Statista — collect 5 data points for assigned city</li>
+                <li>Record in a new Excel sheet: Column A = Data Type, B = Value, C = Source URL, D = Year</li>
+                <li>Minimum required: city population, internet users %, avg household income, no. of OTT subscribers (estimate), top 2 competitors' pricing in that city</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="hour-label">Hr 2 · 1:00–2:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">📊 Excel Structuring Demo (20 min)</div>
+              <ul class="step-list">
+                <li>Show how to structure collected data in Excel: separate sheets for Raw Data, Summary, Charts</li>
+                <li>Demonstrate basic pivot table on sample city dataset</li>
+                <li>Show how to create a simple bar chart from the data</li>
+              </ul>
+<div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://support.microsoft.com/en-us/office/create-a-pivottable-to-analyze-worksheet-data-a9a84538-bfe9-40a9-a8e9-f99134456576" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Excel Pivot Table Guide – Microsoft</a><a href="https://support.microsoft.com/en-us/office/create-a-chart-from-start-to-finish-0baf399e-dd61-4e18-8a43-b3fd26d7c606" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Excel Charts Tutorial</a></div>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">📊 Build Excel Workbook (60 min)</div>
+              <ul class="step-list">
+                <li>Structure collected data across 3 sheets: Raw Data / Summary / Charts</li>
+                <li>Create 1 pivot table summarising key metrics</li>
+                <li>Create 1 bar/column chart — market size vs. competitor pricing</li>
+                <li>Save as [UserID]_P1_DataWorkbook.xlsx — upload to Drive</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="hour-label">Hr 3 · 2:00–3:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">📌 GSDC M2 cont. — LLMs &amp; Hallucination (30 min)</div>
+              <ul class="step-list">
+                <li>Teach: LLMs and the hallucination problem — how to detect wrong AI output</li>
+                <li>Live example: ask ChatGPT for a statistic — show it gives a plausible but wrong number</li>
+                <li>Lesson: always verify AI-generated data with a primary source</li>
+              </ul>
+<div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://chat.openai.com" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 ChatGPT</a><a href="https://www.ibm.com/topics/ai-hallucinations" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 AI Hallucination – IBM</a></div>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">📖 GSDC Revision (30 min)</div>
+              <ul class="step-list">
+                <li>Review M2 notes — focus on LLM behaviour and hallucination</li>
+                <li>Test yourself: name 3 differences between GAN, VAE, and Transformer</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ═══ WEEK 5 ═══ -->
+    <div id="wk5" class="card">
+      <div class="week-header">
+        <h3>📅 Week 5 — Shadow P1 Phase 4: AI Lab + Dashboard Draft</h3>
+        <span class="wk-meta">31 Aug–04 Sep 2026 · 3 hours · Sat Mock: M3 AI in Planning</span>
+      </div>
+      <table>
+        <tr><th style="width:110px">Time Block</th><th>Faculty Action</th><th>Student Activity</th></tr>
+        <tr>
+          <td><span class="hour-label">Hr 1 · 0:00–1:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">🤖 Excel AI Feature Demo (30 min)</div>
+              <ul class="step-list">
+                <li>Open Excel with sample city data — show Copilot/AI "Analyse Data" feature</li>
+                <li>Demonstrate asking Excel: "What is the trend in OTT subscribers?"</li>
+                <li>Show auto-generated chart suggestions and how to accept/modify them</li>
+              </ul>
+            </div>
+            <div class="activity-block" style="margin-top:6px">
+              <div class="activity-title">📊 Power BI / Looker Studio Demo (30 min)</div>
+              <ul class="step-list">
+                <li>Open Power BI Desktop — import sample city dataset</li>
+                <li>Build a 3-KPI dashboard live: Total Subscribers, Market Share %, Avg Revenue Per User</li>
+                <li>Show how to add slicers, colour-code by competitor</li>
+              </ul>
+<div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://www.microsoft.com/en-us/microsoft-365/excel" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Excel Copilot (Microsoft 365)</a><a href="https://powerbi.microsoft.com/en-us/desktop/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Power BI Desktop Download</a><a href="https://lookerstudio.google.com/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Looker Studio (Free)</a><a href="https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-kpi" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Power BI – KPI Card Tutorial</a></div>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">✏️ Before-AI Note (15 min)</div>
+              <ul class="step-list">
+                <li>Write a "Before AI" note: list 3 insights from manual analysis (from Phase 2–3)</li>
+                <li>This will be compared to AI output later — save to Drive</li>
+              </ul>
+            </div>
+            <div class="activity-block student-block" style="margin-top:6px">
+              <div class="activity-title">🤖 Run AI Prompts on Own Data (45 min)</div>
+              <ul class="step-list">
+                <li>Open ChatGPT — paste summary from Excel workbook</li>
+                <li>Run prompt: "Based on this data, what are the top 3 expansion opportunities for [Company] in [City]?"</li>
+                <li>Copy AI output — annotate with 2 facts to verify manually</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="hour-label">Hr 2 · 1:00–2:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">🧑‍🏫 Dashboard Build Support (60 min)</div>
+              <ul class="step-list">
+                <li>Circulate and help each student connect their Excel data to Power BI / Looker Studio</li>
+                <li>Assist troubleshooting data format issues</li>
+                <li>Show how to make a chart interactive with a city filter/slicer</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">📊 Build Own Dashboard Draft (60 min)</div>
+              <ul class="step-list">
+                <li>Open Power BI / Looker Studio — import own Excel workbook</li>
+                <li>Build dashboard with minimum 3 KPIs: market size, competitor count, price gap</li>
+                <li>Add 1 interactive filter (by competitor or by year)</li>
+                <li>Export PDF screenshot as draft — save to Drive P1 folder</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="hour-label">Hr 3 · 2:00–3:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">📌 GSDC M3 — AI in Project Planning (30 min)</div>
+              <ul class="step-list">
+                <li>Teach M3: AI use in resource allocation, scheduling, WBS generation</li>
+                <li>Discuss: Can AI replace the project manager? — Augmentation vs Automation</li>
+              </ul>
+<div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://www.pmi.org/learning/library/ai-project-management-14214" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 AI in PM – PMI Article</a><a href="https://chat.openai.com" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 ChatGPT WBS Demo</a><a href="https://www.gsdcouncil.org/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 GSDC M3 Resource</a></div>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">📖 GSDC M3 Self-Study (30 min)</div>
+              <ul class="step-list">
+                <li>Read M3 resource — note 3 AI tools used in project planning</li>
+                <li>Prepare for M3 mock on Saturday (06 Sep)</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ═══ WEEK 6 ═══ -->
+    <div id="wk6" class="card">
+      <div class="week-header">
+        <h3>📅 Week 6 — P1 Viva + Presentation</h3>
+        <span class="wk-meta">07–11 Sep 2026 · 3 hours · Deadline: Submit all P1 files</span>
+      </div>
+      <table>
+        <tr><th style="width:110px">Time Block</th><th>Faculty Action</th><th>Student Activity</th></tr>
+        <tr>
+          <td><span class="hour-label">Hr 1–3 · Full Session</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">🎤 Viva Conduct (Full 3 hours)</div>
+              <ul class="step-list">
+                <li>Call students one by one — 5-min presentation + 3-min Q&amp;A = ~8 min each (10 × 8 = 80 min)</li>
+                <li>Ask: Why did you choose this city? What was your best prompt? What did AI miss?</li>
+                <li>Note scores on rubric sheet (Company Understanding 30%, Concept Application 30%, AI Proficiency 40%)</li>
+                <li>Use remaining time for group debrief — share top 3 findings from class</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">🖥️ Present + Submit (Full 3 hours)</div>
+              <ul class="step-list">
+                <li>Before viva: finalise Beautiful.ai / Tome presentation (max 8 slides)</li>
+                <li>Submit P1 Google Form before session begins — link shared by faculty on WhatsApp</li>
+                <li>Present for 5 minutes: City Context → Manual Analysis → AI Lab → Dashboard → Reflection</li>
+                <li>Q&amp;A: be ready to run a prompt live if asked by faculty</li>
+                <li>After presenting: watch peers and give 1 written peer comment (shared on Drive)</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ═══ WEEK 7 ═══ -->
+    <div id="wk7" class="card">
+      <div class="week-header">
+        <h3>📅 Week 7 — Shadow P2 Phase 1–2: Customer Journey Map</h3>
+        <span class="wk-meta">14–18 Sep 2026 · 3 hours · Sat Mock: M4 Risk Assessment</span>
+      </div>
+      <table>
+        <tr><th style="width:110px">Time Block</th><th>Faculty Action</th><th>Student Activity</th></tr>
+        <tr>
+          <td><span class="hour-label">Hr 1 · 0:00–1:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">🗺️ Introduce Journey Mapping (30 min)</div>
+              <ul class="step-list">
+                <li>Explain Customer Journey Map: stages from Awareness → Delivery → Post-Order</li>
+                <li>Show Miro / Canva template for journey map on projector</li>
+                <li>Demonstrate filling touchpoints for Zomato order: App Open → Browse → Order → Payment → Delivery → Review</li>
+                <li>Explain emotion curve: how to map user sentiment at each touchpoint</li>
+              </ul>
+<div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://miro.com/templates/customer-journey-map/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Miro – Journey Map Template</a><a href="https://www.canva.com/graphs/journey-maps/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Canva – Journey Map</a><a href="https://www.nngroup.com/articles/journey-mapping-101/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 NNGroup – Journey Mapping Guide</a><a href="https://www.zomato.com/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Zomato App</a><a href="https://www.swiggy.com/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Swiggy App</a></div>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">📋 Observe + Choose Company (30 min)</div>
+              <ul class="step-list">
+                <li>Watch faculty demo — note the 9 touchpoint structure</li>
+                <li>Choose: Zomato or Swiggy as your P2 company</li>
+                <li>Open Miro (free) or Canva — open Journey Map template</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="hour-label">Hr 2 · 1:00–2:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">🧑‍🏫 Guided Journey Mapping (60 min)</div>
+              <ul class="step-list">
+                <li>Circulate — help students identify accurate touchpoints from real app experience</li>
+                <li>Prompt each student: "Have you actually ordered on this app? What was frustrating?"</li>
+                <li>Demonstrate emotion curve: use emoji to mark sentiment at each touchpoint</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">🗺️ Manual Journey Map (60 min)</div>
+              <ul class="step-list">
+                <li>Fill all 8–9 touchpoints manually in Miro/Canva — NO AI in this phase</li>
+                <li>Add emotion ratings (😀/😐/😟) at each touchpoint</li>
+                <li>Identify 3 friction points: moments where user experience dips</li>
+                <li>Annotate each friction point with: What happens? Why is it frustrating?</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="hour-label">Hr 3 · 2:00–3:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">📌 GSDC M4 — Risk Assessment (30 min)</div>
+              <ul class="step-list">
+                <li>Teach M4: Risk identification, risk heat maps, qualitative vs. quantitative risk</li>
+                <li>Build a 5×5 risk matrix on whiteboard together with class</li>
+              </ul>
+<div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://www.canva.com/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Risk Matrix Template – Canva</a><a href="https://www.pmi.org/learning/library/risk-register-project-management-7273" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Risk Register Guide – PMI</a><a href="https://www.investopedia.com/terms/m/montecarlosimulation.asp" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Monte Carlo Simulation – Explained</a></div>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">📖 GSDC M4 Self-Study (30 min)</div>
+              <ul class="step-list">
+                <li>Study M4 resource — focus on risk register format and heat map construction</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ═══ WEEK 8 ═══ -->
+    <div id="wk8" class="card">
+      <div class="week-header">
+        <h3>📅 Week 8 — P2 Phase 3–4 + Viva: AI Friction Analysis</h3>
+        <span class="wk-meta">21–25 Sep 2026 · 3 hours · Sat Mock: M4 cont.</span>
+      </div>
+      <table>
+        <tr><th style="width:110px">Time Block</th><th>Faculty Action</th><th>Student Activity</th></tr>
+        <tr>
+          <td><span class="hour-label">Hr 1 · 0:00–1:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">🤖 ChatGPT Journey Prompt Demo (20 min)</div>
+              <ul class="step-list">
+                <li>Demonstrate: "Act as a UX researcher. Analyse the Zomato customer journey from app open to delivery. Identify 3 high-friction touchpoints and suggest solutions for each."</li>
+                <li>Compare AI output with manual friction analysis — what did AI catch/miss?</li>
+              </ul>
+<div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://chat.openai.com" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 ChatGPT</a><a href="https://miro.com" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Miro</a><a href="https://www.canva.com/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Canva Visual Map</a></div>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">🤖 AI Friction Analysis (60 min)</div>
+              <ul class="step-list">
+                <li>Run adapted ChatGPT prompt for own company (Zomato or Swiggy)</li>
+                <li>Compare AI friction analysis with own manual map — write Before/After comparison note</li>
+                <li>Create visual map in Canva/Miro showing AI-augmented insights</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="hour-label">Hr 2–3 · 1:00–3:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">🎤 P2 Viva (2 hours)</div>
+              <ul class="step-list">
+                <li>Each student: 5-min presentation + 3-min Q&amp;A on Journey Map</li>
+                <li>Assess: touchpoint accuracy, friction quality, AI vs. manual comparison depth</li>
+                <li>Submit P2 scores on rubric sheet</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">🖥️ Present + Submit P2</div>
+              <ul class="step-list">
+                <li>Submit P2 Google Form before session (link from faculty WhatsApp)</li>
+                <li>Present journey map + friction analysis + AI comparison</li>
+                <li>Be ready to show the Before/After insight comparison live</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ═══ WEEK 9 ═══ -->
+    <div id="wk9" class="card">
+      <div class="week-header">
+        <h3>📅 Week 9 — Shadow P3 Phase 1–2: Startup BMC</h3>
+        <span class="wk-meta">28 Sep–02 Oct 2026 · 3 hours · Sat Mock: M5 Data Analysis</span>
+      </div>
+      <table>
+        <tr><th style="width:110px">Time Block</th><th>Faculty Action</th><th>Student Activity</th></tr>
+        <tr>
+          <td><span class="hour-label">Hr 1 · 0:00–1:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">🏢 Introduce Business Model Canvas (30 min)</div>
+              <ul class="step-list">
+                <li>Teach all 9 BMC blocks with definitions and examples on projector</li>
+                <li>Show Crunchbase.com navigation live — how to find startup profiles and funding rounds</li>
+                <li>Distribute list of 15 eligible startups (recently funded, India-based)</li>
+              </ul>
+<div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://www.crunchbase.com/hub/india-startups" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Crunchbase – India Startups</a><a href="https://www.canva.com/graphs/business-model-canvas/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 BMC Template – Canva</a><a href="https://www.strategyzer.com/library/the-business-model-canvas" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Strategyzer BMC Tool</a><a href="https://yourstory.com/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 YourStory – Indian Startups</a></div>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">🔍 Choose Startup + Research (60 min)</div>
+              <ul class="step-list">
+                <li>Browse Crunchbase — select one startup from the approved list</li>
+                <li>Read startup's website, recent news, and Crunchbase profile</li>
+                <li>Note: founding year, total funding, key investors, core product, revenue model</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="hour-label">Hr 2 · 1:00–2:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">🧑‍🏫 Guide Manual BMC (60 min)</div>
+              <ul class="step-list">
+                <li>Circulate — help students fill BMC blocks accurately</li>
+                <li>Check: Value Proposition must be specific, not generic</li>
+                <li>Check: Revenue Streams must include actual pricing/model, not just "sells products"</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">📋 Manual BMC (no AI) (60 min)</div>
+              <ul class="step-list">
+                <li>Fill all 9 BMC blocks on printed/digital template — using only research notes</li>
+                <li>Each block: minimum 3 bullet points, sourced from real data</li>
+                <li>Photograph/export and save to Drive P3 folder</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="hour-label">Hr 3 · 2:00–3:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">📌 GSDC M5 — Data Analysis (30 min)</div>
+              <ul class="step-list">
+                <li>Teach EVM: CPI, SPI calculations with worked example</li>
+                <li>Show: AI-powered Excel "Analyse Data" for project datasets</li>
+              </ul>
+<div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://www.projectengineer.net/earned-value-management-calculator/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 EVM Calculator – Online</a><a href="https://support.microsoft.com/en-us/office/get-insights-in-excel-3223aab8-f543-4fda-85ed-76bb0295ffc4" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Excel Analyse Data Feature</a><a href="https://learn.microsoft.com/en-us/power-bi/consumer/end-user-insights" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Power BI Insights</a></div>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">📖 GSDC M5 Study (30 min)</div>
+              <ul class="step-list">
+                <li>Practise CPI/SPI calculation with sample numbers from M5 resource</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ═══ WEEK 10 ═══ -->
+    <div id="wk10" class="card">
+      <div class="week-header">
+        <h3>📅 Week 10 — P3 Phase 3–4 + Viva: AI Viability Analysis</h3>
+        <span class="wk-meta">05–09 Oct 2026 · 3 hours · Sat Mock: M5 cont.</span>
+      </div>
+      <table>
+        <tr><th style="width:110px">Time Block</th><th>Faculty Action</th><th>Student Activity</th></tr>
+        <tr>
+          <td><span class="hour-label">Hr 1 · 0:00–1:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">🤖 Notion AI + ChatGPT VC Analyst Demo (20 min)</div>
+              <ul class="step-list">
+                <li>Demo Notion AI to auto-fill a BMC from a startup description</li>
+                <li>Demo ChatGPT: "Act as a VC analyst. Assess the viability of [startup] based on this BMC. Give a viability score out of 10 with 3 scenarios: optimistic, base, and pessimistic."</li>
+              </ul>
+<div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://www.notion.so/product/ai" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Notion AI</a><a href="https://chat.openai.com" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 ChatGPT</a><a href="https://www.crunchbase.com/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Crunchbase Financials</a><a href="https://www.smartsheet.com/content/financial-model-templates" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Financial Model Template – Smartsheet</a></div>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">🤖 AI Viability Assessment (60 min)</div>
+              <ul class="step-list">
+                <li>Run VC analyst prompt for own startup — adapt with real BMC data</li>
+                <li>Build simple financial model in Excel: revenue projection for 3 years (3 scenarios)</li>
+                <li>Write AI Reflection note: Where did AI agree with your manual BMC? Where did it differ?</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="hour-label">Hr 2–3 · 1:00–3:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">🎤 P3 Viva (2 hours)</div>
+              <ul class="step-list">
+                <li>Each student: 5-min startup pitch (as if presenting to VC) + 3-min Q&amp;A</li>
+                <li>Assess rubric: Startup Understanding 30%, BMC Quality 30%, AI Viability 40%</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">🖥️ Present Startup + Submit P3</div>
+              <ul class="step-list">
+                <li>Submit P3 Google Form before session begins</li>
+                <li>Present: Startup overview → Manual BMC → AI viability → 3-year financial model</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ═══ WEEK 11 ═══ -->
+    <div id="wk11" class="card">
+      <div class="week-header">
+        <h3>📅 Week 11 — Shadow P4 Phase 1–2: KPI Dashboard Design</h3>
+        <span class="wk-meta">12–16 Oct 2026 · 3 hours · Sat Mock: M6 Automation</span>
+      </div>
+      <table>
+        <tr><th style="width:110px">Time Block</th><th>Faculty Action</th><th>Student Activity</th></tr>
+        <tr>
+          <td><span class="hour-label">Hr 1 · 0:00–1:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">📊 KPI Framework Lecture (30 min)</div>
+              <ul class="step-list">
+                <li>Teach: What is a SMART KPI? Specific, Measurable, Achievable, Relevant, Time-bound</li>
+                <li>Show KPI examples for Sales, Customer Service, Operations functions</li>
+                <li>Distribute the faculty-prepared dataset (standardised data for all 10 students)</li>
+              </ul>
+<div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://www.klipfolio.com/resources/articles/what-is-a-key-performance-indicator" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 SMART KPI Guide – Klipfolio</a><a href="https://www.tableau.com/learn/articles/kpis-key-performance-indicators" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 KPI Examples by Function – Tableau</a><a href="https://www.canva.com/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 KPI Template – Canva</a></div>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">📋 KPI Specification (60 min)</div>
+              <ul class="step-list">
+                <li>Choose a business function: Sales, Customer Service, or Operations</li>
+                <li>Design 4 SMART KPIs for chosen function — write KPI spec sheet (template provided)</li>
+                <li>For each KPI: name, formula, target value, data source in dataset, visualization type</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="hour-label">Hr 2 · 1:00–2:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">🧑‍🏫 Manual Data Work Guidance (60 min)</div>
+              <ul class="step-list">
+                <li>Circulate — check KPI specs for SMART compliance</li>
+                <li>Help students structure Excel pivot tables for their chosen function</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">📊 Manual Pivot Tables (60 min)</div>
+              <ul class="step-list">
+                <li>Open faculty dataset in Excel</li>
+                <li>Create 4 pivot tables — one per KPI</li>
+                <li>Verify calculations manually: spot check 3 rows against raw data</li>
+                <li>Save Excel file: [UserID]_P4_PivotTables.xlsx</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="hour-label">Hr 3 · 2:00–3:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">📌 GSDC M6 — Automation (30 min)</div>
+              <ul class="step-list">
+                <li>Teach: Make / n8n / Zapier workflow automation — show a simple diagram</li>
+                <li>Discuss: What routine PM tasks can be automated? (Reporting, reminders, status updates)</li>
+              </ul>
+<div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://www.make.com/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Make (Integromat) – Automation</a><a href="https://n8n.io/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 n8n – Open Source Automation</a><a href="https://zapier.com/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Zapier – No-Code Automation</a><a href="https://otter.ai/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Otter.ai – Meeting Intelligence</a><a href="https://fireflies.ai/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Fireflies.ai</a></div>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">📖 GSDC M6 Study (30 min)</div>
+              <ul class="step-list">
+                <li>Study M6 resource — identify 5 tasks that can be automated in a project</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ═══ WEEK 12 ═══ -->
+    <div id="wk12" class="card">
+      <div class="week-header">
+        <h3>📅 Week 12 — P4 Phase 3–4 + Viva: Power BI Dashboard</h3>
+        <span class="wk-meta">19–23 Oct 2026 · 3 hours · Sat Mock: M6 cont.</span>
+      </div>
+      <table>
+        <tr><th style="width:110px">Time Block</th><th>Faculty Action</th><th>Student Activity</th></tr>
+        <tr>
+          <td><span class="hour-label">Hr 1 · 0:00–1:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">💻 Power BI / Looker Studio Dashboard Demo (20 min)</div>
+              <ul class="step-list">
+                <li>Live demo: import faculty dataset into Power BI Desktop</li>
+                <li>Build dashboard with 4 KPI cards + 2 trend charts + 1 slicer</li>
+                <li>Show: how to add AI-generated narrative text using Copilot in Power BI</li>
+              </ul>
+<div style="margin-top:8px;padding-top:7px;border-top:1px dashed #c7d7f9;"><span style="font-size:.72rem;color:#888;font-weight:600;letter-spacing:.4px;">📎 DEMO RESOURCES &nbsp;</span><a href="https://powerbi.microsoft.com/en-us/desktop/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Power BI Desktop</a><a href="https://lookerstudio.google.com/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Looker Studio</a><a href="https://learn.microsoft.com/en-us/power-bi/create-reports/copilot-introduction" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Power BI Copilot Docs</a><a href="https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-smart-narrative" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Smart Narrative Visual – Power BI</a><a href="https://www.beautiful.ai/" target="_blank" style="display:inline-block;background:#e8f0fe;color:#1a56db;border:1px solid #c7d7f9;border-radius:5px;padding:3px 10px;font-size:.76rem;text-decoration:none;margin:2px 3px 2px 0;font-weight:600;">🔗 Beautiful.ai Presentation</a></div>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">📊 Build Dashboard (60 min)</div>
+              <ul class="step-list">
+                <li>Import own pivot table data into Power BI / Looker Studio</li>
+                <li>Build interactive dashboard: 4 KPI tiles + 2 charts + 1 filter</li>
+                <li>Add AI narrative / insight summary below charts</li>
+                <li>Export: .pbix file (Power BI) OR Looker Studio shareable link</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="hour-label">Hr 2–3 · 1:00–3:00</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">🎤 P4 Viva (2 hours)</div>
+              <ul class="step-list">
+                <li>Each student: 5-min dashboard walkthrough + 3-min Q&amp;A</li>
+                <li>Assess rubric: KPI Relevance 30%, Data Accuracy 30%, Dashboard Quality 40%</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">🖥️ Present Dashboard + Submit P4</div>
+              <ul class="step-list">
+                <li>Submit P4 Google Form before session</li>
+                <li>Present: KPI rationale → pivot validation → live dashboard demo → AI insight report</li>
+                <li>Bring laptop with dashboard open — faculty may click slicers live</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ═══ WEEK 13 ═══ -->
+    <div id="wk13" class="card">
+      <div class="week-header">
+        <h3>📅 Week 13 — Portfolio Review + Peer Feedback</h3>
+        <span class="wk-meta">26–30 Oct 2026 · 3 hours · Sat Mock: M7 Future Trends</span>
+      </div>
+      <table>
+        <tr><th style="width:110px">Time Block</th><th>Faculty Action</th><th>Student Activity</th></tr>
+        <tr>
+          <td><span class="hour-label">Hr 1–3 · Full Session</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">🔁 Facilitated Peer Review (Full 3 hours)</div>
+              <ul class="step-list">
+                <li>Organise 5 pairs — each pair reviews each other's portfolio (all 4 projects)</li>
+                <li>Share peer review rubric: Structure, Depth of AI Use, Presentation Quality, Insight Quality</li>
+                <li>Facilitate group share-out: each student shares 1 strongest insight from P1–P4</li>
+                <li>Collect written peer feedback forms — return to students for revision</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">📋 Peer Review + Portfolio Refinement</div>
+              <ul class="step-list">
+                <li>Review assigned peer's portfolio (access via Google Drive shared link)</li>
+                <li>Fill in peer review rubric for each of the 4 projects</li>
+                <li>Present 1 key insight from your own portfolio to class (2 min each)</li>
+                <li>Use feedback received to plan final viva preparation</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ═══ WEEK 14 ═══ -->
+    <div id="wk14" class="card">
+      <div class="week-header">
+        <h3>📅 Week 14 — Final Comprehensive Viva</h3>
+        <span class="wk-meta">02–06 Nov 2026 · 3 hours · Sat: Full Mock Exam (60 min)</span>
+      </div>
+      <table>
+        <tr><th style="width:110px">Time Block</th><th>Faculty Action</th><th>Student Activity</th></tr>
+        <tr>
+          <td><span class="hour-label">Hr 1–3 · Full Session</span></td>
+          <td>
+            <div class="activity-block">
+              <div class="activity-title">🎓 Final Comprehensive Viva (Full 3 hours)</div>
+              <ul class="step-list">
+                <li>Each student: 1 question per project (4 questions total) — 15 min per student</li>
+                <li>Q format: "Walk me through your P[X] — what was your best AI prompt and why?"</li>
+                <li>Assess overall: consistency, depth, AI-vs-manual reasoning, reflective thinking</li>
+                <li>Share final program scores and GSDC exam reminder (December 2026)</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="activity-block student-block">
+              <div class="activity-title">🎓 Final Viva Preparation + Defence</div>
+              <ul class="step-list">
+                <li>Bring laptop with all 4 project dashboards/presentations open and ready</li>
+                <li>Be ready to walk through any of the 4 projects</li>
+                <li>Defend AI choices: explain why you used each prompt and what it produced</li>
+                <li>Submit final portfolio link (all 4 projects in Drive) if not already done</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+  </div><!-- /main-content -->
+</div><!-- /layout -->
+
+<footer>GJIMT MBA AI Integrated Program 2026 · Faculty: Gurdeepak · Session Guide v1.0</footer>
+
+</div><!-- /lms-page-content -->
+
+<script>
+(function(){
+  var USERS = {
+    'mba26-ai-01':'student@2026','mba26-ai-02':'student@2026','mba26-ai-03':'student@2026',
+    'mba26-ai-04':'student@2026','mba26-ai-05':'student@2026','mba26-ai-06':'student@2026',
+    'mba26-ai-07':'student@2026','mba26-ai-08':'student@2026','mba26-ai-09':'student@2026',
+    'mba26-ai-10':'student@2026',
+    'mba26-fac-gurdeepak':'faculty@2026',
+    'mba26-admin':'admin@2026'
+  };
+  var ROLES = {
+    'mba26-ai-01':'student','mba26-ai-02':'student','mba26-ai-03':'student',
+    'mba26-ai-04':'student','mba26-ai-05':'student','mba26-ai-06':'student',
+    'mba26-ai-07':'student','mba26-ai-08':'student','mba26-ai-09':'student',
+    'mba26-ai-10':'student',
+    'mba26-fac-gurdeepak':'faculty',
+    'mba26-admin':'admin'
+  };
+  var ALLOWED = ['student','faculty','admin'];
+
+  function getSession(){
+    try{ return JSON.parse(localStorage.getItem('lmsSession')||'null'); }
+    catch(e){ return null; }
+  }
+  function setSession(uid,role){
+    localStorage.setItem('lmsSession',JSON.stringify({uid:uid,role:role}));
+  }
+  function clearSession(){ localStorage.removeItem('lmsSession'); }
+
+  function unlock(session){
+    document.getElementById('lms-login-overlay').classList.remove('active');
+    document.getElementById('lms-logout-btn').style.display='block';
+    var wb=document.getElementById('lms-welcome-bar');
+    wb.style.display='block';
+    wb.textContent='Signed in as: '+session.uid+' ('+session.role+')  |  MBA AI Integrated Program 2026';
+    var content=document.getElementById('lms-page-content');
+    if(content) content.classList.add('unlocked');
+
+    // Scroll to hash anchor after unlock
+    if(window.location.hash){
+      setTimeout(function(){
+        var el = document.getElementById(window.location.hash.substring(1));
+        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      }, 150);
+    }
+
+  }
+
+  window.lmsDoLogin=function(){
+    var uid=(document.getElementById('lms-uid').value||'').trim().toLowerCase();
+    var pwd=document.getElementById('lms-pwd').value||'';
+    var err=document.getElementById('lms-login-error');
+    if(!USERS[uid]){err.textContent='❌ User ID not found.';return;}
+    if(USERS[uid]!==pwd){err.textContent='❌ Incorrect password.';return;}
+    var role=ROLES[uid];
+    if(ALLOWED.indexOf(role)===-1){
+      err.textContent='⛔ Access denied. This page is for '+ALLOWED.join('/')+' only.';return;
+    }
+    setSession(uid,role);
+    unlock({uid:uid,role:role});
+  };
+
+  window.lmsLogout=function(){
+    clearSession();
+    document.getElementById('lms-login-overlay').classList.add('active');
+    document.getElementById('lms-logout-btn').style.display='none';
+    document.getElementById('lms-welcome-bar').style.display='none';
+    var content=document.getElementById('lms-page-content');
+    if(content) content.classList.remove('unlocked');
+    document.getElementById('lms-uid').value='';
+    document.getElementById('lms-pwd').value='';
+    document.getElementById('lms-login-error').textContent='';
+  };
+
+  var session=getSession();
+  if(session && USERS[session.uid] && ROLES[session.uid]===session.role && ALLOWED.indexOf(session.role)!==-1){
+    unlock(session);
+  }
+})();
+</script>
+
+<script>
+// ── Session Guide Date-Gate (students only) ───────────────────────────────
+(function(){
+  var UNLOCK_DATES  = {
+    'wk1': '2026-07-27',
+    'wk2': '2026-08-03',
+    'wk3': '2026-08-10',
+    'wk4': '2026-08-17',
+    'wk5': '2026-08-24',
+    'wk6': '2026-08-31',
+    'wk7': '2026-09-07',
+    'wk8': '2026-09-14',
+    'wk9': '2026-09-21',
+    'wk10': '2026-09-28',
+    'wk11': '2026-10-05',
+    'wk12': '2026-10-12',
+    'wk13': '2026-10-19',
+    'wk14': '2026-10-26',
+  };
+  var SESSION_DATES = {
+    'wk1': '2026-08-03',
+    'wk2': '2026-08-10',
+    'wk3': '2026-08-17',
+    'wk4': '2026-08-24',
+    'wk5': '2026-08-31',
+    'wk6': '2026-09-07',
+    'wk7': '2026-09-14',
+    'wk8': '2026-09-21',
+    'wk9': '2026-09-28',
+    'wk10': '2026-10-05',
+    'wk11': '2026-10-12',
+    'wk12': '2026-10-19',
+    'wk13': '2026-10-26',
+    'wk14': '2026-11-02',
+  };
+  var LABELS        = {
+    'wk1': 'Week 1 — P1 Phase 1',
+    'wk2': 'Week 2 — P1 Phase 1 cont.',
+    'wk3': 'Week 3 — P1 Phase 2',
+    'wk4': 'Week 4 — P1 Phase 3',
+    'wk5': 'Week 5 — P1 Phase 4',
+    'wk6': 'Week 6 — P1 Viva',
+    'wk7': 'Week 7 — P2 Phase 1–2',
+    'wk8': 'Week 8 — P2 Phase 3–4 + Viva',
+    'wk9': 'Week 9 — P3 Phase 1–2',
+    'wk10': 'Week 10 — P3 Phase 3–4 + Viva',
+    'wk11': 'Week 11 — P4 Phase 1–2',
+    'wk12': 'Week 12 — P4 Phase 3–4 + Viva',
+    'wk13': 'Week 13 — Portfolio Review',
+    'wk14': 'Week 14 — Final Viva',
+  };
+
+  function getRole(){
+    try{ var s=JSON.parse(localStorage.getItem('lmsSession')||'null'); return s?s.role:null; }
+    catch(e){ return null; }
+  }
+
+  function applySessionGates(){
+    var role = getRole();
+    // Faculty and admin always see everything
+    if(role==='faculty' || role==='admin') return;
+
+    var today = new Date(); today.setHours(0,0,0,0);
+
+    Object.keys(UNLOCK_DATES).forEach(function(wid){
+      var section = document.getElementById(wid);
+      if(!section) return;
+
+      var unlockDate  = new Date(UNLOCK_DATES[wid]);  unlockDate.setHours(0,0,0,0);
+      var sessionDate = new Date(SESSION_DATES[wid]); sessionDate.setHours(0,0,0,0);
+      var label = LABELS[wid] || wid;
+
+      if(today < unlockDate){
+        var daysToUnlock  = Math.ceil((unlockDate  - today)/(1000*60*60*24));
+        var daysToSession = Math.ceil((sessionDate - today)/(1000*60*60*24));
+        var unlockStr   = unlockDate.toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+        var sessionStr  = sessionDate.toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+        // Save heading (first child) and replace content with lock screen
+        var heading = section.querySelector('.week-header');
+        var headingHTML = heading ? heading.outerHTML : '';
+
+        section.innerHTML =
+          headingHTML +
+          '<div style="padding:28px 20px;text-align:center;">' +
+            '<div style="font-size:2.8rem;margin-bottom:10px;">🔒</div>' +
+            '<div style="background:#f0f4ff;border:1.5px solid #c7d7f9;border-radius:10px;padding:20px 28px;display:inline-block;max-width:480px;">' +
+              '<p style="font-size:.95rem;color:#0f3460;font-weight:700;margin-bottom:8px;">This session guide is not yet available</p>' +
+              '<p style="font-size:.88rem;color:#555;margin-bottom:6px;">⏳ Unlocks in <strong>' + daysToUnlock + ' day' + (daysToUnlock!==1?'s':'') + '</strong> — on <strong>' + unlockStr + '</strong></p>' +
+              '<p style="font-size:.82rem;color:#888;">📅 Session week begins: <strong>' + sessionStr + '</strong></p>' +
+              '<p style="font-size:.78rem;color:#aaa;margin-top:10px;">Sessions are released 1 week before they begin so you can prepare in advance.</p>' +
+            '</div>' +
+          '</div>';
+      }
+    });
+
+    // Update sidebar links with lock/unlock indicators
+    Object.keys(UNLOCK_DATES).forEach(function(wid){
+      var link = document.querySelector('.sidebar a[href="#' + wid + '"]');
+      if(!link) return;
+      var unlockDate = new Date(UNLOCK_DATES[wid]); unlockDate.setHours(0,0,0,0);
+      var sessionDate = new Date(SESSION_DATES[wid]); sessionDate.setHours(0,0,0,0);
+      var lbl = LABELS[wid]||wid;
+      var shortLbl = lbl.replace('Week ','Wk ').replace(/ —.*/,'');
+      if(today < unlockDate){
+        link.textContent = '🔒 ' + shortLbl;
+        link.style.color = '#666';
+      } else if(today >= sessionDate){
+        link.textContent = '✅ ' + shortLbl;
+        link.style.color = '#81c784';
+      } else {
+        link.textContent = '📖 ' + shortLbl + ' (Preview)';
+        link.style.color = '#ffcc80';
+      }
+    });
+  }
+
+  // Hook into auth unlock via MutationObserver
+  var content = document.getElementById('lms-page-content');
+  if(content){
+    new MutationObserver(function(ms){
+      ms.forEach(function(m){
+        if(m.attributeName==='class' && m.target.classList.contains('unlocked'))
+          applySessionGates();
+      });
+    }).observe(content, {attributes:true});
+    if(content.classList.contains('unlocked')) applySessionGates();
+  }
+})();
+</script>
+
+</body>
+</html>
